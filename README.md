@@ -8,5 +8,5 @@
 ### Доска: 
 [Trello](https://trello.com/b/gsFTLlAo/personalbudget)
 
-### Mockup интерфейса
+### Mockup интерфейса:
 [ninjamock](https://ninjamock.com/s/CCRW2Sx)
