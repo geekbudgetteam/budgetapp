@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">budgetapp</string>
+
+    <string name="nav_about_programmer">О разработчике</string>
+    <string name="nav_feedback">Обратная связь</string>
 </resources>
