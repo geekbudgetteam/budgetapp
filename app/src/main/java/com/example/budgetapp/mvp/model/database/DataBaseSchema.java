@@ -3,6 +3,7 @@ package com.example.budgetapp.mvp.model.database;
 import android.content.ContentValues;
 import android.database.Cursor;
 
+import com.example.budgetapp.mvp.model.entity.Category;
 import com.example.budgetapp.mvp.model.entity.Record;
 
 public class DataBaseSchema {
@@ -43,6 +44,34 @@ public class DataBaseSchema {
             record.setId(id);
 
             return record;
+        }
+    }
+
+    public static final class CategoriesTable {
+        public static final String TABLE_NAME = "categories";
+
+        public static final String ID_COLUMN = "id";
+        public static final String NAME_COLUMN = "name";
+
+        public static final String CREATE =
+                "CREATE TABLE " + TABLE_NAME + " (" +
+                        ID_COLUMN + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                        NAME_COLUMN + " TEXT NOT NULL);";
+
+        public static ContentValues getContentValues(Category category) {
+            ContentValues values = new ContentValues();
+            values.put(NAME_COLUMN, category.getName());
+            return values;
+        }
+
+        public static Category parseCursor(Cursor cursor) {
+            int id = cursor.getInt(cursor.getColumnIndexOrThrow(ID_COLUMN));
+            String name = cursor.getString(cursor.getColumnIndexOrThrow(NAME_COLUMN));
+
+            Category category = new Category(name);
+            category.setId(id);
+
+            return category;
         }
     }
 }

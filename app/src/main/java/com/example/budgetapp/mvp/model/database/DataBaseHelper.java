@@ -19,6 +19,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         db.beginTransaction();
         try {
             db.execSQL(DataBaseSchema.RecordsTable.CREATE);
+            db.execSQL(DataBaseSchema.CategoriesTable.CREATE);
+
             db.setTransactionSuccessful();
         } finally {
             db.endTransaction();
