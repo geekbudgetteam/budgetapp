@@ -10,6 +10,8 @@ public interface CategoryStorage {
 
     Observable<Boolean> addCategory(Category category);
 
+    Observable<Category> getCategory(int id);
+
     Observable<List<Category>> getCategoriesList();
 
     Observable<Boolean> updateCategory(Category category);

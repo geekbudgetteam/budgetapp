@@ -18,7 +18,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.beginTransaction();
         try {
-            db.execSQL(DataBaseSchema.RecordsTable.CREATE);
+            db.execSQL(DataBaseSchema.TransactionsTable.CREATE);
             db.execSQL(DataBaseSchema.CategoriesTable.CREATE);
 
             db.setTransactionSuccessful();

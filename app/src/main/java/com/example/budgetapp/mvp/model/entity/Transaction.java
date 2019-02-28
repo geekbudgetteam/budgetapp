@@ -2,17 +2,17 @@ package com.example.budgetapp.mvp.model.entity;
 
 import java.io.Serializable;
 
-public class Record implements Serializable {
+public class Transaction implements Serializable {
 
     private int id;
-    private String projectName;
-    private String categoryName;
+    private int projectId;
+    private int categoryId;
     private long date;
     private float amount;
 
-    public Record(String projectName, String categoryName, long date, float amount) {
-        this.projectName = projectName;
-        this.categoryName = categoryName;
+    public Transaction(int projectId, int categoryId, long date, float amount) {
+        this.projectId = projectId;
+        this.categoryId = categoryId;
         this.date = date;
         this.amount = amount;
     }
@@ -25,20 +25,20 @@ public class Record implements Serializable {
         this.id = id;
     }
 
-    public String getProjectName() {
-        return projectName;
+    public int getProjectId() {
+        return projectId;
     }
 
-    public void setProjectName(String projectName) {
-        this.projectName = projectName;
+    public void setProjectId(int projectId) {
+        this.projectId = projectId;
     }
 
-    public String getCategoryName() {
-        return categoryName;
+    public int getCategoryId() {
+        return categoryId;
     }
 
-    public void setCategoryName(String categoryName) {
-        this.categoryName = categoryName;
+    public void setCategoryId(int categoryId) {
+        this.categoryId = categoryId;
     }
 
     public long getDate() {

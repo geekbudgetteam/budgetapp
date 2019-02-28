@@ -4,12 +4,13 @@ import android.content.ContentValues;
 import android.database.Cursor;
 
 import com.example.budgetapp.mvp.model.entity.Category;
-import com.example.budgetapp.mvp.model.entity.Record;
+import com.example.budgetapp.mvp.model.entity.Project;
+import com.example.budgetapp.mvp.model.entity.Transaction;
 
 public class DataBaseSchema {
 
-    public static final class RecordsTable {
-        public static final String TABLE_NAME = "records";
+    public static final class TransactionsTable {
+        public static final String TABLE_NAME = "transactions";
 
         public static final String ID_COLUMN = "id";
         public static final String PROJECT_COLUMN = "project";
@@ -20,30 +21,30 @@ public class DataBaseSchema {
         public static final String CREATE =
                 "CREATE TABLE " + TABLE_NAME + " (" +
                         ID_COLUMN + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                        PROJECT_COLUMN + " TEXT, " +
-                        CATEGORY_COLUMN + " TEXT, " +
+                        PROJECT_COLUMN + " INTEGER, " +
+                        CATEGORY_COLUMN + " INTEGER, " +
                         DATE_COLUMN + " INTEGER NOT NULL, " +
                         AMOUNT_COLUMN + " REAL NOT NULL);";
 
-        public static ContentValues getContentValues(Record record) {
+        public static ContentValues getContentValues(Transaction transaction) {
             ContentValues values = new ContentValues();
-            values.put(PROJECT_COLUMN, record.getProjectName());
-            values.put(CATEGORY_COLUMN, record.getCategoryName());
-            values.put(DATE_COLUMN, record.getDate());
-            values.put(AMOUNT_COLUMN, record.getAmount());
+            values.put(PROJECT_COLUMN, transaction.getProjectId());
+            values.put(CATEGORY_COLUMN, transaction.getCategoryId());
+            values.put(DATE_COLUMN, transaction.getDate());
+            values.put(AMOUNT_COLUMN, transaction.getAmount());
             return values;
         }
 
-        public static Record parseCursor(Cursor cursor) {
+        public static Transaction parseCursor(Cursor cursor) {
             int id = cursor.getInt(cursor.getColumnIndexOrThrow(ID_COLUMN));
-            String projectName = cursor.getString(cursor.getColumnIndexOrThrow(PROJECT_COLUMN));
-            String categoryName = cursor.getString(cursor.getColumnIndexOrThrow(CATEGORY_COLUMN));
+            int projectId = cursor.getInt(cursor.getColumnIndexOrThrow(PROJECT_COLUMN));
+            int categoryId = cursor.getInt(cursor.getColumnIndexOrThrow(CATEGORY_COLUMN));
             long date = cursor.getLong(cursor.getColumnIndexOrThrow(DATE_COLUMN));
             float amount = cursor.getFloat(cursor.getColumnIndexOrThrow(AMOUNT_COLUMN));
-            Record record = new Record(projectName, categoryName, date, amount);
-            record.setId(id);
+            Transaction transaction = new Transaction(projectId, categoryId, date, amount);
+            transaction.setId(id);
 
-            return record;
+            return transaction;
         }
     }
 
@@ -72,6 +73,53 @@ public class DataBaseSchema {
             category.setId(id);
 
             return category;
+        }
+    }
+
+    public static final class ProjectsTable {
+        public static final String TABLE_NAME = "projects";
+
+        public static final String ID_COLUMN = "id";
+        public static final String TYPE_COLUMN = "type";
+        public static final String NAME_COLUMN = "name";
+        public static final String VARIABLE_COLUMN = "variable";
+        public static final String PERIOD_COLUMN = "period";
+        public static final String START_PERIOD_COLUMN = "start";
+        public static final String FINISH_PERIOD_COLUMN = "finish";
+
+        public static final String CREATE =
+                "CREATE TABLE " + TABLE_NAME + " (" +
+                        ID_COLUMN + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                        TYPE_COLUMN + " INTEGER NOT NULL, " +
+                        NAME_COLUMN + " TEXT NOT NULL, " +
+                        VARIABLE_COLUMN + " INTEGER NOT NULL, " +
+                        PERIOD_COLUMN + " INTEGER NOT NULL, " +
+                        START_PERIOD_COLUMN + " INTEGER NOT NULL, " +
+                        FINISH_PERIOD_COLUMN + " INTEGER NOT NULL);";
+
+        public static ContentValues getContentValues(Project project) {
+            ContentValues values = new ContentValues();
+            values.put(TYPE_COLUMN, project.getProjectType());
+            values.put(NAME_COLUMN, project.getName());
+            values.put(VARIABLE_COLUMN, project.getVariable());
+            values.put(PERIOD_COLUMN, project.getProjectPeriod());
+            values.put(START_PERIOD_COLUMN, project.getStartPeriod());
+            values.put(FINISH_PERIOD_COLUMN, project.getFinishPeriod());
+            return values;
+        }
+
+        public static Project parseCursor(Cursor cursor) {
+            int id = cursor.getInt(cursor.getColumnIndexOrThrow(ID_COLUMN));
+            int projectType = cursor.getInt(cursor.getColumnIndexOrThrow(TYPE_COLUMN));
+            String name = cursor.getString(cursor.getColumnIndexOrThrow(NAME_COLUMN));
+            int variable = cursor.getInt(cursor.getColumnIndexOrThrow(VARIABLE_COLUMN));
+            int projectPeriod = cursor.getInt(cursor.getColumnIndexOrThrow(PERIOD_COLUMN));
+            long startPeriod = cursor.getLong(cursor.getColumnIndexOrThrow(START_PERIOD_COLUMN));
+            long finishPeriod = cursor.getLong(cursor.getColumnIndexOrThrow(FINISH_PERIOD_COLUMN));
+            Project project = new Project(projectType, name, variable, projectPeriod, startPeriod, finishPeriod);
+            project.setId(id);
+
+            return project;
         }
     }
 }
