@@ -1,4 +1,4 @@
-package com.example.budgetapp.ui;
+package com.example.budgetapp.ui.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -19,7 +19,7 @@ public class MainFragmentAdapter extends RecyclerView.Adapter<MainFragmentAdapte
     private LayoutInflater mInflater;
 
     // data is passed into the constructor
-    MainFragmentAdapter(Context context, List<String> data) {
+    public MainFragmentAdapter(Context context, List<String> data) {
         this.mInflater = LayoutInflater.from(context);
         this.mData = data;
         mContext = context;
@@ -58,8 +58,6 @@ public class MainFragmentAdapter extends RecyclerView.Adapter<MainFragmentAdapte
 
         @Override
         public void onClick(View view) {
-            Toast.makeText(mContext, "Информация по транзакции",
-                    Toast.LENGTH_LONG).show();
         }
     }
 }

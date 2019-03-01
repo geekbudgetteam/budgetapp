@@ -1,7 +1,9 @@
-package com.example.budgetapp;
+package com.example.budgetapp.ui.activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.example.budgetapp.R;
 
 public class MainActivity extends AppCompatActivity {
 
