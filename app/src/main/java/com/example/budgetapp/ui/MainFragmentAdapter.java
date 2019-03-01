@@ -1,4 +1,4 @@
-package com.example.budgetapp.UI;
+package com.example.budgetapp.ui;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -12,14 +12,14 @@ import java.util.List;
 
 import com.example.budgetapp.R;
 
-public class MainFragmentTransactionViewAdapter extends RecyclerView.Adapter<MainFragmentTransactionViewAdapter.ViewHolder> {
+public class MainFragmentAdapter extends RecyclerView.Adapter<MainFragmentAdapter.ViewHolder> {
 
-    Context mContext;
+    private Context mContext;
     private List<String> mData;
     private LayoutInflater mInflater;
 
     // data is passed into the constructor
-    MainFragmentTransactionViewAdapter(Context context, List<String> data) {
+    MainFragmentAdapter(Context context, List<String> data) {
         this.mInflater = LayoutInflater.from(context);
         this.mData = data;
         mContext = context;

@@ -1,4 +1,4 @@
-package com.example.budgetapp.UI;
+package com.example.budgetapp.ui;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -15,7 +15,7 @@ import com.example.budgetapp.R;
 import java.util.ArrayList;
 
 public class MainFragment extends Fragment {
-    MainFragmentTransactionViewAdapter adapter;
+    MainFragmentAdapter adapter;
 
     public MainFragment() {
         // Required empty public constructor
@@ -47,7 +47,7 @@ public class MainFragment extends Fragment {
         // set up the RecyclerView
         RecyclerView recyclerView = getView().findViewById(R.id.transactionsRecycler);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
-        adapter = new MainFragmentTransactionViewAdapter(this.getActivity(), transactions);
+        adapter = new MainFragmentAdapter(this.getActivity(), transactions);
         recyclerView.setAdapter(adapter);
     }
 }

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <fragment android:name="com.example.budgetapp.UI.MainFragment"
+    <fragment android:name="com.example.budgetapp.ui.MainFragment"
         android:id="@+id/article_fragment"
         android:layout_weight="2"
         android:layout_width="match_parent"
