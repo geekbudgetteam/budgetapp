@@ -2,6 +2,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group android:checkableBehavior="single">
         <item
+            android:id="@+id/main_fragment"
+            android:icon="@drawable/baseline_list_alt_black_18dp"
+            android:title="@string/main_fragment" />
+        <item
             android:id="@+id/nav_about_programmer"
             android:icon="@drawable/ic_menu_manage"
             android:title="@string/nav_about_programmer" />
@@ -9,9 +13,6 @@
             android:id="@+id/nav_feedback"
             android:icon="@drawable/ic_menu_send"
             android:title="@string/nav_feedback" />
-        <item
-            android:id="@+id/main_fragment"
-            android:icon="@drawable/baseline_list_alt_black_18dp"
-            android:title="@string/main_fragment" />
+
     </group>
 </menu>

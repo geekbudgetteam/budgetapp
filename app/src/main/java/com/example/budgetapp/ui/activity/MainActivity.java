@@ -14,6 +14,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.example.budgetapp.R;
+import com.example.budgetapp.ui.fragment.DeveloperFragment;
 import com.example.budgetapp.ui.fragment.MainFragment;
 
 public class MainActivity extends AppCompatActivity {
@@ -47,6 +48,9 @@ public class MainActivity extends AppCompatActivity {
                         switch (id) {
                             case R.id.main_fragment:
                                 fragment = new MainFragment();
+                                break;
+                            case R.id.nav_about_programmer:
+                                fragment = new DeveloperFragment();
                                 break;
                         }
                         final FragmentTransaction transaction = fragmentManager.beginTransaction();
