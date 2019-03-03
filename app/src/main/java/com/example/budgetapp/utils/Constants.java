@@ -15,4 +15,8 @@ public class Constants {
     public static final int WEEK = 1;
     public static final int MONTH = 2;
     public static final int YEAR = 3;
+
+    //    ProjectElement monitored types
+    public static final int UNMONITORED = 0;
+    public static final int MONITORED = 1;
 }
