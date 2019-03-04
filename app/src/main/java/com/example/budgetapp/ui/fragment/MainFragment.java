@@ -3,12 +3,14 @@ package com.example.budgetapp.ui.fragment;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.arellomobile.mvp.MvpAppCompatFragment;
 import com.arellomobile.mvp.presenter.InjectPresenter;
@@ -25,6 +27,7 @@ public class MainFragment extends MvpAppCompatFragment implements MainFragmentVi
     MainFragmentAdapter adapter;
     TextView totalAmountTextView;
     RecyclerView recyclerView;
+    private FloatingActionButton fab;
 
     @InjectPresenter
     MainFragmentPresenter mainFragmentPresenter;
@@ -57,9 +60,17 @@ public class MainFragment extends MvpAppCompatFragment implements MainFragmentVi
 
         totalAmountTextView = getView().findViewById(R.id.totalAmount);
         recyclerView = getView().findViewById(R.id.transactionsRecycler);
+        fab = getView().findViewById(R.id.fragment_fab);
 
         mainFragmentPresenter.getTotalAmount();
         mainFragmentPresenter.getTransaction();
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getView().getContext(),
+                        "Привет из другого фрагмента!", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
