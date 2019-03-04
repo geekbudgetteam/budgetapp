@@ -6,17 +6,21 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.example.budgetapp.mvp.model.entity.Category;
 import com.example.budgetapp.mvp.model.entity.Project;
+import com.example.budgetapp.mvp.model.entity.ProjectElement;
 import com.example.budgetapp.mvp.model.entity.Transaction;
+import com.example.budgetapp.mvp.model.entity.Unit;
 import com.example.budgetapp.mvp.model.entity.storage.CategoryStorage;
+import com.example.budgetapp.mvp.model.entity.storage.ProjectElementStorage;
 import com.example.budgetapp.mvp.model.entity.storage.ProjectStorage;
 import com.example.budgetapp.mvp.model.entity.storage.TransactionStorage;
+import com.example.budgetapp.mvp.model.entity.storage.UnitStorage;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Observable;
 
-public class DataBaseManager implements TransactionStorage, CategoryStorage, ProjectStorage {
+public class DataBaseManager implements TransactionStorage, CategoryStorage, UnitStorage, ProjectStorage, ProjectElementStorage {
 
     private static DataBaseManager instance;
     private DataBaseHelper dataBaseHelper;
@@ -236,6 +240,105 @@ public class DataBaseManager implements TransactionStorage, CategoryStorage, Pro
     }
 
     @Override
+    public Observable<Boolean> addUnit(Unit unit) {
+        return Observable.create(e -> {
+            SQLiteDatabase database = dataBaseHelper.getWritableDatabase();
+            long success = database.insert(DataBaseSchema.UnitsTable.TABLE_NAME,
+                    null,
+                    DataBaseSchema.UnitsTable.getContentValues(unit));
+            database.close();
+            if (success != -1) {
+                e.onNext(true);
+            } else {
+                e.onNext(false);
+            }
+            e.onComplete();
+        });
+    }
+
+    @Override
+    public Observable<Unit> getUnit(int id) {
+        return Observable.create(e -> {
+            SQLiteDatabase database = dataBaseHelper.getReadableDatabase();
+
+            Cursor cursor = database.query(DataBaseSchema.UnitsTable.TABLE_NAME,
+                    new String[]{
+                            DataBaseSchema.UnitsTable.ID_COLUMN,
+                            DataBaseSchema.UnitsTable.NAME_COLUMN},
+                    DataBaseSchema.UnitsTable.ID_COLUMN + " = ? ",
+                    new String[]{String.valueOf(id)}, null, null, null
+            );
+            if (cursor.moveToNext()) {
+                e.onNext(DataBaseSchema.UnitsTable.parseCursor(cursor));
+            } else {
+                e.onError(new RuntimeException("Database does not contain the unit"));
+            }
+            cursor.close();
+            database.close();
+            e.onComplete();
+        });
+    }
+
+    @Override
+    public Observable<List<Unit>> getUnitsList() {
+        return Observable.create(e -> {
+            SQLiteDatabase database = dataBaseHelper.getReadableDatabase();
+            List<Unit> units = new ArrayList<>();
+            Cursor cursor = database.query(DataBaseSchema.UnitsTable.TABLE_NAME,
+                    new String[]{
+                            DataBaseSchema.UnitsTable.ID_COLUMN,
+                            DataBaseSchema.UnitsTable.NAME_COLUMN},
+                    null, null, null, null, null
+            );
+            while (cursor.moveToNext()) {
+                units.add(DataBaseSchema.UnitsTable.parseCursor(cursor));
+            }
+            cursor.close();
+            database.close();
+
+            e.onNext(units);
+            e.onComplete();
+        });
+    }
+
+    @Override
+    public Observable<Boolean> updateUnit(Unit unit) {
+        return Observable.create(e -> {
+            SQLiteDatabase database = dataBaseHelper.getWritableDatabase();
+            long success = database.update(DataBaseSchema.UnitsTable.TABLE_NAME,
+                    DataBaseSchema.UnitsTable.getContentValues(unit),
+                    DataBaseSchema.UnitsTable.ID_COLUMN + " = ? ",
+                    new String[]{String.valueOf(unit.getId())}
+            );
+            database.close();
+            if (success > 0) {
+                e.onNext(true);
+            } else {
+                e.onNext(false);
+            }
+            e.onComplete();
+        });
+    }
+
+    @Override
+    public Observable<Boolean> deleteUnit(Unit unit) {
+        return Observable.create(e -> {
+            SQLiteDatabase database = dataBaseHelper.getWritableDatabase();
+            long success = database.delete(DataBaseSchema.UnitsTable.TABLE_NAME,
+                    DataBaseSchema.UnitsTable.ID_COLUMN + " = ? ",
+                    new String[]{String.valueOf(unit.getId())}
+            );
+            database.close();
+            if (success > 0) {
+                e.onNext(true);
+            } else {
+                e.onNext(false);
+            }
+            e.onComplete();
+        });
+    }
+
+    @Override
     public Observable<Boolean> addProject(Project project) {
         return Observable.create(e -> {
             SQLiteDatabase database = dataBaseHelper.getWritableDatabase();
@@ -332,6 +435,113 @@ public class DataBaseManager implements TransactionStorage, CategoryStorage, Pro
             long success = database.delete(DataBaseSchema.ProjectsTable.TABLE_NAME,
                     DataBaseSchema.ProjectsTable.ID_COLUMN + " = ? ",
                     new String[]{String.valueOf(project.getId())}
+            );
+            database.close();
+            if (success > 0) {
+                e.onNext(true);
+            } else {
+                e.onNext(false);
+            }
+            e.onComplete();
+        });
+    }
+
+    @Override
+    public Observable<Boolean> addProjectElement(ProjectElement projectElement) {
+        return Observable.create(e -> {
+            SQLiteDatabase database = dataBaseHelper.getWritableDatabase();
+            long success = database.insert(DataBaseSchema.ProjectElementsTable.TABLE_NAME,
+                    null,
+                    DataBaseSchema.ProjectElementsTable.getContentValues(projectElement));
+            database.close();
+            if (success != -1) {
+                e.onNext(true);
+            } else {
+                e.onNext(false);
+            }
+            e.onComplete();
+        });
+    }
+
+    @Override
+    public Observable<ProjectElement> getProjectElement(int id) {
+        return Observable.create(e -> {
+            SQLiteDatabase database = dataBaseHelper.getReadableDatabase();
+            Cursor cursor = database.query(DataBaseSchema.ProjectElementsTable.TABLE_NAME,
+                    new String[]{
+                            DataBaseSchema.ProjectElementsTable.ID_COLUMN,
+                            DataBaseSchema.ProjectElementsTable.PROJECT_COLUMN,
+                            DataBaseSchema.ProjectElementsTable.CATEGORY_COLUMN,
+                            DataBaseSchema.ProjectElementsTable.UNIT_COLUMN,
+                            DataBaseSchema.ProjectElementsTable.QUANTITY_COLUMN,
+                            DataBaseSchema.ProjectElementsTable.MONITORED_COLUMN,
+                            DataBaseSchema.ProjectElementsTable.MINIMAL_QUANTITY_COLUMN},
+                    DataBaseSchema.ProjectElementsTable.ID_COLUMN + " = ? ",
+                    new String[]{String.valueOf(id)}, null, null, null
+            );
+            if (cursor.moveToNext()) {
+                e.onNext(DataBaseSchema.ProjectElementsTable.parseCursor(cursor));
+            } else {
+                e.onError(new RuntimeException("Database does not contain the project element"));
+            }
+            cursor.close();
+            database.close();
+            e.onComplete();
+        });
+    }
+
+    @Override
+    public Observable<List<ProjectElement>> getProjectElementsList() {
+        return Observable.create(e -> {
+            SQLiteDatabase database = dataBaseHelper.getReadableDatabase();
+            List<ProjectElement> projectElements = new ArrayList<>();
+            Cursor cursor = database.query(DataBaseSchema.ProjectElementsTable.TABLE_NAME,
+                    new String[]{
+                            DataBaseSchema.ProjectElementsTable.ID_COLUMN,
+                            DataBaseSchema.ProjectElementsTable.PROJECT_COLUMN,
+                            DataBaseSchema.ProjectElementsTable.CATEGORY_COLUMN,
+                            DataBaseSchema.ProjectElementsTable.UNIT_COLUMN,
+                            DataBaseSchema.ProjectElementsTable.QUANTITY_COLUMN,
+                            DataBaseSchema.ProjectElementsTable.MONITORED_COLUMN,
+                            DataBaseSchema.ProjectElementsTable.MINIMAL_QUANTITY_COLUMN},
+                    null, null, null, null, null
+            );
+            while (cursor.moveToNext()) {
+                projectElements.add(DataBaseSchema.ProjectElementsTable.parseCursor(cursor));
+            }
+            cursor.close();
+            database.close();
+            e.onNext(projectElements);
+            e.onComplete();
+        });
+    }
+
+    @Override
+    public Observable<Boolean> updateProjectElement(ProjectElement projectElement) {
+        return Observable.create(e -> {
+            SQLiteDatabase database = dataBaseHelper.getWritableDatabase();
+            long success = database.update(DataBaseSchema.TransactionsTable.TABLE_NAME,
+                    DataBaseSchema.ProjectElementsTable.getContentValues(projectElement),
+                    DataBaseSchema.ProjectElementsTable.ID_COLUMN + " = ? ",
+                    new String[]{String.valueOf(projectElement.getId())}
+            );
+            database.close();
+            if (success > 0) {
+                e.onNext(true);
+            } else {
+                e.onNext(false);
+            }
+            e.onComplete();
+        });
+    }
+
+    @Override
+    public Observable<Boolean> deleteProjectElement(ProjectElement projectElement) {
+        return Observable.create(e -> {
+            SQLiteDatabase database = dataBaseHelper.getWritableDatabase();
+            long success = database.delete(DataBaseSchema.ProjectElementsTable.TABLE_NAME,
+                    DataBaseSchema.ProjectElementsTable.ID_COLUMN + " = ? ",
+                    new String[]{String.valueOf(projectElement.getId())}
             );
             database.close();
             if (success > 0) {

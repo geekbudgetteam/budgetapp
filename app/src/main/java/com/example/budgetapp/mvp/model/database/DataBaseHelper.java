@@ -20,6 +20,9 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         try {
             db.execSQL(DataBaseSchema.TransactionsTable.CREATE);
             db.execSQL(DataBaseSchema.CategoriesTable.CREATE);
+            db.execSQL(DataBaseSchema.UnitsTable.CREATE);
+            db.execSQL(DataBaseSchema.ProjectsTable.CREATE);
+            db.execSQL(DataBaseSchema.ProjectElementsTable.CREATE);
 
             db.setTransactionSuccessful();
         } finally {

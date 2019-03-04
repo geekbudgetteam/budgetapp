@@ -5,7 +5,9 @@ import android.database.Cursor;
 
 import com.example.budgetapp.mvp.model.entity.Category;
 import com.example.budgetapp.mvp.model.entity.Project;
+import com.example.budgetapp.mvp.model.entity.ProjectElement;
 import com.example.budgetapp.mvp.model.entity.Transaction;
+import com.example.budgetapp.mvp.model.entity.Unit;
 
 public class DataBaseSchema {
 
@@ -76,6 +78,34 @@ public class DataBaseSchema {
         }
     }
 
+    public static final class UnitsTable {
+        public static final String TABLE_NAME = "units";
+
+        public static final String ID_COLUMN = "id";
+        public static final String NAME_COLUMN = "name";
+
+        public static final String CREATE =
+                "CREATE TABLE " + TABLE_NAME + " (" +
+                        ID_COLUMN + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                        NAME_COLUMN + " TEXT NOT NULL);";
+
+        public static ContentValues getContentValues(Unit unit) {
+            ContentValues values = new ContentValues();
+            values.put(NAME_COLUMN, unit.getName());
+            return values;
+        }
+
+        public static Unit parseCursor(Cursor cursor) {
+            int id = cursor.getInt(cursor.getColumnIndexOrThrow(ID_COLUMN));
+            String name = cursor.getString(cursor.getColumnIndexOrThrow(NAME_COLUMN));
+
+            Unit unit = new Unit(name);
+            unit.setId(id);
+
+            return unit;
+        }
+    }
+
     public static final class ProjectsTable {
         public static final String TABLE_NAME = "projects";
 
@@ -120,6 +150,53 @@ public class DataBaseSchema {
             project.setId(id);
 
             return project;
+        }
+    }
+
+    public static final class ProjectElementsTable {
+        public static final String TABLE_NAME = "elements";
+
+        public static final String ID_COLUMN = "id";
+        public static final String PROJECT_COLUMN = "project";
+        public static final String CATEGORY_COLUMN = "category";
+        public static final String UNIT_COLUMN = "unit";
+        public static final String QUANTITY_COLUMN = "quantity";
+        public static final String MONITORED_COLUMN = "monitored";
+        public static final String MINIMAL_QUANTITY_COLUMN = "minimal_quantity";
+
+        public static final String CREATE =
+                "CREATE TABLE " + TABLE_NAME + " (" +
+                        ID_COLUMN + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                        PROJECT_COLUMN + " INTEGER NOT NULL, " +
+                        CATEGORY_COLUMN + " INTEGER, " +
+                        UNIT_COLUMN + " INTEGER NOT NULL, " +
+                        QUANTITY_COLUMN + " REAL NOT NULL, " +
+                        MONITORED_COLUMN + " INTEGER NOT NULL, " +
+                        MINIMAL_QUANTITY_COLUMN + " REAL NOT NULL);";
+
+        public static ContentValues getContentValues(ProjectElement projectElement) {
+            ContentValues values = new ContentValues();
+            values.put(PROJECT_COLUMN, projectElement.getProjectId());
+            values.put(CATEGORY_COLUMN, projectElement.getCategoryId());
+            values.put(UNIT_COLUMN, projectElement.getUnitId());
+            values.put(QUANTITY_COLUMN, projectElement.getQuantity());
+            values.put(MONITORED_COLUMN, projectElement.isMonitored());
+            values.put(MINIMAL_QUANTITY_COLUMN, projectElement.getMinimalQuantity());
+            return values;
+        }
+
+        public static ProjectElement parseCursor(Cursor cursor) {
+            int id = cursor.getInt(cursor.getColumnIndexOrThrow(ID_COLUMN));
+            int projectId = cursor.getInt(cursor.getColumnIndexOrThrow(PROJECT_COLUMN));
+            int categoryId = cursor.getInt(cursor.getColumnIndexOrThrow(CATEGORY_COLUMN));
+            int unitId = cursor.getInt(cursor.getColumnIndexOrThrow(CATEGORY_COLUMN));
+            float quantity = cursor.getFloat(cursor.getColumnIndexOrThrow(QUANTITY_COLUMN));
+            int monitored = cursor.getInt(cursor.getColumnIndexOrThrow(MONITORED_COLUMN));
+            float minimalQuantity = cursor.getFloat(cursor.getColumnIndexOrThrow(MINIMAL_QUANTITY_COLUMN));
+            ProjectElement projectElement = new ProjectElement(projectId, categoryId, unitId, quantity, monitored, minimalQuantity);
+            projectElement.setId(id);
+
+            return projectElement;
         }
     }
 }
