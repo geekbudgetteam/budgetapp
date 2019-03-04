@@ -5,20 +5,24 @@ import java.io.Serializable;
 public class ProjectElement implements Serializable {
 
     private int id;
-    private int projectId;
-    private int categoryId;
-    private int unitId;
+    private Project project;
+    private Category category;
+    private Unit unit;
     private float quantity;
     private int monitored;
     private float minimalQuantity;
 
-    public ProjectElement(int projectId, int categoryId, int unitId, float quantity, int monitored, float minimalQuantity) {
-        this.projectId = projectId;
-        this.categoryId = categoryId;
-        this.unitId = unitId;
+    public ProjectElement(float quantity, int monitored, float minimalQuantity) {
         this.quantity = quantity;
         this.monitored = monitored;
         this.minimalQuantity = minimalQuantity;
+    }
+
+    public ProjectElement(Project project, Category category, Unit unit, float quantity, int monitored, float minimalQuantity) {
+        this(quantity, monitored, minimalQuantity);
+        this.project = project;
+        this.category = category;
+        this.unit = unit;
     }
 
     public int getId() {
@@ -29,28 +33,28 @@ public class ProjectElement implements Serializable {
         this.id = id;
     }
 
-    public int getProjectId() {
-        return projectId;
+    public Project getProject() {
+        return project;
     }
 
-    public void setProjectId(int projectId) {
-        this.projectId = projectId;
+    public void setProject(Project project) {
+        this.project = project;
     }
 
-    public int getCategoryId() {
-        return categoryId;
+    public Category getCategory() {
+        return category;
     }
 
-    public void setCategoryId(int categoryId) {
-        this.categoryId = categoryId;
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
-    public int getUnitId() {
-        return unitId;
+    public Unit getUnit() {
+        return unit;
     }
 
-    public void setUnitId(int unitId) {
-        this.unitId = unitId;
+    public void setUnit(Unit unit) {
+        this.unit = unit;
     }
 
     public float getQuantity() {

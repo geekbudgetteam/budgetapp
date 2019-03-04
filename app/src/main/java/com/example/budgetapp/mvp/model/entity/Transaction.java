@@ -5,16 +5,20 @@ import java.io.Serializable;
 public class Transaction implements Serializable {
 
     private int id;
-    private int projectId;
-    private int categoryId;
+    private Project project;
+    private Category category;
     private long date;
     private float amount;
 
-    public Transaction(int projectId, int categoryId, long date, float amount) {
-        this.projectId = projectId;
-        this.categoryId = categoryId;
+    public Transaction(long date, float amount) {
         this.date = date;
         this.amount = amount;
+    }
+
+    public Transaction(Project project, Category category, long date, float amount) {
+        this(date, amount);
+        this.project = project;
+        this.category = category;
     }
 
     public int getId() {
@@ -25,20 +29,20 @@ public class Transaction implements Serializable {
         this.id = id;
     }
 
-    public int getProjectId() {
-        return projectId;
+    public Project getProject() {
+        return project;
     }
 
-    public void setProjectId(int projectId) {
-        this.projectId = projectId;
+    public void setProject(Project project) {
+        this.project = project;
     }
 
-    public int getCategoryId() {
-        return categoryId;
+    public Category getCategory() {
+        return category;
     }
 
-    public void setCategoryId(int categoryId) {
-        this.categoryId = categoryId;
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     public long getDate() {
