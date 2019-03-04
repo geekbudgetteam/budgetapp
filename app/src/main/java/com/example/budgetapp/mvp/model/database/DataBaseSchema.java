@@ -30,8 +30,8 @@ public class DataBaseSchema {
 
         public static ContentValues getContentValues(Transaction transaction) {
             ContentValues values = new ContentValues();
-            values.put(PROJECT_COLUMN, transaction.getProjectId());
-            values.put(CATEGORY_COLUMN, transaction.getCategoryId());
+            values.put(PROJECT_COLUMN, transaction.getProject().getId());
+            values.put(CATEGORY_COLUMN, transaction.getCategory().getId());
             values.put(DATE_COLUMN, transaction.getDate());
             values.put(AMOUNT_COLUMN, transaction.getAmount());
             return values;
@@ -39,11 +39,9 @@ public class DataBaseSchema {
 
         public static Transaction parseCursor(Cursor cursor) {
             int id = cursor.getInt(cursor.getColumnIndexOrThrow(ID_COLUMN));
-            int projectId = cursor.getInt(cursor.getColumnIndexOrThrow(PROJECT_COLUMN));
-            int categoryId = cursor.getInt(cursor.getColumnIndexOrThrow(CATEGORY_COLUMN));
             long date = cursor.getLong(cursor.getColumnIndexOrThrow(DATE_COLUMN));
             float amount = cursor.getFloat(cursor.getColumnIndexOrThrow(AMOUNT_COLUMN));
-            Transaction transaction = new Transaction(projectId, categoryId, date, amount);
+            Transaction transaction = new Transaction(date, amount);
             transaction.setId(id);
 
             return transaction;
@@ -176,9 +174,9 @@ public class DataBaseSchema {
 
         public static ContentValues getContentValues(ProjectElement projectElement) {
             ContentValues values = new ContentValues();
-            values.put(PROJECT_COLUMN, projectElement.getProjectId());
-            values.put(CATEGORY_COLUMN, projectElement.getCategoryId());
-            values.put(UNIT_COLUMN, projectElement.getUnitId());
+            values.put(PROJECT_COLUMN, projectElement.getProject().getId());
+            values.put(CATEGORY_COLUMN, projectElement.getCategory().getId());
+            values.put(UNIT_COLUMN, projectElement.getUnit().getId());
             values.put(QUANTITY_COLUMN, projectElement.getQuantity());
             values.put(MONITORED_COLUMN, projectElement.isMonitored());
             values.put(MINIMAL_QUANTITY_COLUMN, projectElement.getMinimalQuantity());
@@ -187,13 +185,10 @@ public class DataBaseSchema {
 
         public static ProjectElement parseCursor(Cursor cursor) {
             int id = cursor.getInt(cursor.getColumnIndexOrThrow(ID_COLUMN));
-            int projectId = cursor.getInt(cursor.getColumnIndexOrThrow(PROJECT_COLUMN));
-            int categoryId = cursor.getInt(cursor.getColumnIndexOrThrow(CATEGORY_COLUMN));
-            int unitId = cursor.getInt(cursor.getColumnIndexOrThrow(CATEGORY_COLUMN));
             float quantity = cursor.getFloat(cursor.getColumnIndexOrThrow(QUANTITY_COLUMN));
             int monitored = cursor.getInt(cursor.getColumnIndexOrThrow(MONITORED_COLUMN));
             float minimalQuantity = cursor.getFloat(cursor.getColumnIndexOrThrow(MINIMAL_QUANTITY_COLUMN));
-            ProjectElement projectElement = new ProjectElement(projectId, categoryId, unitId, quantity, monitored, minimalQuantity);
+            ProjectElement projectElement = new ProjectElement(quantity, monitored, minimalQuantity);
             projectElement.setId(id);
 
             return projectElement;

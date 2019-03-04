@@ -69,7 +69,12 @@ public class DataBaseManager implements TransactionStorage, CategoryStorage, Uni
                     new String[]{String.valueOf(id)}, null, null, null
             );
             if (cursor.moveToNext()) {
-                e.onNext(DataBaseSchema.TransactionsTable.parseCursor(cursor));
+                Transaction transaction = DataBaseSchema.TransactionsTable.parseCursor(cursor);
+                int projectId = cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseSchema.TransactionsTable.PROJECT_COLUMN));
+                transaction.setProject(getProject(projectId, database));
+                int categoryId = cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseSchema.TransactionsTable.CATEGORY_COLUMN));
+                transaction.setCategory(getCategory(categoryId, database));
+                e.onNext(transaction);
             } else {
                 e.onError(new RuntimeException("Database does not contain the transaction"));
             }
@@ -94,7 +99,12 @@ public class DataBaseManager implements TransactionStorage, CategoryStorage, Uni
                     null, null, null, null, null
             );
             while (cursor.moveToNext()) {
-                transactions.add(DataBaseSchema.TransactionsTable.parseCursor(cursor));
+                Transaction transaction = DataBaseSchema.TransactionsTable.parseCursor(cursor);
+                int projectId = cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseSchema.TransactionsTable.PROJECT_COLUMN));
+                transaction.setProject(getProject(projectId, database));
+                int categoryId = cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseSchema.TransactionsTable.CATEGORY_COLUMN));
+                transaction.setCategory(getCategory(categoryId, database));
+                transactions.add(transaction);
             }
             cursor.close();
             database.close();
@@ -161,23 +171,31 @@ public class DataBaseManager implements TransactionStorage, CategoryStorage, Uni
     public Observable<Category> getCategory(int id) {
         return Observable.create(e -> {
             SQLiteDatabase database = dataBaseHelper.getReadableDatabase();
-
-            Cursor cursor = database.query(DataBaseSchema.CategoriesTable.TABLE_NAME,
-                    new String[]{
-                            DataBaseSchema.CategoriesTable.ID_COLUMN,
-                            DataBaseSchema.CategoriesTable.NAME_COLUMN},
-                    DataBaseSchema.CategoriesTable.ID_COLUMN + " = ? ",
-                    new String[]{String.valueOf(id)}, null, null, null
-            );
-            if (cursor.moveToNext()) {
-                e.onNext(DataBaseSchema.CategoriesTable.parseCursor(cursor));
+            Category category = getCategory(id, database);
+            if (category != null) {
+                e.onNext(category);
             } else {
                 e.onError(new RuntimeException("Database does not contain the category"));
             }
-            cursor.close();
             database.close();
             e.onComplete();
         });
+    }
+
+    private Category getCategory(int id, SQLiteDatabase database){
+        Category category = null;
+        Cursor cursor = database.query(DataBaseSchema.CategoriesTable.TABLE_NAME,
+                new String[]{
+                        DataBaseSchema.CategoriesTable.ID_COLUMN,
+                        DataBaseSchema.CategoriesTable.NAME_COLUMN},
+                DataBaseSchema.CategoriesTable.ID_COLUMN + " = ? ",
+                new String[]{String.valueOf(id)}, null, null, null
+        );
+        if (cursor.moveToNext()) {
+            category =  DataBaseSchema.CategoriesTable.parseCursor(cursor);
+        }
+        cursor.close();
+        return category;
     }
 
     @Override
@@ -260,23 +278,26 @@ public class DataBaseManager implements TransactionStorage, CategoryStorage, Uni
     public Observable<Unit> getUnit(int id) {
         return Observable.create(e -> {
             SQLiteDatabase database = dataBaseHelper.getReadableDatabase();
-
-            Cursor cursor = database.query(DataBaseSchema.UnitsTable.TABLE_NAME,
-                    new String[]{
-                            DataBaseSchema.UnitsTable.ID_COLUMN,
-                            DataBaseSchema.UnitsTable.NAME_COLUMN},
-                    DataBaseSchema.UnitsTable.ID_COLUMN + " = ? ",
-                    new String[]{String.valueOf(id)}, null, null, null
-            );
-            if (cursor.moveToNext()) {
-                e.onNext(DataBaseSchema.UnitsTable.parseCursor(cursor));
-            } else {
-                e.onError(new RuntimeException("Database does not contain the unit"));
-            }
-            cursor.close();
+            Unit unit = getUnit(id, database);
             database.close();
             e.onComplete();
         });
+    }
+
+    private Unit getUnit(int id, SQLiteDatabase database){
+        Unit unit = null;
+        Cursor cursor = database.query(DataBaseSchema.UnitsTable.TABLE_NAME,
+                new String[]{
+                        DataBaseSchema.UnitsTable.ID_COLUMN,
+                        DataBaseSchema.UnitsTable.NAME_COLUMN},
+                DataBaseSchema.UnitsTable.ID_COLUMN + " = ? ",
+                new String[]{String.valueOf(id)}, null, null, null
+        );
+        if (cursor.moveToNext()) {
+            unit = DataBaseSchema.UnitsTable.parseCursor(cursor);
+        }
+        cursor.close();
+        return unit;
     }
 
     @Override
@@ -359,27 +380,36 @@ public class DataBaseManager implements TransactionStorage, CategoryStorage, Uni
     public Observable<Project> getProject(int id) {
         return Observable.create(e -> {
             SQLiteDatabase database = dataBaseHelper.getReadableDatabase();
-            Cursor cursor = database.query(DataBaseSchema.ProjectsTable.TABLE_NAME,
-                    new String[]{
-                            DataBaseSchema.ProjectsTable.ID_COLUMN,
-                            DataBaseSchema.ProjectsTable.TYPE_COLUMN,
-                            DataBaseSchema.ProjectsTable.NAME_COLUMN,
-                            DataBaseSchema.ProjectsTable.VARIABLE_COLUMN,
-                            DataBaseSchema.ProjectsTable.PERIOD_COLUMN,
-                            DataBaseSchema.ProjectsTable.START_PERIOD_COLUMN,
-                            DataBaseSchema.ProjectsTable.FINISH_PERIOD_COLUMN},
-                    DataBaseSchema.ProjectsTable.ID_COLUMN + " = ? ",
-                    new String[]{String.valueOf(id)}, null, null, null
-            );
-            if (cursor.moveToNext()) {
-                e.onNext(DataBaseSchema.ProjectsTable.parseCursor(cursor));
+            Project project = getProject(id, database);
+            if (project != null) {
+                e.onNext(project);
             } else {
                 e.onError(new RuntimeException("Database does not contain the project"));
             }
-            cursor.close();
             database.close();
             e.onComplete();
         });
+    }
+
+    private Project getProject(int id, SQLiteDatabase database){
+        Project project = null;
+        Cursor cursor = database.query(DataBaseSchema.ProjectsTable.TABLE_NAME,
+                new String[]{
+                        DataBaseSchema.ProjectsTable.ID_COLUMN,
+                        DataBaseSchema.ProjectsTable.TYPE_COLUMN,
+                        DataBaseSchema.ProjectsTable.NAME_COLUMN,
+                        DataBaseSchema.ProjectsTable.VARIABLE_COLUMN,
+                        DataBaseSchema.ProjectsTable.PERIOD_COLUMN,
+                        DataBaseSchema.ProjectsTable.START_PERIOD_COLUMN,
+                        DataBaseSchema.ProjectsTable.FINISH_PERIOD_COLUMN},
+                DataBaseSchema.ProjectsTable.ID_COLUMN + " = ? ",
+                new String[]{String.valueOf(id)}, null, null, null
+        );
+        if (cursor.moveToNext()) {
+            project = DataBaseSchema.ProjectsTable.parseCursor(cursor);
+        }
+        cursor.close();
+        return project;
     }
 
     @Override
@@ -480,7 +510,14 @@ public class DataBaseManager implements TransactionStorage, CategoryStorage, Uni
                     new String[]{String.valueOf(id)}, null, null, null
             );
             if (cursor.moveToNext()) {
-                e.onNext(DataBaseSchema.ProjectElementsTable.parseCursor(cursor));
+                ProjectElement projectElement = DataBaseSchema.ProjectElementsTable.parseCursor(cursor);
+                int projectId = cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseSchema.ProjectElementsTable.PROJECT_COLUMN));
+                projectElement.setProject(getProject(projectId, database));
+                int categoryId = cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseSchema.ProjectElementsTable.CATEGORY_COLUMN));
+                projectElement.setCategory(getCategory(categoryId, database));
+                int unitId = cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseSchema.ProjectElementsTable.UNIT_COLUMN));
+                projectElement.setUnit(getUnit(unitId, database));
+                e.onNext(projectElement);
             } else {
                 e.onError(new RuntimeException("Database does not contain the project element"));
             }
@@ -507,7 +544,14 @@ public class DataBaseManager implements TransactionStorage, CategoryStorage, Uni
                     null, null, null, null, null
             );
             while (cursor.moveToNext()) {
-                projectElements.add(DataBaseSchema.ProjectElementsTable.parseCursor(cursor));
+                ProjectElement projectElement = DataBaseSchema.ProjectElementsTable.parseCursor(cursor);
+                int projectId = cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseSchema.ProjectElementsTable.PROJECT_COLUMN));
+                projectElement.setProject(getProject(projectId, database));
+                int categoryId = cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseSchema.ProjectElementsTable.CATEGORY_COLUMN));
+                projectElement.setCategory(getCategory(categoryId, database));
+                int unitId = cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseSchema.ProjectElementsTable.UNIT_COLUMN));
+                projectElement.setUnit(getUnit(unitId, database));
+                projectElements.add(projectElement);
             }
             cursor.close();
             database.close();
