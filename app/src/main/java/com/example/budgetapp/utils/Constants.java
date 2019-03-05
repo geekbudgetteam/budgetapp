@@ -19,4 +19,13 @@ public class Constants {
     //    ProjectElement monitored types
     public static final int UNMONITORED = 0;
     public static final int MONITORED = 1;
+
+    //    ProjectsListFragment types
+    public static final int EXPENSE_PROJECTS = 0;
+    public static final int INCOME_PROJECTS = 1;
+
+    //    ProjectsList titles
+    public static final String EXPENSE_TITLE = "Проекты расходов";
+    public static final String INCOME_TITLE = "Проекты доходов";
+
 }

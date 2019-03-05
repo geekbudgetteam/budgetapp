@@ -428,13 +428,17 @@ public class DataBaseManager implements TransactionStorage, CategoryStorage, Uni
                             DataBaseSchema.ProjectsTable.FINISH_PERIOD_COLUMN},
                     null, null, null, null, null
             );
-            while (cursor.moveToNext()) {
-                projects.add(DataBaseSchema.ProjectsTable.parseCursor(cursor));
+            try {
+                while (cursor.moveToNext()) {
+                    projects.add(DataBaseSchema.ProjectsTable.parseCursor(cursor));
+                }
+            } finally {
+                cursor.close();
+                database.close();
             }
-            cursor.close();
-            database.close();
 
             e.onNext(projects);
+
             e.onComplete();
         });
     }
