@@ -10,9 +10,13 @@ import com.example.budgetapp.utils.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
+import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
 import io.reactivex.Scheduler;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.functions.Predicate;
 import io.reactivex.schedulers.Schedulers;
@@ -44,6 +48,12 @@ public class ProjectsPresenter extends MvpPresenter<ProjectsListView> {
     public void loadProjects(int fragmentType) {
         disposable = dbManager.getProjectsList()
                 .subscribeOn(Schedulers.io())
+                .retryWhen(new Function<Observable<Throwable>, ObservableSource<?>>() {
+                    @Override
+                    public ObservableSource<?> apply(Observable<Throwable> throwableObservable) throws Exception {
+                        return throwableObservable.take(3).delay(1, TimeUnit.SECONDS);
+                    }
+                })
                 .flatMapIterable(new Function<List<Project>, List<Project>>() {
                     @Override
                     public List<Project> apply(List<Project> projects) throws Exception {
@@ -67,9 +77,12 @@ public class ProjectsPresenter extends MvpPresenter<ProjectsListView> {
                 })
                 .toList()
                 .observeOn(scheduler)
-                .subscribe(projects -> {
-                    ProjectsPresenter.this.projects = projects;
-                    ProjectsPresenter.this.getViewState().updateProjectsList();
+                .subscribe(new Consumer<List<Project>>() {
+                    @Override
+                    public void accept(List<Project> projects) throws Exception {
+                        ProjectsPresenter.this.projects = projects;
+                        ProjectsPresenter.this.getViewState().updateProjectsList();
+                    }
                 });
     }
 

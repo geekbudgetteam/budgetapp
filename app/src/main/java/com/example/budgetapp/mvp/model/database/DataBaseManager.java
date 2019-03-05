@@ -3,6 +3,7 @@ package com.example.budgetapp.mvp.model.database;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 
 import com.example.budgetapp.mvp.model.entity.Category;
 import com.example.budgetapp.mvp.model.entity.Project;
@@ -413,32 +414,37 @@ public class DataBaseManager implements TransactionStorage, CategoryStorage, Uni
     }
 
     @Override
-    public Observable<List<Project>> getProjectsList() {
+    public synchronized Observable<List<Project>> getProjectsList() {
         return Observable.create(e -> {
             SQLiteDatabase database = dataBaseHelper.getReadableDatabase();
             List<Project> projects = new ArrayList<>();
-            Cursor cursor = database.query(DataBaseSchema.ProjectsTable.TABLE_NAME,
-                    new String[]{
-                            DataBaseSchema.ProjectsTable.ID_COLUMN,
-                            DataBaseSchema.ProjectsTable.TYPE_COLUMN,
-                            DataBaseSchema.ProjectsTable.NAME_COLUMN,
-                            DataBaseSchema.ProjectsTable.VARIABLE_COLUMN,
-                            DataBaseSchema.ProjectsTable.PERIOD_COLUMN,
-                            DataBaseSchema.ProjectsTable.START_PERIOD_COLUMN,
-                            DataBaseSchema.ProjectsTable.FINISH_PERIOD_COLUMN},
-                    null, null, null, null, null
-            );
+            Cursor cursor = null;
             try {
+                cursor = database.query(DataBaseSchema.ProjectsTable.TABLE_NAME,
+                        new String[]{
+                                DataBaseSchema.ProjectsTable.ID_COLUMN,
+                                DataBaseSchema.ProjectsTable.TYPE_COLUMN,
+                                DataBaseSchema.ProjectsTable.NAME_COLUMN,
+                                DataBaseSchema.ProjectsTable.VARIABLE_COLUMN,
+                                DataBaseSchema.ProjectsTable.PERIOD_COLUMN,
+                                DataBaseSchema.ProjectsTable.START_PERIOD_COLUMN,
+                                DataBaseSchema.ProjectsTable.FINISH_PERIOD_COLUMN},
+                        null, null, null, null, null
+                );
                 while (cursor.moveToNext()) {
                     projects.add(DataBaseSchema.ProjectsTable.parseCursor(cursor));
                 }
+
+            } catch (SQLiteException ex) {
+                e.onError(ex);
             } finally {
-                cursor.close();
+                if (cursor != null) {
+                    cursor.close();
+                }
                 database.close();
             }
 
             e.onNext(projects);
-
             e.onComplete();
         });
     }
