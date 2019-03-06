@@ -13,16 +13,30 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import com.arellomobile.mvp.presenter.InjectPresenter;
+import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.example.budgetapp.R;
+import com.example.budgetapp.mvp.presenter.MainActivityPresenter;
+import com.example.budgetapp.mvp.view.MainActivityView;
 import com.example.budgetapp.ui.fragment.DeveloperFragment;
 import com.example.budgetapp.ui.fragment.FeedbackFragment;
 import com.example.budgetapp.ui.fragment.MainFragment;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements MainActivityView {
 
     private DrawerLayout drawerLayout;
     private Fragment fragment;
     private FragmentManager fragmentManager;
+    private FragmentTransaction transaction;
+
+    @InjectPresenter
+    MainActivityPresenter mainActivityPresenter;
+
+    @ProvidePresenter
+    public MainActivityPresenter provideMainActivityPresenter(){
+        return new MainActivityPresenter();
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
                                 fragment = new FeedbackFragment();
                                 break;
                         }
-                        final FragmentTransaction transaction = fragmentManager.beginTransaction();
+                        transaction = fragmentManager.beginTransaction();
                         transaction.replace(R.id.fl_master, fragment).commit();
                         drawerLayout.closeDrawers();
                         return true;
@@ -73,5 +87,9 @@ public class MainActivity extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void showAddTransactionFragment(){
     }
 }
