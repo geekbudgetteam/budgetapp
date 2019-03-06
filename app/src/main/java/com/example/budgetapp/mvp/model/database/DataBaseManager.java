@@ -1,9 +1,11 @@
 package com.example.budgetapp.mvp.model.database;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
+import android.util.Log;
 
 import com.example.budgetapp.mvp.model.entity.Category;
 import com.example.budgetapp.mvp.model.entity.Project;
@@ -15,8 +17,11 @@ import com.example.budgetapp.mvp.model.entity.storage.ProjectElementStorage;
 import com.example.budgetapp.mvp.model.entity.storage.ProjectStorage;
 import com.example.budgetapp.mvp.model.entity.storage.TransactionStorage;
 import com.example.budgetapp.mvp.model.entity.storage.UnitStorage;
+import com.example.budgetapp.utils.Constants;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import io.reactivex.Observable;
@@ -28,6 +33,10 @@ public class DataBaseManager implements TransactionStorage, CategoryStorage, Uni
 
     private DataBaseManager(Context context) {
         dataBaseHelper = new DataBaseHelper(context);
+
+//        test
+        setTestProjects();
+
     }
 
     //  TODO: заменить на di
@@ -36,6 +45,24 @@ public class DataBaseManager implements TransactionStorage, CategoryStorage, Uni
             instance = new DataBaseManager(context);
         }
         return instance;
+    }
+
+    @SuppressLint("CheckResult")
+    private void setTestProjects() {
+        getProjectsList()
+                .subscribe(projects -> {
+                    Log.d(getClass().getName(), "Количество проектов до: " + projects.size());
+                    if (projects.size() == 0) {
+                        projects.add(new Project(Constants.EXPENSE, "Home budget", Constants.CONSTANT, Constants.MONTH, 0, 0));
+                        projects.add(new Project(Constants.EXPENSE, "Holidays", Constants.CONSTANT, Constants.YEAR, 0, 0));
+                        projects.add(new Project(Constants.EXPENSE, "8 March", Constants.CONSTANT, Constants.DATED, new GregorianCalendar(2019, Calendar.MARCH, 8).getTimeInMillis(), new GregorianCalendar(2019, Calendar.MARCH, 8).getTimeInMillis()));
+                        projects.add(new Project(Constants.INCOME, "Salary", Constants.CONSTANT, Constants.MONTH, 0, 0));
+                        for (Project project : projects) {
+                            addProject(project).subscribe();
+                        }
+                    }
+                    Log.d(getClass().getName(), "Количество проектов после: " + projects.size());
+                });
     }
 
     @Override

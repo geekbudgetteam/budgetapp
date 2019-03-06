@@ -11,6 +11,7 @@ public class Project implements Serializable {
     private int projectPeriod;
     private long startPeriod;
     private long finishPeriod;
+    private float amount;
 
     public Project(int projectType, String name, int variable, int projectPeriod, long startPeriod, long finishPeriod) {
         this.projectType = projectType;
@@ -75,5 +76,13 @@ public class Project implements Serializable {
 
     public void setFinishPeriod(long finishPeriod) {
         this.finishPeriod = finishPeriod;
+    }
+
+    public float getAmount() {
+        return amount;
+    }
+
+    public void setAmount(float amount) {
+        this.amount = amount;
     }
 }

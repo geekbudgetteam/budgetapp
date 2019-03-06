@@ -11,10 +11,15 @@ import com.example.budgetapp.R;
 import com.example.budgetapp.mvp.model.entity.Project;
 import com.example.budgetapp.mvp.presenter.IProjectsListPresenter;
 import com.example.budgetapp.mvp.view.ProjectRowView;
+import com.example.budgetapp.utils.Constants;
+
+import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 public class ProjectsListAdapter extends RecyclerView.Adapter<ProjectsListAdapter.ProjectHolder> {
 
     private IProjectsListPresenter presenter;
+    private SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yy", Locale.getDefault());
 
     public ProjectsListAdapter(IProjectsListPresenter presenter) {
         this.presenter = presenter;
@@ -39,12 +44,15 @@ public class ProjectsListAdapter extends RecyclerView.Adapter<ProjectsListAdapte
     public class ProjectHolder extends RecyclerView.ViewHolder implements View.OnClickListener, ProjectRowView {
 
         TextView projectNameView;
+        TextView projectPeriodView;
+        TextView projectAmountView;
         private Project project;
 
         ProjectHolder(View itemView) {
             super(itemView);
             projectNameView = itemView.findViewById(R.id.project_name);
-
+            projectPeriodView = itemView.findViewById(R.id.project_period);
+            projectAmountView = itemView.findViewById(R.id.project_amount);
         }
 
         @Override
@@ -55,7 +63,32 @@ public class ProjectsListAdapter extends RecyclerView.Adapter<ProjectsListAdapte
         @Override
         public void setProject(Project project) {
             this.project = project;
-            projectNameView.setText(project.getName());
+            String name = "Наименование: " + project.getName();
+            projectNameView.setText(name);
+            String period = null;
+            switch (project.getProjectPeriod()) {
+                case Constants.WEEK:
+                    period = "Период: " + Constants.WEEK_STRING;
+                    break;
+                case Constants.MONTH:
+                    period = "Период: " + Constants.MONTH_STRING;
+                    break;
+                case Constants.YEAR:
+                    period = "Период: " + Constants.YEAR_STRING;
+                    break;
+                case Constants.DATED:
+                    if (project.getStartPeriod() == project.getFinishPeriod()) {
+                        period = period = "Период: "
+                                + sdf.format(project.getStartPeriod());
+                    } else {
+                        period = "Период: "
+                                + sdf.format(project.getStartPeriod()
+                                + " - " + sdf.format(project.getFinishPeriod()));
+                    }
+                    break;
+            }
+            projectPeriodView.setText(period);
+            projectAmountView.setText(String.valueOf(project.getAmount()));
         }
     }
 }

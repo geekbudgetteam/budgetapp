@@ -159,6 +159,7 @@ public class DataBaseSchema {
         public static final String CATEGORY_COLUMN = "category";
         public static final String UNIT_COLUMN = "unit";
         public static final String QUANTITY_COLUMN = "quantity";
+        public static final String AMOUNT_COLUMN = "amount";
         public static final String MONITORED_COLUMN = "monitored";
         public static final String MINIMAL_QUANTITY_COLUMN = "minimal_quantity";
 
@@ -169,6 +170,7 @@ public class DataBaseSchema {
                         CATEGORY_COLUMN + " INTEGER, " +
                         UNIT_COLUMN + " INTEGER NOT NULL, " +
                         QUANTITY_COLUMN + " REAL NOT NULL, " +
+                        AMOUNT_COLUMN + " REAL NOT NULL, " +
                         MONITORED_COLUMN + " INTEGER NOT NULL, " +
                         MINIMAL_QUANTITY_COLUMN + " REAL NOT NULL);";
 
@@ -178,6 +180,7 @@ public class DataBaseSchema {
             values.put(CATEGORY_COLUMN, projectElement.getCategory().getId());
             values.put(UNIT_COLUMN, projectElement.getUnit().getId());
             values.put(QUANTITY_COLUMN, projectElement.getQuantity());
+            values.put(AMOUNT_COLUMN, projectElement.getAmount());
             values.put(MONITORED_COLUMN, projectElement.isMonitored());
             values.put(MINIMAL_QUANTITY_COLUMN, projectElement.getMinimalQuantity());
             return values;

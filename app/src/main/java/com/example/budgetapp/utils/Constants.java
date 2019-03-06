@@ -16,6 +16,10 @@ public class Constants {
     public static final int MONTH = 2;
     public static final int YEAR = 3;
 
+    public static final String WEEK_STRING = "Неделя";
+    public static final String MONTH_STRING = "Месяц";
+    public static final String YEAR_STRING = "Год";
+
     //    ProjectElement monitored types
     public static final int UNMONITORED = 0;
     public static final int MONITORED = 1;
