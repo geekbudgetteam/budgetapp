@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -24,22 +25,18 @@ import java.util.ArrayList;
 
 public class MainFragment extends MvpAppCompatFragment implements MainFragmentView {
 
-    MainFragmentAdapter adapter;
-    TextView totalAmountTextView;
-    RecyclerView recyclerView;
+    private MainFragmentAdapter adapter;
+    private TextView totalAmountTextView;
+    private RecyclerView recyclerView;
     private FloatingActionButton fab;
+
+    public static Fragment newInstance(){
+        MainFragment fragment = new MainFragment();
+        return fragment;
+    }
 
     @InjectPresenter
     MainFragmentPresenter mainFragmentPresenter;
-
-    public MainFragment() {
-    }
-
-    @ProvidePresenter
-    public MainFragmentPresenter provideMainPresenter(){
-        return new MainFragmentPresenter();
-    }
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -64,13 +61,8 @@ public class MainFragment extends MvpAppCompatFragment implements MainFragmentVi
 
         mainFragmentPresenter.getTotalAmount();
         mainFragmentPresenter.getTransaction();
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(getView().getContext(),
-                        "Привет из другого фрагмента!", Toast.LENGTH_SHORT).show();
-            }
-        });
+        fab.setOnClickListener(view1 -> Toast.makeText(getView().getContext(),
+                "Привет из другого фрагмента!", Toast.LENGTH_SHORT).show());
     }
 
     @Override
