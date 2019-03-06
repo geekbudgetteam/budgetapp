@@ -24,4 +24,8 @@ public class MainFragmentPresenter extends MvpPresenter<MainFragmentView> {
         }
         getViewState().setTransactions(transactions);
     }
+
+    public void setAddTransactionFragent(){
+        getViewState().showAddTransactionFragment();
+    }
 }

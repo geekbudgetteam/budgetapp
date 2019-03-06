@@ -11,4 +11,5 @@ public interface MainFragmentView extends MvpView {
 
     void setTotalAmount(Integer totalAmount);
     void setTransactions(ArrayList<String> transactions);
+    void showAddTransactionFragment();
 }

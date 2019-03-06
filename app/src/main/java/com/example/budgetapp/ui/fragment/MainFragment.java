@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
@@ -18,22 +19,21 @@ import com.arellomobile.mvp.MvpAppCompatFragment;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.example.budgetapp.R;
-import com.example.budgetapp.mvp.presenter.MainActivityPresenter;
 import com.example.budgetapp.mvp.presenter.MainFragmentPresenter;
-import com.example.budgetapp.mvp.view.MainActivityView;
 import com.example.budgetapp.mvp.view.MainFragmentView;
 import com.example.budgetapp.ui.adapter.MainFragmentAdapter;
 
 import java.util.ArrayList;
 
-public class MainFragment extends MvpAppCompatFragment implements MainFragmentView,MainActivityView {
+public class MainFragment extends MvpAppCompatFragment implements MainFragmentView {
 
-    MainFragmentAdapter adapter;
-    TextView totalAmountTextView;
-    RecyclerView recyclerView;
+    private MainFragmentAdapter adapter;
+    private TextView totalAmountTextView;
+    private RecyclerView recyclerView;
     private FloatingActionButton fab;
     private FragmentTransaction transaction;
     private FragmentManager fragmentManager;
+    private Fragment fragment;
 
     @InjectPresenter
     MainFragmentPresenter mainFragmentPresenter;
@@ -44,14 +44,6 @@ public class MainFragment extends MvpAppCompatFragment implements MainFragmentVi
     @ProvidePresenter
     public MainFragmentPresenter provideMainPresenter(){
         return new MainFragmentPresenter();
-    }
-
-    @InjectPresenter
-    MainActivityPresenter mainActivityPresenter;
-
-    @ProvidePresenter
-    public MainActivityPresenter provideMainActivityPresenter(){
-        return new MainActivityPresenter();
     }
 
     @Override
@@ -84,7 +76,7 @@ public class MainFragment extends MvpAppCompatFragment implements MainFragmentVi
             public void onClick(View view) {
                 Toast.makeText(getView().getContext(),
                         "Привет из другого фрагмента!", Toast.LENGTH_SHORT).show();
-                showAddTransactionFragment();
+                mainFragmentPresenter.setAddTransactionFragent();
             }
         });
     }
@@ -105,7 +97,7 @@ public class MainFragment extends MvpAppCompatFragment implements MainFragmentVi
     public void showAddTransactionFragment() {
         Toast.makeText(getView().getContext(),
                 "Привет из главной активти!", Toast.LENGTH_SHORT).show();
-        AddTransactionFragment fragment = new AddTransactionFragment();
+        fragment = new AddTransactionFragment();
         transaction = fragmentManager.beginTransaction();
         transaction.replace(R.id.fl_master, fragment).commit();
     }
