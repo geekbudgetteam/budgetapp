@@ -9,6 +9,7 @@ public class ProjectElement implements Serializable {
     private Category category;
     private Unit unit;
     private float quantity;
+    private float amount;
     private int monitored;
     private float minimalQuantity;
 
@@ -63,6 +64,14 @@ public class ProjectElement implements Serializable {
 
     public void setQuantity(float quantity) {
         this.quantity = quantity;
+    }
+
+    public float getAmount() {
+        return amount;
+    }
+
+    public void setAmount(float amount) {
+        this.amount = amount;
     }
 
     public int isMonitored() {
