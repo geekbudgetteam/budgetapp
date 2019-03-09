@@ -9,9 +9,6 @@ import java.util.ArrayList;
 @InjectViewState
 public class TransactionFragmentPresenter extends MvpPresenter<TransactionFragmentView> {
 
-    public TransactionFragmentPresenter() {
-    }
-
     public void getTotalAmount(){
         Integer totalAmount = 2523000;
         getViewState().setTotalAmount(totalAmount);

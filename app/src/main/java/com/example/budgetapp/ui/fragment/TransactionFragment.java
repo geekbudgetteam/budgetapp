@@ -30,9 +30,6 @@ public class TransactionFragment extends MvpAppCompatFragment implements Transac
     private TextView totalAmountTextView;
     private RecyclerView recyclerView;
     private FloatingActionButton fab;
-    private FragmentTransaction transaction;
-    private FragmentManager fragmentManager;
-    private Fragment fragment;
 
     public static Fragment newInstance(){
         TransactionFragment fragment = new TransactionFragment();
@@ -63,7 +60,6 @@ public class TransactionFragment extends MvpAppCompatFragment implements Transac
         recyclerView = getView().findViewById(R.id.transactionsRecycler);
         fab = getView().findViewById(R.id.fragment_fab);
 
-        fragmentManager = getFragmentManager();
 
         transactionFragmentPresenter.getTotalAmount();
         transactionFragmentPresenter.getTransaction();
@@ -89,8 +85,5 @@ public class TransactionFragment extends MvpAppCompatFragment implements Transac
 
     @Override
     public void showAddTransactionFragment() {
-        fragment = new AddTransactionFragment();
-        transaction = fragmentManager.beginTransaction();
-        transaction.replace(R.id.fl_master, fragment).commit();
     }
 }
