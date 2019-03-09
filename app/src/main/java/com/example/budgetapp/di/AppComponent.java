@@ -3,6 +3,7 @@ package com.example.budgetapp.di;
 import com.example.budgetapp.di.modules.AppModule;
 import com.example.budgetapp.di.modules.CiceronModule;
 import com.example.budgetapp.ui.activity.MainActivity;
+import com.example.budgetapp.ui.fragment.ProjectsFragment;
 
 import javax.inject.Singleton;
 
@@ -16,4 +17,5 @@ import dagger.Component;
 
 public interface AppComponent {
     void inject (MainActivity mainActivity);
+    void inject (ProjectsFragment projectsFragment);
 }
