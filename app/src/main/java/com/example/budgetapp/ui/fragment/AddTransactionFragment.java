@@ -37,6 +37,11 @@ public class AddTransactionFragment extends MvpAppCompatFragment implements AddT
     private Spinner categorySpinner;
     @Inject Router router;
 
+    public static Fragment newInstance(){
+        AddTransactionFragment fragment = new AddTransactionFragment();
+        return fragment;
+    }
+
     @InjectPresenter
     AddTransactionFragmentPresenter addTransactionFragmentPresenter;
 

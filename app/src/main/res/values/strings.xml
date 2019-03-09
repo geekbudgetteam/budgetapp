@@ -32,5 +32,6 @@
     <string name="project_element_name_hint">Наименование</string>
     <string name="project_element_number_hint">0</string>
     <string name="project_element_add_button">Добавить</string>
+    <string name="familybudget">Бюджет</string>
 
 </resources>
