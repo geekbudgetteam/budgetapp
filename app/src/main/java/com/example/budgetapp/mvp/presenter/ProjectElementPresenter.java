@@ -9,6 +9,7 @@ import com.example.budgetapp.mvp.model.entity.Category;
 import com.example.budgetapp.mvp.model.entity.ProjectElement;
 import com.example.budgetapp.mvp.model.entity.Unit;
 import com.example.budgetapp.mvp.view.ProjectElementView;
+import com.example.budgetapp.utils.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,8 +63,8 @@ public class ProjectElementPresenter extends MvpPresenter<ProjectElementView> {
                     @Override
                     public void accept(List<Category> categories) throws Exception {
                         ProjectElementPresenter.this.categories = categories;
-//                        ProjectElementPresenter.this.categories.add(new Category("Test"));
-                        ProjectElementPresenter.this.categories.add(new Category(ADD_CATEGORY_ITEM));
+                        ProjectElementPresenter.this.categories.add(0, new Category(Constants.SPINNER_CHOICE));
+                        ProjectElementPresenter.this.categories.add(new Category(Constants.SPINNER_ADD));
 
                         dbManager.getUnitsList()
                                 .subscribeOn(Schedulers.io())
@@ -71,8 +72,8 @@ public class ProjectElementPresenter extends MvpPresenter<ProjectElementView> {
                                 .observeOn(scheduler)
                                 .subscribe(units -> {
                                     ProjectElementPresenter.this.units = units;
-//                                    ProjectElementPresenter.this.units.add(new Unit("Test"));
-                                    ProjectElementPresenter.this.units.add(new Unit(ADD_UNIT_ITEM));
+                                    ProjectElementPresenter.this.units.add(0, new Unit(Constants.SPINNER_CHOICE));
+                                    ProjectElementPresenter.this.units.add(new Unit(Constants.SPINNER_ADD));
                                     ProjectElementPresenter.this.getViewState().updateData();
                                 });
                     }
@@ -80,6 +81,7 @@ public class ProjectElementPresenter extends MvpPresenter<ProjectElementView> {
     }
 
     public void checkCategorySpinnerChoice(int position) {
+        System.out.println("checkCategorySpinnerChoice");
         if (position == categories.size() - 1) {
             getViewState().showMessage("Переход к экрану добавления категории");
         }
@@ -90,6 +92,10 @@ public class ProjectElementPresenter extends MvpPresenter<ProjectElementView> {
         if (position == units.size() - 1) {
             getViewState().showMessage("Переход к экрану добавления единицы измерения");
         }
+    }
+
+    public void addDataError(String field) {
+        getViewState().showMessage(Constants.ERROR_MESSAGE + field);
     }
 
     public void monitoredCheckboxClicked(boolean monitored) {

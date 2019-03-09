@@ -91,22 +91,26 @@ public class ProjectElementFragment extends MvpAppCompatFragment implements Proj
         categorySpinner = view.findViewById(R.id.category_spinner);
         categoriesSpinnerAdapter = new CategoriesSpinnerAdapter(this.getContext(), presenter.getCategoriesSpinnerPresenter());
         categorySpinner.setAdapter(categoriesSpinnerAdapter);
+
+
         categorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                System.out.println("onItemSelected");
+                System.out.println("CategoriesSpinnerInitialized " + categoriesSpinnerInitialized);
                 if (categoriesSpinnerInitialized) {
                     presenter.checkCategorySpinnerChoice(position);
                 } else {
                     categoriesSpinnerInitialized = true;
                 }
-
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
             }
         });
+
+
         unitSpinner = view.findViewById(R.id.unit_spinner);
         unitsSpinnerAdapter = new UnitsSpinnerAdapter(this.getContext(), presenter.getUnitsSpinnerPresenter());
         unitSpinner.setAdapter(unitsSpinnerAdapter);
@@ -122,7 +126,6 @@ public class ProjectElementFragment extends MvpAppCompatFragment implements Proj
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
             }
         });
         quantityInput = view.findViewById(R.id.quantity_input);
@@ -156,6 +159,9 @@ public class ProjectElementFragment extends MvpAppCompatFragment implements Proj
     @Override
     public void getData() {
         String name = nameInput.getText().toString();
+        if (name == null) {
+            presenter.addDataError("Наименование");
+        }
         Project project = new Project(projectId);
         Category category = categoriesSpinnerAdapter.getItem(categorySpinner.getSelectedItemPosition());
         Unit unit = unitsSpinnerAdapter.getItem(unitSpinner.getSelectedItemPosition());
