@@ -5,8 +5,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -16,13 +14,18 @@ import android.widget.TextView;
 
 import com.arellomobile.mvp.MvpAppCompatFragment;
 import com.arellomobile.mvp.presenter.InjectPresenter;
-import com.arellomobile.mvp.presenter.ProvidePresenter;
+import com.example.budgetapp.App;
 import com.example.budgetapp.R;
 import com.example.budgetapp.mvp.presenter.TransactionFragmentPresenter;
 import com.example.budgetapp.mvp.view.TransactionFragmentView;
+import com.example.budgetapp.navigation.Screens;
 import com.example.budgetapp.ui.adapter.MainFragmentAdapter;
 
 import java.util.ArrayList;
+
+import javax.inject.Inject;
+
+import ru.terrakok.cicerone.Router;
 
 public class TransactionFragment extends MvpAppCompatFragment implements TransactionFragmentView {
 
@@ -30,6 +33,9 @@ public class TransactionFragment extends MvpAppCompatFragment implements Transac
     private TextView totalAmountTextView;
     private RecyclerView recyclerView;
     private FloatingActionButton fab;
+
+    @Inject
+    Router router;
 
     public static Fragment newInstance(){
         TransactionFragment fragment = new TransactionFragment();
@@ -47,7 +53,7 @@ public class TransactionFragment extends MvpAppCompatFragment implements Transac
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+        App.getInstance().getAppComponent().inject(this);
         return inflater.inflate(R.layout.fragment_transaction, container, false);
     }
 
@@ -59,16 +65,11 @@ public class TransactionFragment extends MvpAppCompatFragment implements Transac
         totalAmountTextView = getView().findViewById(R.id.totalAmount);
         recyclerView = getView().findViewById(R.id.transactionsRecycler);
         fab = getView().findViewById(R.id.fragment_fab);
+        setFABOnClickListener();
 
 
         transactionFragmentPresenter.getTotalAmount();
         transactionFragmentPresenter.getTransaction();
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                transactionFragmentPresenter.setAddTransactionFragent();
-            }
-        });
     }
 
     @Override
@@ -85,5 +86,11 @@ public class TransactionFragment extends MvpAppCompatFragment implements Transac
 
     @Override
     public void showAddTransactionFragment() {
+    }
+
+    public void setFABOnClickListener() {
+        fab.setOnClickListener(v -> {
+            router.navigateTo(new Screens.AddTransactionFragmentScreen()); //TODO projectID передана заглушка
+        });
     }
 }

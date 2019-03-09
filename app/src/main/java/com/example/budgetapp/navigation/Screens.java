@@ -3,6 +3,7 @@ package com.example.budgetapp.navigation;
 import android.support.v4.app.Fragment;
 
 import com.example.budgetapp.ui.fragment.AddProjectFragment;
+import com.example.budgetapp.ui.fragment.AddTransactionFragment;
 import com.example.budgetapp.ui.fragment.DeveloperFragment;
 import com.example.budgetapp.ui.fragment.FamilyBudgetFragment;
 import com.example.budgetapp.ui.fragment.FeedbackFragment;
@@ -18,6 +19,13 @@ public class Screens {
         @Override
         public Fragment getFragment() {
             return TransactionFragment.newInstance();
+        }
+    }
+
+    public static class AddTransactionFragmentScreen extends SupportAppScreen {
+        @Override
+        public Fragment getFragment() {
+            return AddTransactionFragment.newInstance();
         }
     }
 

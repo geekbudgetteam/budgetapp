@@ -4,8 +4,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,10 +14,10 @@ import android.widget.Spinner;
 import com.arellomobile.mvp.MvpAppCompatFragment;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
+import com.example.budgetapp.App;
 import com.example.budgetapp.R;
 import com.example.budgetapp.mvp.model.database.DataBaseManager;
 import com.example.budgetapp.mvp.presenter.AddTransactionFragmentPresenter;
-import com.example.budgetapp.mvp.presenter.DeveloperFragmentPresenter;
 import com.example.budgetapp.mvp.view.AddTransactionView;
 import com.example.budgetapp.navigation.Screens;
 
@@ -35,6 +33,7 @@ public class AddTransactionFragment extends MvpAppCompatFragment implements AddT
     private Button addTransactionButton;
     private Spinner projectsSpinner;
     private Spinner categorySpinner;
+
     @Inject Router router;
 
     public static Fragment newInstance(){
@@ -58,8 +57,9 @@ public class AddTransactionFragment extends MvpAppCompatFragment implements AddT
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+        App.getInstance().getAppComponent().inject(this);
         return inflater.inflate(R.layout.fragment_add_transaction, container, false);
+
     }
 
     @Override
