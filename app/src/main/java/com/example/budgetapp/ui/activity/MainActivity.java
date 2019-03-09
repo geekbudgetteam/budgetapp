@@ -16,7 +16,7 @@ import android.view.MenuItem;
 import com.example.budgetapp.R;
 import com.example.budgetapp.ui.fragment.DeveloperFragment;
 import com.example.budgetapp.ui.fragment.FeedbackFragment;
-import com.example.budgetapp.ui.fragment.MainFragment;
+import com.example.budgetapp.ui.fragment.TransactionFragment;
 
 public class MainActivity extends AppCompatActivity{
 
@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity{
                         int id = menuItem.getItemId();
                         switch (id) {
                             case R.id.main_fragment:
-                                fragment = new MainFragment();
+                                fragment = new TransactionFragment();
                                 break;
                             case R.id.nav_about_programmer:
                                 fragment = new DeveloperFragment();

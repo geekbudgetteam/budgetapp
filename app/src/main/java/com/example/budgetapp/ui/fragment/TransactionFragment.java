@@ -25,7 +25,7 @@ import com.example.budgetapp.ui.adapter.MainFragmentAdapter;
 
 import java.util.ArrayList;
 
-public class MainFragment extends MvpAppCompatFragment implements MainFragmentView {
+public class TransactionFragment extends MvpAppCompatFragment implements MainFragmentView {
 
     private MainFragmentAdapter adapter;
     private TextView totalAmountTextView;
@@ -38,7 +38,7 @@ public class MainFragment extends MvpAppCompatFragment implements MainFragmentVi
     @InjectPresenter
     MainFragmentPresenter mainFragmentPresenter;
 
-    public MainFragment() {
+    public TransactionFragment() {
     }
 
     @ProvidePresenter
