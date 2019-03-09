@@ -6,6 +6,10 @@
             android:icon="@drawable/baseline_list_alt_black_18dp"
             android:title="@string/main_fragment" />
         <item
+            android:id="@+id/projects_fragment"
+            android:icon="@drawable/ic_project"
+            android:title="@string/projects_fragment" />
+        <item
             android:id="@+id/nav_about_programmer"
             android:icon="@drawable/ic_menu_manage"
             android:title="@string/nav_about_programmer" />
