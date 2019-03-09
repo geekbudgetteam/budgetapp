@@ -12,7 +12,8 @@ import dagger.Component;
 @Singleton
 @Component(modules ={
         AppModule.class,
-        CiceronModule.class})
+        CiceronModule.class
+})
 
 public interface AppComponent {
     void inject (MainActivity mainActivity);

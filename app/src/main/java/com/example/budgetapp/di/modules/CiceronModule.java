@@ -21,13 +21,13 @@ public class CiceronModule {
 
     @Provides
     @Singleton
-    public Router router(){
-        return cicerone.getRouter();
+    public NavigatorHolder navigatorHolder(){
+        return cicerone.getNavigatorHolder();
     }
 
     @Provides
     @Singleton
-    public NavigatorHolder navigatorHolder(){
-        return cicerone.getNavigatorHolder();
+    public Router router(){
+        return cicerone.getRouter();
     }
 }
