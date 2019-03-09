@@ -18,8 +18,8 @@ import com.example.budgetapp.R;
 import com.example.budgetapp.navigation.Screens;
 import com.example.budgetapp.ui.fragment.DeveloperFragment;
 import com.example.budgetapp.ui.fragment.FeedbackFragment;
-import com.example.budgetapp.ui.fragment.MainFragment;
 import com.example.budgetapp.ui.fragment.ProjectsFragment;
+import com.example.budgetapp.ui.fragment.TransactionFragment;
 
 import javax.inject.Inject;
 
@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
     private Fragment fragment;
     private FragmentManager fragmentManager;
     private NavigationView navigationView;
+    private FragmentTransaction transaction;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,9 +80,9 @@ public class MainActivity extends AppCompatActivity {
                     menuItem.setChecked(true);
                     int id = menuItem.getItemId();
                     switch (id) {
-                        case R.id.main_fragment:
-                            fragment = new MainFragment();
-                            break;
+                       case R.id.main_fragment:
+                                fragment = new TransactionFragment();
+                                break;
                         case R.id.projects_fragment:
                                 fragment = ProjectsFragment.newInstance();
                                 break;
