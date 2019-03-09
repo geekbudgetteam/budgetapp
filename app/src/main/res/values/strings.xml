@@ -6,4 +6,20 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="main_fragment">Главный экран</string>
     <string name="projects_fragment">Проекты</string>
+    <string name="project_element_fragment">Добавить элемент</string>
+
+
+    <!--ProjectElement values-->
+    <string name="project_element_name">Наименование:</string>
+    <string name="project_element_category">Категория:</string>
+    <string name="project_element_unit">Единица измерения:</string>
+    <string name="project_element_quantity">Количество:</string>
+    <string name="project_element_amount">Цена:</string>
+    <string name="project_element_monitoring">Отслеживать:</string>
+    <string name="project_element_minimum">Минимальный остаток:</string>
+
+    <string name="project_element_name_hint">Наименование</string>
+    <string name="project_element_number_hint">0</string>
+    <string name="project_element_add_button">Добавить</string>
+
 </resources>

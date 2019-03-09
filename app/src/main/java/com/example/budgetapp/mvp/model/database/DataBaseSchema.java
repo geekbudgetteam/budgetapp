@@ -155,6 +155,7 @@ public class DataBaseSchema {
         public static final String TABLE_NAME = "elements";
 
         public static final String ID_COLUMN = "id";
+        public static final String NAME_COLUMN = "name";
         public static final String PROJECT_COLUMN = "project";
         public static final String CATEGORY_COLUMN = "category";
         public static final String UNIT_COLUMN = "unit";
@@ -166,6 +167,7 @@ public class DataBaseSchema {
         public static final String CREATE =
                 "CREATE TABLE " + TABLE_NAME + " (" +
                         ID_COLUMN + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                        NAME_COLUMN + " TEXT NOT NULL, " +
                         PROJECT_COLUMN + " INTEGER NOT NULL, " +
                         CATEGORY_COLUMN + " INTEGER, " +
                         UNIT_COLUMN + " INTEGER NOT NULL, " +
@@ -176,6 +178,7 @@ public class DataBaseSchema {
 
         public static ContentValues getContentValues(ProjectElement projectElement) {
             ContentValues values = new ContentValues();
+            values.put(NAME_COLUMN, projectElement.getName());
             values.put(PROJECT_COLUMN, projectElement.getProject().getId());
             values.put(CATEGORY_COLUMN, projectElement.getCategory().getId());
             values.put(UNIT_COLUMN, projectElement.getUnit().getId());
@@ -188,10 +191,12 @@ public class DataBaseSchema {
 
         public static ProjectElement parseCursor(Cursor cursor) {
             int id = cursor.getInt(cursor.getColumnIndexOrThrow(ID_COLUMN));
+            String name = cursor.getString(cursor.getColumnIndex(NAME_COLUMN));
             float quantity = cursor.getFloat(cursor.getColumnIndexOrThrow(QUANTITY_COLUMN));
+            float amount = cursor.getFloat(cursor.getColumnIndexOrThrow(AMOUNT_COLUMN));
             int monitored = cursor.getInt(cursor.getColumnIndexOrThrow(MONITORED_COLUMN));
             float minimalQuantity = cursor.getFloat(cursor.getColumnIndexOrThrow(MINIMAL_QUANTITY_COLUMN));
-            ProjectElement projectElement = new ProjectElement(quantity, monitored, minimalQuantity);
+            ProjectElement projectElement = new ProjectElement(name, quantity, amount, monitored, minimalQuantity);
             projectElement.setId(id);
 
             return projectElement;

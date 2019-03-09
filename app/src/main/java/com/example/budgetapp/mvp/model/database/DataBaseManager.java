@@ -537,10 +537,12 @@ public class DataBaseManager implements TransactionStorage, CategoryStorage, Uni
             Cursor cursor = database.query(DataBaseSchema.ProjectElementsTable.TABLE_NAME,
                     new String[]{
                             DataBaseSchema.ProjectElementsTable.ID_COLUMN,
+                            DataBaseSchema.ProjectElementsTable.NAME_COLUMN,
                             DataBaseSchema.ProjectElementsTable.PROJECT_COLUMN,
                             DataBaseSchema.ProjectElementsTable.CATEGORY_COLUMN,
                             DataBaseSchema.ProjectElementsTable.UNIT_COLUMN,
                             DataBaseSchema.ProjectElementsTable.QUANTITY_COLUMN,
+                            DataBaseSchema.ProjectElementsTable.AMOUNT_COLUMN,
                             DataBaseSchema.ProjectElementsTable.MONITORED_COLUMN,
                             DataBaseSchema.ProjectElementsTable.MINIMAL_QUANTITY_COLUMN},
                     DataBaseSchema.ProjectElementsTable.ID_COLUMN + " = ? ",
@@ -572,10 +574,12 @@ public class DataBaseManager implements TransactionStorage, CategoryStorage, Uni
             Cursor cursor = database.query(DataBaseSchema.ProjectElementsTable.TABLE_NAME,
                     new String[]{
                             DataBaseSchema.ProjectElementsTable.ID_COLUMN,
+                            DataBaseSchema.ProjectElementsTable.NAME_COLUMN,
                             DataBaseSchema.ProjectElementsTable.PROJECT_COLUMN,
                             DataBaseSchema.ProjectElementsTable.CATEGORY_COLUMN,
                             DataBaseSchema.ProjectElementsTable.UNIT_COLUMN,
                             DataBaseSchema.ProjectElementsTable.QUANTITY_COLUMN,
+                            DataBaseSchema.ProjectElementsTable.AMOUNT_COLUMN,
                             DataBaseSchema.ProjectElementsTable.MONITORED_COLUMN,
                             DataBaseSchema.ProjectElementsTable.MINIMAL_QUANTITY_COLUMN},
                     null, null, null, null, null
