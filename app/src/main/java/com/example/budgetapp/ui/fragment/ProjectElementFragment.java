@@ -159,14 +159,31 @@ public class ProjectElementFragment extends MvpAppCompatFragment implements Proj
     @Override
     public void getData() {
         String name = nameInput.getText().toString();
-        if (name == null) {
-            presenter.addDataError("Наименование");
+        if (name.equals("")) {
+            presenter.addDataError(getContext().getResources().getString(R.string.project_element_name));
+            return;
         }
         Project project = new Project(projectId);
         Category category = categoriesSpinnerAdapter.getItem(categorySpinner.getSelectedItemPosition());
+        if (category.getId() == 0) {
+            presenter.addDataError(getContext().getResources().getString(R.string.project_element_category));
+            return;
+        }
         Unit unit = unitsSpinnerAdapter.getItem(unitSpinner.getSelectedItemPosition());
+        if (unit.getId() == 0) {
+            presenter.addDataError(getContext().getResources().getString(R.string.project_element_unit));
+            return;
+        }
         float quantity = Float.parseFloat(quantityInput.getText().toString());
+        if (quantity == 0) {
+            presenter.addDataError(getContext().getResources().getString(R.string.project_element_quantity));
+            return;
+        }
         float amount = Float.parseFloat(amountInput.getText().toString());
+        if (amount == 0) {
+            presenter.addDataError(getContext().getResources().getString(R.string.project_element_amount));
+            return;
+        }
         int monitored = monitoringCheckbox.isChecked() ? Constants.MONITORED : Constants.UNMONITORED;
         float minimalQuantity = monitored == Constants.MONITORED ? Float.parseFloat(minimumQuantityInput.getText().toString()) : 0f;
         presenter.addElement(new ProjectElement(name, project, category, unit, quantity, amount, monitored, minimalQuantity));
