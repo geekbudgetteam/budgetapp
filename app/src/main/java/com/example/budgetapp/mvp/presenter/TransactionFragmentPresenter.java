@@ -2,14 +2,14 @@ package com.example.budgetapp.mvp.presenter;
 
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
-import com.example.budgetapp.mvp.view.MainFragmentView;
+import com.example.budgetapp.mvp.view.TransactionFragmentView;
 
 import java.util.ArrayList;
 
 @InjectViewState
-public class MainFragmentPresenter extends MvpPresenter<MainFragmentView> {
+public class TransactionFragmentPresenter extends MvpPresenter<TransactionFragmentView> {
 
-    public MainFragmentPresenter() {
+    public TransactionFragmentPresenter() {
     }
 
     public void getTotalAmount(){

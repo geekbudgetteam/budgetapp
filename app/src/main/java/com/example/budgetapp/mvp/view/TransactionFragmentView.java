@@ -7,7 +7,7 @@ import com.arellomobile.mvp.viewstate.strategy.StateStrategyType;
 import java.util.ArrayList;
 
 @StateStrategyType(value = AddToEndSingleStrategy.class)
-public interface MainFragmentView extends MvpView {
+public interface TransactionFragmentView extends MvpView {
 
     void setTotalAmount(Integer totalAmount);
     void setTransactions(ArrayList<String> transactions);

@@ -13,19 +13,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.arellomobile.mvp.MvpAppCompatFragment;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.example.budgetapp.R;
-import com.example.budgetapp.mvp.presenter.MainFragmentPresenter;
-import com.example.budgetapp.mvp.view.MainFragmentView;
+import com.example.budgetapp.mvp.presenter.TransactionFragmentPresenter;
+import com.example.budgetapp.mvp.view.TransactionFragmentView;
 import com.example.budgetapp.ui.adapter.MainFragmentAdapter;
 
 import java.util.ArrayList;
 
-public class TransactionFragment extends MvpAppCompatFragment implements MainFragmentView {
+public class TransactionFragment extends MvpAppCompatFragment implements TransactionFragmentView {
 
     private MainFragmentAdapter adapter;
     private TextView totalAmountTextView;
@@ -36,14 +35,14 @@ public class TransactionFragment extends MvpAppCompatFragment implements MainFra
     private Fragment fragment;
 
     @InjectPresenter
-    MainFragmentPresenter mainFragmentPresenter;
+    TransactionFragmentPresenter transactionFragmentPresenter;
 
     public TransactionFragment() {
     }
 
     @ProvidePresenter
-    public MainFragmentPresenter provideMainPresenter(){
-        return new MainFragmentPresenter();
+    public TransactionFragmentPresenter provideMainPresenter(){
+        return new TransactionFragmentPresenter();
     }
 
     @Override
@@ -55,7 +54,7 @@ public class TransactionFragment extends MvpAppCompatFragment implements MainFra
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_main, container, false);
+        return inflater.inflate(R.layout.fragment_transaction, container, false);
     }
 
 
@@ -69,14 +68,12 @@ public class TransactionFragment extends MvpAppCompatFragment implements MainFra
 
         fragmentManager = getFragmentManager();
 
-        mainFragmentPresenter.getTotalAmount();
-        mainFragmentPresenter.getTransaction();
+        transactionFragmentPresenter.getTotalAmount();
+        transactionFragmentPresenter.getTransaction();
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getView().getContext(),
-                        "Привет из другого фрагмента!", Toast.LENGTH_SHORT).show();
-                mainFragmentPresenter.setAddTransactionFragent();
+                transactionFragmentPresenter.setAddTransactionFragent();
             }
         });
     }
@@ -95,8 +92,6 @@ public class TransactionFragment extends MvpAppCompatFragment implements MainFra
 
     @Override
     public void showAddTransactionFragment() {
-        Toast.makeText(getView().getContext(),
-                "Привет из главной активти!", Toast.LENGTH_SHORT).show();
         fragment = new AddTransactionFragment();
         transaction = fragmentManager.beginTransaction();
         transaction.replace(R.id.fl_master, fragment).commit();
