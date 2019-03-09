@@ -32,4 +32,12 @@ public class Constants {
     public static final String EXPENSE_TITLE = "Проекты расходов";
     public static final String INCOME_TITLE = "Проекты доходов";
 
+    //    ProjectElement Spinner titles
+    public static final String SPINNER_CHOICE = "Выбрать";
+    public static final String SPINNER_ADD = "Добавить";
+
+    //    ProjectElement Error message
+    public static final String ERROR_MESSAGE = "Ошибка ввода данных в поле: ";
+
+
 }

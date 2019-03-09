@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 
+import com.example.budgetapp.R;
 import com.example.budgetapp.mvp.model.entity.Category;
 import com.example.budgetapp.mvp.presenter.ICategoriesSpinnerPresenter;
 
@@ -17,7 +18,8 @@ public class CategoriesSpinnerAdapter extends ArrayAdapter<Category> implements 
     private ICategoriesSpinnerPresenter presenter;
 
     public CategoriesSpinnerAdapter(Context context, ICategoriesSpinnerPresenter presenter) {
-        super(context, android.R.layout.simple_spinner_item);
+//        super(context, android.R.layout.simple_spinner_item);
+        super(context, R.layout.spinner_item);
         this.presenter = presenter;
 
     }
@@ -39,8 +41,8 @@ public class CategoriesSpinnerAdapter extends ArrayAdapter<Category> implements 
 
     @Override
     public View getView(int position, View convertView, @NonNull ViewGroup parent) {
-        Category category = getItem(position);
         TextView label = (TextView) super.getView(position, convertView, parent);
+        Category category = getItem(position);
         label.setTextColor(Color.BLACK);
         label.setText(category.getName());
         return label;
@@ -50,7 +52,6 @@ public class CategoriesSpinnerAdapter extends ArrayAdapter<Category> implements 
     public View getDropDownView(int position, View convertView, @NonNull ViewGroup parent) {
         Category category = getItem(position);
         TextView label = (TextView) super.getView(position, convertView, parent);
-        label.setTextColor(Color.BLACK);
         label.setText(category.getName());
         return label;
     }

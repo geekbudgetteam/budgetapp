@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 
+import com.example.budgetapp.R;
 import com.example.budgetapp.mvp.model.entity.Unit;
 import com.example.budgetapp.mvp.presenter.IUnitsSpinnerPresenter;
 
@@ -17,7 +18,7 @@ public class UnitsSpinnerAdapter extends ArrayAdapter<Unit> implements SpinnerAd
     private IUnitsSpinnerPresenter presenter;
 
     public UnitsSpinnerAdapter(Context context, IUnitsSpinnerPresenter presenter) {
-        super(context, android.R.layout.simple_spinner_item);
+        super(context, R.layout.spinner_item);
         this.presenter = presenter;
 
     }
@@ -50,7 +51,6 @@ public class UnitsSpinnerAdapter extends ArrayAdapter<Unit> implements SpinnerAd
     public View getDropDownView(int position, View convertView, @NonNull ViewGroup parent) {
         Unit unit = getItem(position);
         TextView label = (TextView) super.getView(position, convertView, parent);
-        label.setTextColor(Color.BLACK);
         label.setText(unit.getName());
         return label;
     }

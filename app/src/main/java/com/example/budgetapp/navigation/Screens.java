@@ -4,8 +4,10 @@ import android.support.v4.app.Fragment;
 
 import com.example.budgetapp.ui.fragment.DeveloperFragment;
 import com.example.budgetapp.ui.fragment.FeedbackFragment;
+import com.example.budgetapp.ui.fragment.ProjectElementFragment;
 import com.example.budgetapp.ui.fragment.ProjectsFragment;
 import com.example.budgetapp.ui.fragment.TransactionFragment;
+
 import ru.terrakok.cicerone.android.support.SupportAppScreen;
 
 public class Screens {
@@ -21,6 +23,20 @@ public class Screens {
         @Override
         public Fragment getFragment() {
             return ProjectsFragment.newInstance();
+        }
+    }
+
+    public static class ProjectElementFragmentScreen extends SupportAppScreen {
+
+        private int projectId;
+
+        public ProjectElementFragmentScreen(int projectId) {
+            this.projectId = projectId;
+        }
+
+        @Override
+        public Fragment getFragment() {
+            return ProjectElementFragment.newInstance(projectId);
         }
     }
 
