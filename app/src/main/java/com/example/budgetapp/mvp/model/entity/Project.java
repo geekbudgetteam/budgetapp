@@ -13,6 +13,10 @@ public class Project implements Serializable {
     private long finishPeriod;
     private float amount;
 
+    public Project(int id) {
+        this.id = id;
+    }
+
     public Project(int projectType, String name, int variable, int projectPeriod, long startPeriod, long finishPeriod) {
         this.projectType = projectType;
         this.name = name;

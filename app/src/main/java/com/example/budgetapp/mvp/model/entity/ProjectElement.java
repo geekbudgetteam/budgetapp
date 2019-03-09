@@ -5,6 +5,7 @@ import java.io.Serializable;
 public class ProjectElement implements Serializable {
 
     private int id;
+    private String name;
     private Project project;
     private Category category;
     private Unit unit;
@@ -13,14 +14,15 @@ public class ProjectElement implements Serializable {
     private int monitored;
     private float minimalQuantity;
 
-    public ProjectElement(float quantity, int monitored, float minimalQuantity) {
+    public ProjectElement(String name, float quantity, float amount, int monitored, float minimalQuantity) {
         this.quantity = quantity;
+        this.amount = amount;
         this.monitored = monitored;
         this.minimalQuantity = minimalQuantity;
     }
 
-    public ProjectElement(Project project, Category category, Unit unit, float quantity, int monitored, float minimalQuantity) {
-        this(quantity, monitored, minimalQuantity);
+    public ProjectElement(String name, Project project, Category category, Unit unit, float quantity, float amount, int monitored, float minimalQuantity) {
+        this(name, quantity, amount, monitored, minimalQuantity);
         this.project = project;
         this.category = category;
         this.unit = unit;
@@ -32,6 +34,14 @@ public class ProjectElement implements Serializable {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Project getProject() {
