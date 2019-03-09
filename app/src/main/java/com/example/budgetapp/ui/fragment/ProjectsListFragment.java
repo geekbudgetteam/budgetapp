@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import com.arellomobile.mvp.MvpAppCompatFragment;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
+import com.example.budgetapp.App;
 import com.example.budgetapp.R;
 import com.example.budgetapp.mvp.model.database.DataBaseManager;
 import com.example.budgetapp.mvp.presenter.ProjectsPresenter;
@@ -25,6 +26,8 @@ public class ProjectsListFragment extends MvpAppCompatFragment implements Projec
     private static final String ARG_FRAGMENT_TYPE = "fragment_type";
     @InjectPresenter
     ProjectsPresenter presenter;
+
+
     private int fragmentType;
     private RecyclerView recyclerView;
     private ProjectsListAdapter adapter;
@@ -40,7 +43,7 @@ public class ProjectsListFragment extends MvpAppCompatFragment implements Projec
     @ProvidePresenter
     ProjectsPresenter providePresenter() {
         ProjectsPresenter presenter = new ProjectsPresenter(AndroidSchedulers.mainThread(), DataBaseManager.getInstance(getActivity().getApplicationContext()));
-//        App.getInstance().getAppComponent().inject(presenter);
+        App.getInstance().getAppComponent().inject(presenter);
         return presenter;
     }
 

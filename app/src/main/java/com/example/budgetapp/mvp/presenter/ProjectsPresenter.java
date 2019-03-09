@@ -6,11 +6,14 @@ import com.example.budgetapp.mvp.model.database.DataBaseManager;
 import com.example.budgetapp.mvp.model.entity.Project;
 import com.example.budgetapp.mvp.view.ProjectRowView;
 import com.example.budgetapp.mvp.view.ProjectsListView;
+import com.example.budgetapp.navigation.Screens;
 import com.example.budgetapp.utils.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+
+import javax.inject.Inject;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
@@ -20,9 +23,13 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.functions.Predicate;
 import io.reactivex.schedulers.Schedulers;
+import ru.terrakok.cicerone.Router;
 
 @InjectViewState
 public class ProjectsPresenter extends MvpPresenter<ProjectsListView> {
+
+    @Inject
+    Router router;
 
     private Scheduler scheduler;
     private DataBaseManager dbManager;
@@ -99,5 +106,12 @@ public class ProjectsPresenter extends MvpPresenter<ProjectsListView> {
         public int getProjectsCount() {
             return projects.size();
         }
+
+        @Override
+        public void navigateToProject(Project project) {
+            router.replaceScreen(new Screens.FamilyBudgetPresenterScreen());
+        }
+
+
     }
 }

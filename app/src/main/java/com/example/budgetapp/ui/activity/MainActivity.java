@@ -72,8 +72,6 @@ public class MainActivity extends AppCompatActivity {
                         case R.id.nav_feedback:
                             router.replaceScreen(new Screens.FeedbackFragmentScreen());
                             break;
-                        case R.id.nav_family_budget:
-                            router.replaceScreen(new Screens.FamilyBudgetPresenterScreen());
                     }
                     drawerLayout.closeDrawers();
                     return true;

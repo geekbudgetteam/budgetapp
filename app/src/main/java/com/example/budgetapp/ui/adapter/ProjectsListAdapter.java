@@ -50,6 +50,7 @@ public class ProjectsListAdapter extends RecyclerView.Adapter<ProjectsListAdapte
 
         ProjectHolder(View itemView) {
             super(itemView);
+            itemView.setOnClickListener(this::onClick);
             projectNameView = itemView.findViewById(R.id.project_name);
             projectPeriodView = itemView.findViewById(R.id.project_period);
             projectAmountView = itemView.findViewById(R.id.project_amount);
@@ -58,6 +59,7 @@ public class ProjectsListAdapter extends RecyclerView.Adapter<ProjectsListAdapte
         @Override
         public void onClick(View view) {
 
+            presenter.navigateToProject(project);
         }
 
         @Override
