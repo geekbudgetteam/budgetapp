@@ -21,18 +21,21 @@ import com.example.budgetapp.mvp.model.database.DataBaseManager;
 import com.example.budgetapp.mvp.presenter.AddTransactionFragmentPresenter;
 import com.example.budgetapp.mvp.presenter.DeveloperFragmentPresenter;
 import com.example.budgetapp.mvp.view.AddTransactionView;
+import com.example.budgetapp.navigation.Screens;
 
 import java.util.ArrayList;
+
+import javax.inject.Inject;
+
+import ru.terrakok.cicerone.Router;
 
 public class AddTransactionFragment extends MvpAppCompatFragment implements AddTransactionView {
 
     private Button goBackButton;
     private Button addTransactionButton;
-    private FragmentManager fragmentManager;
-    private Fragment fragment;
-    private FragmentTransaction transaction;
     private Spinner projectsSpinner;
     private Spinner categorySpinner;
+    @Inject Router router;
 
     @InjectPresenter
     AddTransactionFragmentPresenter addTransactionFragmentPresenter;
@@ -63,31 +66,16 @@ public class AddTransactionFragment extends MvpAppCompatFragment implements AddT
         projectsSpinner = getView().findViewById(R.id.project_type);
         categorySpinner = getView().findViewById(R.id.category_type);
 
-        fragmentManager = getFragmentManager();
-
         addTransactionFragmentPresenter.setProjectsType();
         addTransactionFragmentPresenter.setCategoryType();
 
-        goBackButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v)
-            {
-                addTransactionFragmentPresenter.goBackToTransactionFragment();
-            }
-        });
-
-        addTransactionButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v)
-            {
-                addTransactionFragmentPresenter.addTransaction();
-            }
-        });
+        goBackButton.setOnClickListener(v -> addTransactionFragmentPresenter.goBackToTransactionFragment());
+        addTransactionButton.setOnClickListener(v -> addTransactionFragmentPresenter.addTransaction());
     }
 
     @Override
     public void showTransactionFragment() {
-        fragment = new TransactionFragment();
-        transaction = fragmentManager.beginTransaction();
-        transaction.replace(R.id.fl_master, fragment).commit();
+        router.replaceScreen(new Screens.TransactionFragmentScreen());
     }
 
     @Override
