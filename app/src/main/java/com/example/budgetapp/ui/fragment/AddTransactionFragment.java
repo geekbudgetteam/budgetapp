@@ -37,14 +37,10 @@ public class AddTransactionFragment extends MvpAppCompatFragment implements AddT
     @InjectPresenter
     AddTransactionFragmentPresenter addTransactionFragmentPresenter;
 
-    public AddTransactionFragment() {
-    }
-
     @ProvidePresenter
     public AddTransactionFragmentPresenter provideAddTransactionFragmentPresenter(){
         return new AddTransactionFragmentPresenter(DataBaseManager.getInstance(getActivity().getApplicationContext()));
     }
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -57,7 +53,6 @@ public class AddTransactionFragment extends MvpAppCompatFragment implements AddT
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_add_transaction, container, false);
     }
-
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -87,7 +82,6 @@ public class AddTransactionFragment extends MvpAppCompatFragment implements AddT
             }
         });
     }
-
 
     @Override
     public void showTransactionFragment() {
