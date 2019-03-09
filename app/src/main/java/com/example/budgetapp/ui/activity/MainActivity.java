@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import com.example.budgetapp.App;
 import com.example.budgetapp.R;
 import com.example.budgetapp.navigation.Screens;
 import com.example.budgetapp.ui.fragment.DeveloperFragment;
@@ -29,13 +30,6 @@ import ru.terrakok.cicerone.commands.Replace;
 
 public class MainActivity extends AppCompatActivity {
 
-    private DrawerLayout drawerLayout;
-    private Fragment fragment;
-    private FragmentManager fragmentManager;
-    private NavigationView navigationView;
-    @Inject NavigatorHolder navigatorHolder;
-
-
     private Navigator navigator = new SupportAppNavigator(this,R.id.fl_master ){
         @Override
         protected void applyCommand(Command command) {
@@ -45,9 +39,18 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
+    @Inject
+    NavigatorHolder navigatorHolder;
+
+    private DrawerLayout drawerLayout;
+    private Fragment fragment;
+    private FragmentManager fragmentManager;
+    private NavigationView navigationView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        App.getInstance().getAppComponent().inject(this);
 
         setContentView(R.layout.activity_main);
 
@@ -105,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResumeFragments() {
         super.onResumeFragments();
-        navigatorHolder.setNavigator(navigator);
+       navigatorHolder.setNavigator(navigator);
     }
 
     @Override
