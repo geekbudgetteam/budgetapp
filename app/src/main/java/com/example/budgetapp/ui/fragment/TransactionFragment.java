@@ -35,7 +35,7 @@ public class TransactionFragment extends MvpAppCompatFragment implements Transac
     private Fragment fragment;
 
     public static Fragment newInstance(){
-        MainFragment fragment = new MainFragment();
+        TransactionFragment fragment = new TransactionFragment();
         return fragment;
     }
 

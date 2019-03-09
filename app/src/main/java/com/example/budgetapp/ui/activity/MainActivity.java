@@ -80,12 +80,12 @@ public class MainActivity extends AppCompatActivity {
                     menuItem.setChecked(true);
                     int id = menuItem.getItemId();
                     switch (id) {
-                       case R.id.main_fragment:
-                                fragment = new TransactionFragment();
-                                break;
+                        case R.id.main_fragment:
+                            fragment = new TransactionFragment();
+                            break;
                         case R.id.projects_fragment:
-                                fragment = ProjectsFragment.newInstance();
-                                break;
+                            fragment = ProjectsFragment.newInstance();
+                            break;
                         case R.id.nav_about_programmer:
                             fragment = new DeveloperFragment();
                             break;
