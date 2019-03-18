@@ -83,7 +83,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="15dp"
-            android:text="@string/transaction_summ"/>
+            android:text="@string/transaction_sum"/>
         <EditText
             android:id="@+id/transaction_summ"
             android:layout_width="wrap_content"

@@ -1,5 +1,6 @@
 package com.example.budgetapp.ui.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -19,6 +20,7 @@ import com.example.budgetapp.R;
 import com.example.budgetapp.mvp.presenter.TransactionFragmentPresenter;
 import com.example.budgetapp.mvp.view.TransactionFragmentView;
 import com.example.budgetapp.navigation.Screens;
+import com.example.budgetapp.ui.activity.MainActivity;
 import com.example.budgetapp.ui.adapter.MainFragmentAdapter;
 
 import java.util.ArrayList;
@@ -27,7 +29,9 @@ import javax.inject.Inject;
 
 import ru.terrakok.cicerone.Router;
 
-public class TransactionFragment extends MvpAppCompatFragment implements TransactionFragmentView {
+public class TransactionsFragment extends MvpAppCompatFragment implements TransactionFragmentView {
+
+    private final int title = R.string.transactions_fragment;
 
     private MainFragmentAdapter adapter;
     private TextView totalAmountTextView;
@@ -38,7 +42,7 @@ public class TransactionFragment extends MvpAppCompatFragment implements Transac
     Router router;
 
     public static Fragment newInstance(){
-        TransactionFragment fragment = new TransactionFragment();
+        TransactionsFragment fragment = new TransactionsFragment();
         return fragment;
     }
 
@@ -48,6 +52,12 @@ public class TransactionFragment extends MvpAppCompatFragment implements Transac
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        ((MainActivity)context).setToolbarTitle(title);
     }
 
     @Override
@@ -70,6 +80,12 @@ public class TransactionFragment extends MvpAppCompatFragment implements Transac
 
         transactionFragmentPresenter.getTotalAmount();
         transactionFragmentPresenter.getTransaction();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        ((MainActivity)getActivity()).showHamburgerIcon();
     }
 
     @Override

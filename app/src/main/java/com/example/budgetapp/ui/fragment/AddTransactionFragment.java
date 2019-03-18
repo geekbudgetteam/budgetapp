@@ -1,5 +1,6 @@
 package com.example.budgetapp.ui.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -20,6 +21,7 @@ import com.example.budgetapp.mvp.model.database.DataBaseManager;
 import com.example.budgetapp.mvp.presenter.AddTransactionFragmentPresenter;
 import com.example.budgetapp.mvp.view.AddTransactionView;
 import com.example.budgetapp.navigation.Screens;
+import com.example.budgetapp.ui.activity.MainActivity;
 
 import java.util.ArrayList;
 
@@ -27,7 +29,9 @@ import javax.inject.Inject;
 
 import ru.terrakok.cicerone.Router;
 
-public class AddTransactionFragment extends MvpAppCompatFragment implements AddTransactionView {
+public class AddTransactionFragment extends MvpAppCompatFragment implements AddTransactionView, BackFragment {
+
+    private final int title = R.string.add_transaction_fragment;
 
     private Button goBackButton;
     private Button addTransactionButton;
@@ -55,6 +59,12 @@ public class AddTransactionFragment extends MvpAppCompatFragment implements AddT
     }
 
     @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        ((MainActivity)context).setToolbarTitle(title);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         App.getInstance().getAppComponent().inject(this);
@@ -76,6 +86,12 @@ public class AddTransactionFragment extends MvpAppCompatFragment implements AddT
 
         goBackButton.setOnClickListener(v -> addTransactionFragmentPresenter.goBackToTransactionFragment());
         addTransactionButton.setOnClickListener(v -> addTransactionFragmentPresenter.addTransaction());
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        ((MainActivity)getActivity()).showBackIcon();
     }
 
     @Override

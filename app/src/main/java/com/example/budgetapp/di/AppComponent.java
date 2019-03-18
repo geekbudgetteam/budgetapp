@@ -7,7 +7,7 @@ import com.example.budgetapp.ui.activity.MainActivity;
 import com.example.budgetapp.ui.fragment.AddTransactionFragment;
 import com.example.budgetapp.ui.fragment.FamilyBudgetFragment;
 import com.example.budgetapp.ui.fragment.ProjectsFragment;
-import com.example.budgetapp.ui.fragment.TransactionFragment;
+import com.example.budgetapp.ui.fragment.TransactionsFragment;
 
 import javax.inject.Singleton;
 
@@ -23,7 +23,7 @@ public interface AppComponent {
     void inject (MainActivity mainActivity);
     void inject (ProjectsFragment projectsFragment);
     void inject (FamilyBudgetFragment familyBudgetFragment);
-    void inject(TransactionFragment fragment);
+    void inject(TransactionsFragment fragment);
 
     void inject(ProjectsPresenter presenter);
     void inject(AddTransactionFragment fragment);

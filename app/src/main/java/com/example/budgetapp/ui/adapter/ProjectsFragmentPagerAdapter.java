@@ -39,9 +39,9 @@ public class ProjectsFragmentPagerAdapter extends FragmentPagerAdapter {
     public CharSequence getPageTitle(int position) {
         switch (position) {
             case 0:
-                return Constants.INCOME_TITLE;
-            case 1:
                 return Constants.EXPENSE_TITLE;
+            case 1:
+                return Constants.INCOME_TITLE;
             default:
                 return "Illegal title";
         }

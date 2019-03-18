@@ -4,20 +4,35 @@
     <string name="nav_about_programmer">О разработчике</string>
     <string name="nav_feedback">Обратная связь</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="main_fragment">Главный экран</string>
-    <string name="add_transaction">Добавить запись</string>
+
     <string name="transaction_type">Вид: </string>
     <string name="back">Назад</string>
     <string name="project">Проект: </string>
     <string name="category">Категория: </string>
-    <string name="transaction_summ">Сумма: </string>
+    <string name="transaction_sum">Сумма: </string>
 
     <string-array name="transaction_type">
         <item>Расходы</item>
         <item>Доходы</item>
     </string-array>
+
+    <string name="navigation_drawer_open">Панель управления открыта</string>
+    <string name="navigation_drawer_close">Панель управления закрыта</string>
+
+    <!--Fragments titles-->
+    <string name="transactions_fragment">Транзакции</string>
+    <string name="add_transaction_fragment">Добавить транзакцию</string>
     <string name="projects_fragment">Проекты</string>
+    <string name="add_project_fragment">Добавить проект</string>
+    <string name="project_fragment">Проект</string>
     <string name="project_element_fragment">Добавить элемент</string>
+
+    <!--AddTransactionFragment values-->
+    <string name="add_transaction">Добавить транзакцию</string>
+
+
+
+
 
 
     <!--ProjectElement values-->

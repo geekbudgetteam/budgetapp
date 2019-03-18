@@ -3,54 +3,77 @@ package com.example.budgetapp.ui.activity;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.example.budgetapp.App;
 import com.example.budgetapp.R;
 import com.example.budgetapp.navigation.Screens;
+import com.example.budgetapp.ui.fragment.BackFragment;
 
 import javax.inject.Inject;
 
 import ru.terrakok.cicerone.Navigator;
 import ru.terrakok.cicerone.NavigatorHolder;
-import ru.terrakok.cicerone.Router;
 import ru.terrakok.cicerone.android.support.SupportAppNavigator;
+import ru.terrakok.cicerone.commands.Back;
+import ru.terrakok.cicerone.commands.Command;
+import ru.terrakok.cicerone.commands.Replace;
 
 public class MainActivity extends AppCompatActivity {
-    private Navigator navigator = new SupportAppNavigator(this,R.id.fl_master ){};
+
+    private Navigator navigator = new SupportAppNavigator(this,R.id.fl_master ) {
+        @Override
+        public void applyCommands(Command[] commands) {
+            super.applyCommands(commands);
+        }
+
+//        @Override
+//        protected void setupFragmentTransaction(Command command, Fragment currentFragment, Fragment nextFragment, FragmentTransaction fragmentTransaction) {
+//            super.setupFragmentTransaction(command, currentFragment, nextFragment, fragmentTransaction);
+//            if (nextFragment instanceof BackFragment){
+//                showBackIcon();
+//            } else {
+//                showHamburgerIcon();
+//            }
+//        }
+    };
 
     @Inject NavigatorHolder navigatorHolder;
-    @Inject Router router;
 
-    private DrawerLayout drawerLayout;
-    private Fragment fragment;
+    private DrawerLayout drawer;
+    private ActionBarDrawerToggle toggle;
+//    private View.OnClickListener toggleListener;
+    private Toolbar toolbar;
     private NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         App.getInstance().getAppComponent().inject(this);
-
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        ActionBar actionbar = getSupportActionBar();
-        actionbar.setDisplayHomeAsUpEnabled(true);
-        actionbar.setHomeAsUpIndicator(R.drawable.ic_menu);
 
-        drawerLayout = findViewById(R.id.drawer_layout);
+        drawer = findViewById(R.id.drawer_layout);
+        toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+//        toggleListener = toggle.getToolbarNavigationClickListener()
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+
         navigationView = findViewById(R.id.nav_view);
         setNavigationItemSelectedListener();
 
-        fragment = getSupportFragmentManager().findFragmentById(R.id.fl_master);
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fl_master);
         if (savedInstanceState == null && fragment == null){
-            router.replaceScreen(new Screens.TransactionFragmentScreen());
+            navigator.applyCommands(new Command[]{new Replace(new Screens.TransactionFragmentScreen())});
         }
     }
 
@@ -61,31 +84,47 @@ public class MainActivity extends AppCompatActivity {
                     int id = menuItem.getItemId();
                     switch (id) {
                         case R.id.main_fragment:
-                            router.replaceScreen(new Screens.TransactionFragmentScreen());
+                            navigator.applyCommands(new Command[]{new Replace(new Screens.TransactionFragmentScreen())});
                             break;
                         case R.id.projects_fragment:
-                            router.replaceScreen(new Screens.ProjectsFragmentScreen());
+                            navigator.applyCommands(new Command[]{new Replace(new Screens.ProjectsFragmentScreen())});
                             break;
                         case R.id.nav_about_programmer:
-                            router.replaceScreen(new Screens.DeveloperFragmentScreen());
+                            navigator.applyCommands(new Command[]{new Replace(new Screens.DeveloperFragmentScreen())});
                             break;
                         case R.id.nav_feedback:
-                            router.replaceScreen(new Screens.FeedbackFragmentScreen());
+                            navigator.applyCommands(new Command[]{new Replace(new Screens.FeedbackFragmentScreen())});
                             break;
                     }
-                    drawerLayout.closeDrawers();
+                    drawer.closeDrawers();
                     return true;
                 });
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                drawerLayout.openDrawer(GravityCompat.START);
-                return true;
+    public void setToolbarTitle(int title) {
+        if (getSupportActionBar() != null){
+            getSupportActionBar().setTitle(title);
         }
-        return super.onOptionsItemSelected(item);
+    }
+
+    public void showHamburgerIcon() {
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+            toolbar.setNavigationOnClickListener((v) -> drawer.openDrawer(GravityCompat.START));
+//            toolbar.setNavigationOnClickListener(toggleListener);
+        }
+        toggle.setDrawerIndicatorEnabled(true);
+        drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+    }
+
+    public void showBackIcon() {
+        toggle.setDrawerIndicatorEnabled(false);
+        drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back);
+            toolbar.setNavigationOnClickListener((v) -> navigator.applyCommands(new Command[]{new Back()}));
+        }
     }
 
     @Override
@@ -98,5 +137,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         navigatorHolder.removeNavigator();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
     }
 }

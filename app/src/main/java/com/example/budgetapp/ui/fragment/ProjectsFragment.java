@@ -1,5 +1,6 @@
 package com.example.budgetapp.ui.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -14,6 +15,7 @@ import android.view.ViewGroup;
 import com.example.budgetapp.App;
 import com.example.budgetapp.R;
 import com.example.budgetapp.navigation.Screens;
+import com.example.budgetapp.ui.activity.MainActivity;
 import com.example.budgetapp.ui.adapter.ProjectsFragmentPagerAdapter;
 
 import javax.inject.Inject;
@@ -22,6 +24,8 @@ import ru.terrakok.cicerone.Router;
 
 public class ProjectsFragment extends Fragment {
 
+    private final int title = R.string.projects_fragment;
+
     private ProjectsFragmentPagerAdapter adapter;
     private ViewPager viewPager;
     private FloatingActionButton floatingActionButton;
@@ -29,6 +33,17 @@ public class ProjectsFragment extends Fragment {
 
     public static ProjectsFragment newInstance() {
         return new ProjectsFragment();
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        ((MainActivity)context).setToolbarTitle(title);
     }
 
     @Nullable

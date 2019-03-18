@@ -28,7 +28,7 @@
         android:layout_gravity="bottom|end"
         android:layout_marginEnd="@dimen/fab_margin"
         android:layout_marginBottom="@dimen/fab_margin"
-        android:background="#CDDC39"
+        android:background="@color/colorAccent"
         android:elevation="20dp"
         android:src="@drawable/baseline_add_black_18dp" />
 

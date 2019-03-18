@@ -1,5 +1,6 @@
 package com.example.budgetapp.ui.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -25,6 +26,7 @@ import com.example.budgetapp.mvp.model.entity.ProjectElement;
 import com.example.budgetapp.mvp.model.entity.Unit;
 import com.example.budgetapp.mvp.presenter.ProjectElementPresenter;
 import com.example.budgetapp.mvp.view.ProjectElementView;
+import com.example.budgetapp.ui.activity.MainActivity;
 import com.example.budgetapp.ui.adapter.CategoriesSpinnerAdapter;
 import com.example.budgetapp.ui.adapter.UnitsSpinnerAdapter;
 import com.example.budgetapp.utils.Constants;
@@ -34,6 +36,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 public class ProjectElementFragment extends MvpAppCompatFragment implements ProjectElementView {
 
     private static final String ARG_PROJECT_ID = "project_id";
+    private final int title = R.string.project_element_fragment;
 
     @InjectPresenter
     ProjectElementPresenter presenter;
@@ -74,7 +77,12 @@ public class ProjectElementFragment extends MvpAppCompatFragment implements Proj
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         projectId = getArguments().getInt(ARG_PROJECT_ID);
+    }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        ((MainActivity)context).setToolbarTitle(title);
     }
 
     @Nullable

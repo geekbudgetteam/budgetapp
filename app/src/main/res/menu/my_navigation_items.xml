@@ -4,7 +4,7 @@
         <item
             android:id="@+id/main_fragment"
             android:icon="@drawable/baseline_list_alt_black_18dp"
-            android:title="@string/main_fragment" />
+            android:title="@string/transactions_fragment" />
         <item
             android:id="@+id/projects_fragment"
             android:icon="@drawable/ic_project"

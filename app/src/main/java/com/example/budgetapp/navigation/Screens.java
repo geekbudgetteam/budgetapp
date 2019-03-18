@@ -9,7 +9,7 @@ import com.example.budgetapp.ui.fragment.FamilyBudgetFragment;
 import com.example.budgetapp.ui.fragment.FeedbackFragment;
 import com.example.budgetapp.ui.fragment.ProjectElementFragment;
 import com.example.budgetapp.ui.fragment.ProjectsFragment;
-import com.example.budgetapp.ui.fragment.TransactionFragment;
+import com.example.budgetapp.ui.fragment.TransactionsFragment;
 
 import ru.terrakok.cicerone.android.support.SupportAppScreen;
 
@@ -18,7 +18,7 @@ public class Screens {
     public static class TransactionFragmentScreen extends SupportAppScreen{
         @Override
         public Fragment getFragment() {
-            return TransactionFragment.newInstance();
+            return TransactionsFragment.newInstance();
         }
     }
 
