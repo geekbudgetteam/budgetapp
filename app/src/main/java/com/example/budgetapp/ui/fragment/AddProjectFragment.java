@@ -14,11 +14,13 @@ import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.example.budgetapp.R;
 import com.example.budgetapp.mvp.presenter.AddProjectFragmentPresenter;
 import com.example.budgetapp.mvp.view.AddProjectFragmentView;
+import com.example.budgetapp.ui.activity.ChangeFragmentTitleListener;
 import com.example.budgetapp.ui.activity.MainActivity;
 
 public class AddProjectFragment extends MvpAppCompatFragment implements AddProjectFragmentView {
 
     private final int title = R.string.add_project_fragment;
+    private ChangeFragmentTitleListener listener;
 
     public static Fragment newInstance(){
         AddProjectFragment fragment = new AddProjectFragment();
@@ -29,14 +31,11 @@ public class AddProjectFragment extends MvpAppCompatFragment implements AddProje
     AddProjectFragmentPresenter presenter;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        ((MainActivity)context).setToolbarTitle(title);
+        if (context instanceof ChangeFragmentTitleListener){
+            listener = (ChangeFragmentTitleListener)context;
+        }
     }
 
     @Nullable
@@ -44,5 +43,11 @@ public class AddProjectFragment extends MvpAppCompatFragment implements AddProje
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_addproject,null);
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        listener.setToolbarTitle(title);
     }
 }

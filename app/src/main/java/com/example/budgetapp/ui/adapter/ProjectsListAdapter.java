@@ -41,7 +41,7 @@ public class ProjectsListAdapter extends RecyclerView.Adapter<ProjectsListAdapte
         return presenter.getProjectsCount();
     }
 
-    public class ProjectHolder extends RecyclerView.ViewHolder implements View.OnClickListener, ProjectRowView {
+    public class ProjectHolder extends RecyclerView.ViewHolder implements ProjectRowView {
 
         TextView projectNameView;
         TextView projectPeriodView;
@@ -50,16 +50,10 @@ public class ProjectsListAdapter extends RecyclerView.Adapter<ProjectsListAdapte
 
         ProjectHolder(View itemView) {
             super(itemView);
-            itemView.setOnClickListener(this::onClick);
+            itemView.setOnClickListener((v) -> presenter.navigateToProject(project));
             projectNameView = itemView.findViewById(R.id.project_name);
             projectPeriodView = itemView.findViewById(R.id.project_period);
             projectAmountView = itemView.findViewById(R.id.project_amount);
-        }
-
-        @Override
-        public void onClick(View view) {
-
-            presenter.navigateToProject(project);
         }
 
         @Override
@@ -80,7 +74,7 @@ public class ProjectsListAdapter extends RecyclerView.Adapter<ProjectsListAdapte
                     break;
                 case Constants.DATED:
                     if (project.getStartPeriod() == project.getFinishPeriod()) {
-                        period = period = "Период: "
+                        period = "Период: "
                                 + sdf.format(project.getStartPeriod());
                     } else {
                         period = "Период: "

@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import com.example.budgetapp.App;
 import com.example.budgetapp.R;
 import com.example.budgetapp.navigation.Screens;
+import com.example.budgetapp.ui.activity.ChangeFragmentTitleListener;
 import com.example.budgetapp.ui.activity.MainActivity;
 import com.example.budgetapp.ui.adapter.ProjectsFragmentPagerAdapter;
 
@@ -25,6 +26,7 @@ import ru.terrakok.cicerone.Router;
 public class ProjectsFragment extends Fragment {
 
     private final int title = R.string.projects_fragment;
+    private ChangeFragmentTitleListener listener;
 
     private ProjectsFragmentPagerAdapter adapter;
     private ViewPager viewPager;
@@ -36,14 +38,11 @@ public class ProjectsFragment extends Fragment {
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        ((MainActivity)context).setToolbarTitle(title);
+        if (context instanceof ChangeFragmentTitleListener){
+            listener = (ChangeFragmentTitleListener)context;
+        }
     }
 
     @Nullable
@@ -64,6 +63,12 @@ public class ProjectsFragment extends Fragment {
         TabLayout tabLayout = view.findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
         setFABClickListener();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        listener.setToolbarTitle(title);
     }
 
     public void setFABClickListener(){

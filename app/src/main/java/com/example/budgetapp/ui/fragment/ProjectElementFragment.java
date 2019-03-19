@@ -26,6 +26,7 @@ import com.example.budgetapp.mvp.model.entity.ProjectElement;
 import com.example.budgetapp.mvp.model.entity.Unit;
 import com.example.budgetapp.mvp.presenter.ProjectElementPresenter;
 import com.example.budgetapp.mvp.view.ProjectElementView;
+import com.example.budgetapp.ui.activity.ChangeFragmentTitleListener;
 import com.example.budgetapp.ui.activity.MainActivity;
 import com.example.budgetapp.ui.adapter.CategoriesSpinnerAdapter;
 import com.example.budgetapp.ui.adapter.UnitsSpinnerAdapter;
@@ -37,6 +38,7 @@ public class ProjectElementFragment extends MvpAppCompatFragment implements Proj
 
     private static final String ARG_PROJECT_ID = "project_id";
     private final int title = R.string.project_element_fragment;
+    private ChangeFragmentTitleListener listener;
 
     @InjectPresenter
     ProjectElementPresenter presenter;
@@ -74,15 +76,17 @@ public class ProjectElementFragment extends MvpAppCompatFragment implements Proj
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        projectId = getArguments().getInt(ARG_PROJECT_ID);
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof ChangeFragmentTitleListener){
+            listener = (ChangeFragmentTitleListener)context;
+        }
     }
 
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        ((MainActivity)context).setToolbarTitle(title);
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        projectId = getArguments().getInt(ARG_PROJECT_ID);
     }
 
     @Nullable
@@ -92,6 +96,12 @@ public class ProjectElementFragment extends MvpAppCompatFragment implements Proj
         initViews(view);
         updateUI();
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        listener.setToolbarTitle(title);
     }
 
     private void initViews(View view) {

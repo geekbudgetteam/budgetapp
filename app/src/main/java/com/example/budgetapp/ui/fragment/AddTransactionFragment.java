@@ -21,7 +21,7 @@ import com.example.budgetapp.mvp.model.database.DataBaseManager;
 import com.example.budgetapp.mvp.presenter.AddTransactionFragmentPresenter;
 import com.example.budgetapp.mvp.view.AddTransactionView;
 import com.example.budgetapp.navigation.Screens;
-import com.example.budgetapp.ui.activity.MainActivity;
+import com.example.budgetapp.ui.activity.ChangeFragmentTitleListener;
 
 import java.util.ArrayList;
 
@@ -29,9 +29,10 @@ import javax.inject.Inject;
 
 import ru.terrakok.cicerone.Router;
 
-public class AddTransactionFragment extends MvpAppCompatFragment implements AddTransactionView, BackFragment {
+public class AddTransactionFragment extends MvpAppCompatFragment implements AddTransactionView {
 
     private final int title = R.string.add_transaction_fragment;
+    private ChangeFragmentTitleListener listener;
 
     private Button goBackButton;
     private Button addTransactionButton;
@@ -54,19 +55,20 @@ public class AddTransactionFragment extends MvpAppCompatFragment implements AddT
     }
 
     @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof ChangeFragmentTitleListener){
+            listener = (ChangeFragmentTitleListener)context;
+        }
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
 
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        ((MainActivity)context).setToolbarTitle(title);
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         App.getInstance().getAppComponent().inject(this);
         return inflater.inflate(R.layout.fragment_add_transaction, container, false);
 
@@ -91,7 +93,7 @@ public class AddTransactionFragment extends MvpAppCompatFragment implements AddT
     @Override
     public void onResume() {
         super.onResume();
-        ((MainActivity)getActivity()).showBackIcon();
+        listener.setToolbarTitle(title);
     }
 
     @Override

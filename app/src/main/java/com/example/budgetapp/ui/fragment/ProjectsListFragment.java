@@ -27,7 +27,6 @@ public class ProjectsListFragment extends MvpAppCompatFragment implements Projec
     @InjectPresenter
     ProjectsPresenter presenter;
 
-
     private int fragmentType;
     private RecyclerView recyclerView;
     private ProjectsListAdapter adapter;

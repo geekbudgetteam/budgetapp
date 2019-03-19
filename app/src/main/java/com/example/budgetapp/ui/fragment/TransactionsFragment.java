@@ -20,6 +20,7 @@ import com.example.budgetapp.R;
 import com.example.budgetapp.mvp.presenter.TransactionFragmentPresenter;
 import com.example.budgetapp.mvp.view.TransactionFragmentView;
 import com.example.budgetapp.navigation.Screens;
+import com.example.budgetapp.ui.activity.ChangeFragmentTitleListener;
 import com.example.budgetapp.ui.activity.MainActivity;
 import com.example.budgetapp.ui.adapter.MainFragmentAdapter;
 
@@ -32,6 +33,7 @@ import ru.terrakok.cicerone.Router;
 public class TransactionsFragment extends MvpAppCompatFragment implements TransactionFragmentView {
 
     private final int title = R.string.transactions_fragment;
+    private ChangeFragmentTitleListener listener;
 
     private MainFragmentAdapter adapter;
     private TextView totalAmountTextView;
@@ -50,23 +52,18 @@ public class TransactionsFragment extends MvpAppCompatFragment implements Transa
     TransactionFragmentPresenter transactionFragmentPresenter;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        ((MainActivity)context).setToolbarTitle(title);
+        if (context instanceof ChangeFragmentTitleListener){
+            listener = (ChangeFragmentTitleListener)context;
+        }
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         App.getInstance().getAppComponent().inject(this);
         return inflater.inflate(R.layout.fragment_transaction, container, false);
     }
-
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -77,7 +74,6 @@ public class TransactionsFragment extends MvpAppCompatFragment implements Transa
         fab = getView().findViewById(R.id.fragment_fab);
         setFABOnClickListener();
 
-
         transactionFragmentPresenter.getTotalAmount();
         transactionFragmentPresenter.getTransaction();
     }
@@ -85,7 +81,7 @@ public class TransactionsFragment extends MvpAppCompatFragment implements Transa
     @Override
     public void onResume() {
         super.onResume();
-        ((MainActivity)getActivity()).showHamburgerIcon();
+        listener.setToolbarTitle(title);
     }
 
     @Override
