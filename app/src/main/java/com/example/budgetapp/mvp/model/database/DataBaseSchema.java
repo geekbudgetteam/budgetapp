@@ -30,8 +30,8 @@ public class DataBaseSchema {
 
         public static ContentValues getContentValues(Transaction transaction) {
             ContentValues values = new ContentValues();
-            values.put(PROJECT_COLUMN, transaction.getProject().getId());
-            values.put(CATEGORY_COLUMN, transaction.getCategory().getId());
+            values.put(PROJECT_COLUMN, transaction.getProjectId().getId());
+            values.put(CATEGORY_COLUMN, transaction.getCategoryId().getId());
             values.put(DATE_COLUMN, transaction.getDate());
             values.put(AMOUNT_COLUMN, transaction.getAmount());
             return values;
@@ -179,9 +179,9 @@ public class DataBaseSchema {
         public static ContentValues getContentValues(ProjectElement projectElement) {
             ContentValues values = new ContentValues();
             values.put(NAME_COLUMN, projectElement.getName());
-            values.put(PROJECT_COLUMN, projectElement.getProject().getId());
-            values.put(CATEGORY_COLUMN, projectElement.getCategory().getId());
-            values.put(UNIT_COLUMN, projectElement.getUnit().getId());
+            values.put(PROJECT_COLUMN, projectElement.getProjectId().getId());
+            values.put(CATEGORY_COLUMN, projectElement.getCategoryId().getId());
+            values.put(UNIT_COLUMN, projectElement.getUnitId().getId());
             values.put(QUANTITY_COLUMN, projectElement.getQuantity());
             values.put(AMOUNT_COLUMN, projectElement.getAmount());
             values.put(MONITORED_COLUMN, projectElement.isMonitored());

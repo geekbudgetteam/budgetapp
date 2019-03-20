@@ -7,8 +7,8 @@
 
     <string name="transaction_type">Вид: </string>
     <string name="back">Назад</string>
-    <string name="project">Проект: </string>
-    <string name="category">Категория: </string>
+    <string name="projectId">Проект: </string>
+    <string name="categoryId">Категория: </string>
     <string name="transaction_sum">Сумма: </string>
 
     <string-array name="transaction_type">

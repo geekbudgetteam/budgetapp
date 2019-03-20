@@ -2,8 +2,13 @@ package com.example.budgetapp.mvp.model.entity;
 
 import java.io.Serializable;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity(tableName = "categories")
 public class Category implements Serializable {
 
+    @PrimaryKey(autoGenerate = true)
     private int id;
     private String name;
 

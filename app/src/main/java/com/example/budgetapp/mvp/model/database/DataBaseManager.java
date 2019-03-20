@@ -99,9 +99,9 @@ public class DataBaseManager implements TransactionStorage, CategoryStorage, Uni
             if (cursor.moveToNext()) {
                 Transaction transaction = DataBaseSchema.TransactionsTable.parseCursor(cursor);
                 int projectId = cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseSchema.TransactionsTable.PROJECT_COLUMN));
-                transaction.setProject(getProject(projectId, database));
+                transaction.setProjectId(getProject(projectId, database));
                 int categoryId = cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseSchema.TransactionsTable.CATEGORY_COLUMN));
-                transaction.setCategory(getCategory(categoryId, database));
+                transaction.setCategoryId(getCategory(categoryId, database));
                 e.onNext(transaction);
             } else {
                 e.onError(new RuntimeException("Database does not contain the transaction"));
@@ -129,9 +129,9 @@ public class DataBaseManager implements TransactionStorage, CategoryStorage, Uni
             while (cursor.moveToNext()) {
                 Transaction transaction = DataBaseSchema.TransactionsTable.parseCursor(cursor);
                 int projectId = cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseSchema.TransactionsTable.PROJECT_COLUMN));
-                transaction.setProject(getProject(projectId, database));
+                transaction.setProjectId(getProject(projectId, database));
                 int categoryId = cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseSchema.TransactionsTable.CATEGORY_COLUMN));
-                transaction.setCategory(getCategory(categoryId, database));
+                transaction.setCategoryId(getCategory(categoryId, database));
                 transactions.add(transaction);
             }
             cursor.close();
@@ -551,11 +551,11 @@ public class DataBaseManager implements TransactionStorage, CategoryStorage, Uni
             if (cursor.moveToNext()) {
                 ProjectElement projectElement = DataBaseSchema.ProjectElementsTable.parseCursor(cursor);
                 int projectId = cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseSchema.ProjectElementsTable.PROJECT_COLUMN));
-                projectElement.setProject(getProject(projectId, database));
+                projectElement.setProjectId(getProject(projectId, database));
                 int categoryId = cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseSchema.ProjectElementsTable.CATEGORY_COLUMN));
-                projectElement.setCategory(getCategory(categoryId, database));
+                projectElement.setCategoryId(getCategory(categoryId, database));
                 int unitId = cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseSchema.ProjectElementsTable.UNIT_COLUMN));
-                projectElement.setUnit(getUnit(unitId, database));
+                projectElement.setUnitId(getUnit(unitId, database));
                 e.onNext(projectElement);
             } else {
                 e.onError(new RuntimeException("Database does not contain the project element"));
@@ -587,11 +587,11 @@ public class DataBaseManager implements TransactionStorage, CategoryStorage, Uni
             while (cursor.moveToNext()) {
                 ProjectElement projectElement = DataBaseSchema.ProjectElementsTable.parseCursor(cursor);
                 int projectId = cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseSchema.ProjectElementsTable.PROJECT_COLUMN));
-                projectElement.setProject(getProject(projectId, database));
+                projectElement.setProjectId(getProject(projectId, database));
                 int categoryId = cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseSchema.ProjectElementsTable.CATEGORY_COLUMN));
-                projectElement.setCategory(getCategory(categoryId, database));
+                projectElement.setCategoryId(getCategory(categoryId, database));
                 int unitId = cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseSchema.ProjectElementsTable.UNIT_COLUMN));
-                projectElement.setUnit(getUnit(unitId, database));
+                projectElement.setUnitId(getUnit(unitId, database));
                 projectElements.add(projectElement);
             }
             cursor.close();

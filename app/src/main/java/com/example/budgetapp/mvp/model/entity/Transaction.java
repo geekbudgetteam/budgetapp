@@ -2,11 +2,25 @@ package com.example.budgetapp.mvp.model.entity;
 
 import java.io.Serializable;
 
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.ForeignKey;
+import androidx.room.PrimaryKey;
+import static androidx.room.ForeignKey.SET_NULL;
+
+@Entity(tableName = "transactions",
+        foreignKeys = {
+                @ForeignKey(entity = Project.class, parentColumns = "id", childColumns = "project_id", onDelete = SET_NULL),
+                @ForeignKey(entity = Category.class, parentColumns = "id", childColumns = "category_id", onDelete = SET_NULL)
+        })
 public class Transaction implements Serializable {
 
+    @PrimaryKey(autoGenerate = true)
     private int id;
-    private Project project;
-    private Category category;
+    @ColumnInfo(name = "project_id")
+    private int projectId;
+    @ColumnInfo(name = "category_id")
+    private int categoryId;
     private long date;
     private float amount;
 
@@ -15,10 +29,10 @@ public class Transaction implements Serializable {
         this.amount = amount;
     }
 
-    public Transaction(Project project, Category category, long date, float amount) {
+    public Transaction(int projectId, int categoryId, long date, float amount) {
         this(date, amount);
-        this.project = project;
-        this.category = category;
+        this.projectId = projectId;
+        this.categoryId = categoryId;
     }
 
     public int getId() {
@@ -29,20 +43,20 @@ public class Transaction implements Serializable {
         this.id = id;
     }
 
-    public Project getProject() {
-        return project;
+    public int getProjectId() {
+        return projectId;
     }
 
-    public void setProject(Project project) {
-        this.project = project;
+    public void setProjectId(int projectId) {
+        this.projectId = projectId;
     }
 
-    public Category getCategory() {
-        return category;
+    public int getCategoryId() {
+        return categoryId;
     }
 
-    public void setCategory(Category category) {
-        this.category = category;
+    public void setCategoryId(int categoryId) {
+        this.categoryId = categoryId;
     }
 
     public long getDate() {
