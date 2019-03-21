@@ -1,4 +1,4 @@
-package com.example.budgetapp.mvp.model.dao;
+package com.example.budgetapp.mvp.model.database.dao;
 
 import com.example.budgetapp.mvp.model.entity.Category;
 
@@ -11,6 +11,7 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import io.reactivex.Completable;
 import io.reactivex.Flowable;
+import io.reactivex.Maybe;
 
 @Dao
 public interface CategoryDao {
@@ -19,7 +20,7 @@ public interface CategoryDao {
     Completable insertCategory(Category category);
 
     @Query("SELECT * FROM categories WHERE id = :id")
-    Flowable<Category> getCategory(int id);
+    Maybe<Category> getCategory(int id);
 
     @Query("SELECT * FROM categories")
     Flowable<List<Category>> getCategoriesList();

@@ -1,15 +1,15 @@
 package com.example.budgetapp.di.modules;
 
+import javax.inject.Singleton;
+
 import dagger.Module;
 import dagger.Provides;
 import ru.terrakok.cicerone.Cicerone;
 import ru.terrakok.cicerone.NavigatorHolder;
 import ru.terrakok.cicerone.Router;
 
-import javax.inject.Singleton;
-
 @Module
-public class CiceronModule {
+public class CiceroneModule {
 
     Cicerone<Router> cicerone = Cicerone.create();
 

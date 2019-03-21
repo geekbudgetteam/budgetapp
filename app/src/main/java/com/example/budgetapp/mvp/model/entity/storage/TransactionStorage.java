@@ -1,20 +1,26 @@
 package com.example.budgetapp.mvp.model.entity.storage;
 
 import com.example.budgetapp.mvp.model.entity.Transaction;
+import com.example.budgetapp.mvp.model.entity.view.TransactionDetail;
 
 import java.util.List;
 
+import io.reactivex.Completable;
+import io.reactivex.Flowable;
+import io.reactivex.Maybe;
 import io.reactivex.Observable;
 
 public interface TransactionStorage {
 
-    Observable<Boolean> addTransaction(Transaction transaction);
+    Completable addTransaction(Transaction transaction);
 
-    Observable<Transaction> getTransaction(int id);
+    Maybe<Transaction> getTransaction(int id);
 
-    Observable<List<Transaction>> getTransactionsList();
+    Flowable<List<Transaction>> getTransactionsList();
 
-    Observable<Boolean> updateTransaction(Transaction transaction);
+    Flowable<List<TransactionDetail>> getTransactionDetailsList();
 
-    Observable<Boolean> deleteTransaction(Transaction transaction);
+    Completable updateTransaction(Transaction transaction);
+
+    Completable deleteTransaction(Transaction transaction);
 }

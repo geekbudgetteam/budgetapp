@@ -19,14 +19,27 @@
             android:paddingTop="5dp"
             android:paddingEnd="5dp"
             android:textColor="@android:color/black"
+            android:textSize="15sp"/>
+
+        <TextView
+            android:id="@+id/category_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@id/project_name"
+            android:layout_toStartOf="@id/transaction_amount"
+            android:paddingStart="5dp"
+            android:paddingTop="5dp"
+            android:paddingEnd="5dp"
+            android:textColor="@android:color/black"
             android:textSize="15sp" />
 
         <TextView
             android:id="@+id/transaction_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/project_name"
             android:layout_alignParentStart="true"
+            android:layout_below="@id/category_name"
             android:layout_toStartOf="@id/transaction_amount"
             android:paddingStart="5dp"
             android:paddingTop="5dp"

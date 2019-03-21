@@ -1,6 +1,5 @@
-package com.example.budgetapp.mvp.model.dao;
+package com.example.budgetapp.mvp.model.database.dao;
 
-import com.example.budgetapp.mvp.model.entity.Category;
 import com.example.budgetapp.mvp.model.entity.Unit;
 
 import java.util.List;
@@ -12,6 +11,7 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import io.reactivex.Completable;
 import io.reactivex.Flowable;
+import io.reactivex.Maybe;
 
 @Dao
 public interface UnitDao {
@@ -20,7 +20,7 @@ public interface UnitDao {
     Completable insertUnit(Unit unit);
 
     @Query("SELECT * FROM units WHERE id = :id")
-    Flowable<Unit> getUnit(int id);
+    Maybe<Unit> getUnit(int id);
 
     @Query("SELECT * FROM units")
     Flowable<List<Unit>> getUnitsList();

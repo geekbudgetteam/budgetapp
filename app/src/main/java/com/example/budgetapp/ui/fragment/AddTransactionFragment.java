@@ -4,12 +4,12 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.arellomobile.mvp.MvpAppCompatFragment;
@@ -17,41 +17,39 @@ import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.example.budgetapp.App;
 import com.example.budgetapp.R;
-import com.example.budgetapp.mvp.model.database.DataBaseManager;
-import com.example.budgetapp.mvp.presenter.AddTransactionFragmentPresenter;
+import com.example.budgetapp.mvp.presenter.AddTransactionPresenter;
 import com.example.budgetapp.mvp.view.AddTransactionView;
-import com.example.budgetapp.navigation.Screens;
 import com.example.budgetapp.ui.activity.ChangeFragmentTitleListener;
 
 import java.util.ArrayList;
 
-import javax.inject.Inject;
-
-import ru.terrakok.cicerone.Router;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 
 public class AddTransactionFragment extends MvpAppCompatFragment implements AddTransactionView {
 
     private final int title = R.string.add_transaction_fragment;
     private ChangeFragmentTitleListener listener;
 
-    private Button goBackButton;
-    private Button addTransactionButton;
-    private Spinner projectsSpinner;
-    private Spinner categorySpinner;
-
-    @Inject Router router;
-
-    public static Fragment newInstance(){
-        AddTransactionFragment fragment = new AddTransactionFragment();
-        return fragment;
-    }
+    @BindView(R.id.type_spinner) Spinner typeSpinner;
+    @BindView(R.id.project_spinner) Spinner projectSpinner;
+    @BindView(R.id.category_spinner) Spinner categorySpinner;
+    @BindView(R.id.amount_input) EditText amountInput;
+    @BindView(R.id.add_transaction_btn) Button addBtn;
 
     @InjectPresenter
-    AddTransactionFragmentPresenter addTransactionFragmentPresenter;
+    AddTransactionPresenter presenter;
 
     @ProvidePresenter
-    public AddTransactionFragmentPresenter provideAddTransactionFragmentPresenter(){
-        return new AddTransactionFragmentPresenter(DataBaseManager.getInstance(getActivity().getApplicationContext()));
+    public AddTransactionPresenter provideAddTransactionFragmentPresenter(){
+        AddTransactionPresenter presenter = new AddTransactionPresenter(AndroidSchedulers.mainThread());
+        App.getInstance().getAppComponent().inject(presenter);
+        return presenter;
+    }
+
+    public static AddTransactionFragment newInstance(){
+        return new AddTransactionFragment();
     }
 
     @Override
@@ -63,42 +61,29 @@ public class AddTransactionFragment extends MvpAppCompatFragment implements AddT
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        App.getInstance().getAppComponent().inject(this);
-        return inflater.inflate(R.layout.fragment_add_transaction, container, false);
-
+        View view = inflater.inflate(R.layout.fragment_add_transaction, container, false);
+        ButterKnife.bind(view);
+        return view;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        goBackButton = getView().findViewById(R.id.back_from_add_transaction_fragment);
-        addTransactionButton = getView().findViewById(R.id.add_transaction_button);
-        projectsSpinner = getView().findViewById(R.id.project_type);
-        categorySpinner = getView().findViewById(R.id.category_type);
 
-        addTransactionFragmentPresenter.setProjectsType();
-        addTransactionFragmentPresenter.setCategoryType();
 
-        goBackButton.setOnClickListener(v -> addTransactionFragmentPresenter.goBackToTransactionFragment());
-        addTransactionButton.setOnClickListener(v -> addTransactionFragmentPresenter.addTransaction());
+        presenter.setProjectsType();
+        presenter.setCategoryType();
+
+        goBackButton.setOnClickListener(v -> presenter.goBackToTransactionFragment());
+        addTransactionButton.setOnClickListener(v -> presenter.addTransaction());
     }
 
     @Override
     public void onResume() {
         super.onResume();
         listener.setToolbarTitle(title);
-    }
-
-    @Override
-    public void showTransactionFragment() {
-        router.replaceScreen(new Screens.TransactionFragmentScreen());
     }
 
     @Override

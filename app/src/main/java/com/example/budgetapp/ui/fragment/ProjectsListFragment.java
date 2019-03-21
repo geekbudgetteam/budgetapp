@@ -14,22 +14,32 @@ import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.example.budgetapp.App;
 import com.example.budgetapp.R;
-import com.example.budgetapp.mvp.model.database.DataBaseManager;
 import com.example.budgetapp.mvp.presenter.ProjectsPresenter;
 import com.example.budgetapp.mvp.view.ProjectsListView;
 import com.example.budgetapp.ui.adapter.ProjectsListAdapter;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 
 public class ProjectsListFragment extends MvpAppCompatFragment implements ProjectsListView {
 
     private static final String ARG_FRAGMENT_TYPE = "fragment_type";
+
+    private int fragmentType;
+    private ProjectsListAdapter adapter;
+
+    @BindView(R.id.recycler_view) RecyclerView recyclerView;
+
     @InjectPresenter
     ProjectsPresenter presenter;
 
-    private int fragmentType;
-    private RecyclerView recyclerView;
-    private ProjectsListAdapter adapter;
+    @ProvidePresenter
+    ProjectsPresenter providePresenter() {
+        ProjectsPresenter presenter = new ProjectsPresenter(AndroidSchedulers.mainThread());
+        App.getInstance().getAppComponent().inject(presenter);
+        return presenter;
+    }
 
     public static ProjectsListFragment newInstance(int fragmentType) {
         Bundle args = new Bundle();
@@ -37,13 +47,6 @@ public class ProjectsListFragment extends MvpAppCompatFragment implements Projec
         ProjectsListFragment fragment = new ProjectsListFragment();
         fragment.setArguments(args);
         return fragment;
-    }
-
-    @ProvidePresenter
-    ProjectsPresenter providePresenter() {
-        ProjectsPresenter presenter = new ProjectsPresenter(AndroidSchedulers.mainThread(), DataBaseManager.getInstance(getActivity().getApplicationContext()));
-        App.getInstance().getAppComponent().inject(presenter);
-        return presenter;
     }
 
     @Override
@@ -56,12 +59,17 @@ public class ProjectsListFragment extends MvpAppCompatFragment implements Projec
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_list, container, false);
-        recyclerView = view.findViewById(R.id.recycler_view);
+        ButterKnife.bind(view);
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         adapter = new ProjectsListAdapter(presenter.getProjectsListPresenter());
         recyclerView.setAdapter(adapter);
         updateUI();
-        return view;
     }
 
     public void updateUI() {
@@ -78,7 +86,7 @@ public class ProjectsListFragment extends MvpAppCompatFragment implements Projec
     }
 
     public boolean onBackPressed() {
-        getActivity().onBackPressed();
+        presenter.onBackPressed();
         return true;
     }
 }

@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity implements ChangeFragmentTit
 
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fl_master);
         if (savedInstanceState == null && fragment == null) {
-            navigator.applyCommands(new Command[]{new Replace(new Screens.TransactionFragmentScreen())});
+            navigator.applyCommands(new Command[]{new Replace(new Screens.TransactionsFragmentScreen())});
         }
     }
 
@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity implements ChangeFragmentTit
                     int id = menuItem.getItemId();
                     switch (id) {
                         case R.id.main_fragment:
-                            navigator.applyCommands(new Command[]{new Replace(new Screens.TransactionFragmentScreen())});
+                            navigator.applyCommands(new Command[]{new Replace(new Screens.TransactionsFragmentScreen())});
                             break;
                         case R.id.projects_fragment:
                             navigator.applyCommands(new Command[]{new Replace(new Screens.ProjectsFragmentScreen())});

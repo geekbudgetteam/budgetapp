@@ -15,7 +15,6 @@ import com.example.budgetapp.R;
 import com.example.budgetapp.mvp.presenter.AddProjectFragmentPresenter;
 import com.example.budgetapp.mvp.view.AddProjectFragmentView;
 import com.example.budgetapp.ui.activity.ChangeFragmentTitleListener;
-import com.example.budgetapp.ui.activity.MainActivity;
 
 public class AddProjectFragment extends MvpAppCompatFragment implements AddProjectFragmentView {
 
@@ -41,7 +40,7 @@ public class AddProjectFragment extends MvpAppCompatFragment implements AddProje
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_addproject,null);
+        View view = inflater.inflate(R.layout.fragment_add_project,null);
         return view;
     }
 

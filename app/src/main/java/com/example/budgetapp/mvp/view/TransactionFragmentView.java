@@ -9,7 +9,7 @@ import java.util.ArrayList;
 @StateStrategyType(value = AddToEndSingleStrategy.class)
 public interface TransactionFragmentView extends MvpView {
 
-    void setTotalAmount(Integer totalAmount);
-    void setTransactions(ArrayList<String> transactions);
-    void showAddTransactionFragment();
+    void updateTransactionsList();
+
+    void updateTotalAmount(int amount);
 }

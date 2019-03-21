@@ -5,17 +5,6 @@
     <string name="nav_feedback">Обратная связь</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
-    <string name="transaction_type">Вид: </string>
-    <string name="back">Назад</string>
-    <string name="projectId">Проект: </string>
-    <string name="categoryId">Категория: </string>
-    <string name="transaction_sum">Сумма: </string>
-
-    <string-array name="transaction_type">
-        <item>Расходы</item>
-        <item>Доходы</item>
-    </string-array>
-
     <string name="navigation_drawer_open">Панель управления открыта</string>
     <string name="navigation_drawer_close">Панель управления закрыта</string>
 
@@ -27,12 +16,17 @@
     <string name="project_fragment">Проект</string>
     <string name="project_element_fragment">Добавить элемент</string>
 
-    <!--AddTransactionFragment values-->
-    <string name="add_transaction">Добавить транзакцию</string>
-
-
-
-
+    <!--Transaction values-->
+    <string name="transaction_type">Вид: </string>
+    <string-array name="transaction_type_values">
+        <item>Расходы</item>
+        <item>Доходы</item>
+    </string-array>
+    <string name="transaction_project">Проект: </string>
+    <string name="transaction_category">Категория: </string>
+    <string name="transaction_amount">Сумма: </string>
+    <string name="transaction_number_hint">0</string>
+    <string name="transaction_add_button">Добавить</string>
 
 
     <!--ProjectElement values-->
@@ -47,6 +41,8 @@
     <string name="project_element_name_hint">Наименование</string>
     <string name="project_element_number_hint">0</string>
     <string name="project_element_add_button">Добавить</string>
+
+
     <string name="familybudget">Бюджет</string>
 
 </resources>

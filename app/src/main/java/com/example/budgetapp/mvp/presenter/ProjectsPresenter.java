@@ -2,12 +2,14 @@ package com.example.budgetapp.mvp.presenter;
 
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
-import com.example.budgetapp.mvp.model.database.DataBaseManager;
 import com.example.budgetapp.mvp.model.entity.Project;
+import com.example.budgetapp.mvp.model.entity.storage.ProjectStorage;
 import com.example.budgetapp.mvp.view.ProjectRowView;
 import com.example.budgetapp.mvp.view.ProjectsListView;
 import com.example.budgetapp.navigation.Screens;
 import com.example.budgetapp.utils.Constants;
+
+import org.reactivestreams.Publisher;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,8 +17,7 @@ import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
-import io.reactivex.Observable;
-import io.reactivex.ObservableSource;
+import io.reactivex.Flowable;
 import io.reactivex.Scheduler;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
@@ -28,19 +29,18 @@ import ru.terrakok.cicerone.Router;
 @InjectViewState
 public class ProjectsPresenter extends MvpPresenter<ProjectsListView> {
 
-    @Inject
-    Router router;
-
     private Scheduler scheduler;
-    private DataBaseManager dbManager;
     private Disposable disposable;
-
-    private IProjectsListPresenter projectsListPresenter = new ProjectsListPresenter();
+    private IProjectsListPresenter projectsListPresenter = new ProjectsPresenter.ProjectsListPresenter();
     private List<Project> projects = new ArrayList<>();
 
-    public ProjectsPresenter(Scheduler scheduler, DataBaseManager dbManager) {
+    @Inject
+    Router router;
+    @Inject
+    ProjectStorage projectStorage;
+
+    public ProjectsPresenter(Scheduler scheduler) {
         this.scheduler = scheduler;
-        this.dbManager = dbManager;
     }
 
     public IProjectsListPresenter getProjectsListPresenter() {
@@ -53,12 +53,12 @@ public class ProjectsPresenter extends MvpPresenter<ProjectsListView> {
     }
 
     public void loadProjects(int fragmentType) {
-        disposable = dbManager.getProjectsList()
+        disposable = projectStorage.getProjectsList()
                 .subscribeOn(Schedulers.io())
-                .retryWhen(new Function<Observable<Throwable>, ObservableSource<?>>() {
+                .retryWhen(new Function<Flowable<Throwable>, Publisher<?>>() {
                     @Override
-                    public ObservableSource<?> apply(Observable<Throwable> throwableObservable) throws Exception {
-                        return throwableObservable.take(3).delay(1, TimeUnit.SECONDS);
+                    public Publisher<?> apply(Flowable<Throwable> throwableFlowable) throws Exception {
+                        return throwableFlowable.take(3).delay(1, TimeUnit.SECONDS);
                     }
                 })
                 .flatMapIterable(new Function<List<Project>, List<Project>>() {
@@ -93,6 +93,10 @@ public class ProjectsPresenter extends MvpPresenter<ProjectsListView> {
                 });
     }
 
+    public void onBackPressed(){
+        router.replaceScreen(new Screens.TransactionsFragmentScreen());
+    }
+
     class ProjectsListPresenter implements IProjectsListPresenter {
 
         @Override
@@ -111,7 +115,5 @@ public class ProjectsPresenter extends MvpPresenter<ProjectsListView> {
         public void navigateToProject(Project project) {
             router.navigateTo(new Screens.FamilyBudgetPresenterScreen());
         }
-
-
     }
 }

@@ -5,7 +5,7 @@ import android.app.Application;
 import com.example.budgetapp.di.AppComponent;
 import com.example.budgetapp.di.DaggerAppComponent;
 import com.example.budgetapp.di.modules.AppModule;
-import com.example.budgetapp.di.modules.CiceronModule;
+import com.example.budgetapp.di.modules.CiceroneModule;
 
 public class App extends Application {
     public static App instance;
@@ -16,7 +16,6 @@ public class App extends Application {
         super.onCreate();
         appComponent = DaggerAppComponent.builder()
                 .appModule(new AppModule(this))
-                .ciceronModule(new CiceronModule())
                 .build();
         instance = this;
     }

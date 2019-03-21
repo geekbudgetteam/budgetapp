@@ -1,7 +1,7 @@
-package com.example.budgetapp.mvp.model.dao;
+package com.example.budgetapp.mvp.model.database.dao;
 
-import com.example.budgetapp.mvp.model.entity.ProjectElement;
 import com.example.budgetapp.mvp.model.entity.Transaction;
+import com.example.budgetapp.mvp.model.entity.view.TransactionDetail;
 
 import java.util.List;
 
@@ -12,6 +12,7 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import io.reactivex.Completable;
 import io.reactivex.Flowable;
+import io.reactivex.Maybe;
 
 @Dao
 public interface TransactionDao {
@@ -20,10 +21,13 @@ public interface TransactionDao {
     Completable insertTransaction(Transaction transaction);
 
     @Query("SELECT * FROM transactions WHERE id = :id")
-    Flowable<Transaction> getTransaction(int id);
+    Maybe<Transaction> getTransaction(int id);
 
     @Query("SELECT * FROM transactions")
     Flowable<List<Transaction>> getTransactionsList();
+
+    @Query("SELECT * FROM transactions")
+    Flowable<List<TransactionDetail>> getTransactionDetailsList();
 
     @Delete
     Completable deleteTransaction(Transaction transaction);

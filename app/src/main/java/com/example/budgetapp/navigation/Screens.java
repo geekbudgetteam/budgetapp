@@ -15,7 +15,7 @@ import ru.terrakok.cicerone.android.support.SupportAppScreen;
 
 public class Screens {
 
-    public static class TransactionFragmentScreen extends SupportAppScreen{
+    public static class TransactionsFragmentScreen extends SupportAppScreen{
         @Override
         public Fragment getFragment() {
             return TransactionsFragment.newInstance();

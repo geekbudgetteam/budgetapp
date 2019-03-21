@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
-import com.example.budgetapp.mvp.model.database.DataBaseManager;
 import com.example.budgetapp.mvp.model.entity.Category;
 import com.example.budgetapp.mvp.model.entity.ProjectElement;
 import com.example.budgetapp.mvp.model.entity.Unit;
@@ -29,7 +28,6 @@ public class ProjectElementPresenter extends MvpPresenter<ProjectElementView> {
     private static final String ADD_UNIT_ITEM = "Добавить ед. измерения";
 
     private Scheduler scheduler;
-    private DataBaseManager dbManager;
 
     private ICategoriesSpinnerPresenter categoriesSpinnerPresenter = new CategoriesSpinnerPresenter();
     private IUnitsSpinnerPresenter unitsSpinnerPresenter = new UnitsSpinnerPresenter();
@@ -37,9 +35,8 @@ public class ProjectElementPresenter extends MvpPresenter<ProjectElementView> {
     private List<Category> categories = new ArrayList<>();
     private List<Unit> units = new ArrayList<>();
 
-    public ProjectElementPresenter(Scheduler scheduler, DataBaseManager dbManager) {
+    public ProjectElementPresenter(Scheduler scheduler) {
         this.scheduler = scheduler;
-        this.dbManager = dbManager;
     }
 
 

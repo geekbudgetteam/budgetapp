@@ -4,17 +4,19 @@ import com.example.budgetapp.mvp.model.entity.Category;
 
 import java.util.List;
 
-import io.reactivex.Observable;
+import io.reactivex.Completable;
+import io.reactivex.Flowable;
+import io.reactivex.Maybe;
 
 public interface CategoryStorage {
 
-    Observable<Boolean> addCategory(Category category);
+    Completable addCategory(Category category);
 
-    Observable<Category> getCategory(int id);
+    Maybe<Category> getCategory(int id);
 
-    Observable<List<Category>> getCategoriesList();
+    Flowable<List<Category>> getCategoriesList();
 
-    Observable<Boolean> updateCategory(Category category);
+    Completable updateCategory(Category category);
 
-    Observable<Boolean> deleteCategory(Category category);
+    Completable deleteCategory(Category category);
 }

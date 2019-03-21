@@ -1,5 +1,8 @@
 package com.example.budgetapp.utils;
 
+import java.text.SimpleDateFormat;
+import java.util.Locale;
+
 public class Constants {
 
     //    Project types
@@ -38,6 +41,15 @@ public class Constants {
 
     //    ProjectElement Error message
     public static final String ERROR_MESSAGE = "Ошибка ввода данных в поле: ";
+
+    //    View fields
+    public static final String NAME_FIELD = "Наименование: ";
+    public static final String PROJECT_FIELD = "Проект: ";
+    public static final String Category_FIELD = "Категория: ";
+    public static final String PERIOD_FIELD = "Период: ";
+
+    //    Date format
+    public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd.MM.yy", Locale.getDefault());
 
 
 }

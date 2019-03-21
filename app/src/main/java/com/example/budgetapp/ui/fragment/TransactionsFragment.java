@@ -15,19 +15,22 @@ import android.widget.TextView;
 
 import com.arellomobile.mvp.MvpAppCompatFragment;
 import com.arellomobile.mvp.presenter.InjectPresenter;
+import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.example.budgetapp.App;
 import com.example.budgetapp.R;
-import com.example.budgetapp.mvp.presenter.TransactionFragmentPresenter;
+import com.example.budgetapp.mvp.presenter.TransactionsPresenter;
 import com.example.budgetapp.mvp.view.TransactionFragmentView;
 import com.example.budgetapp.navigation.Screens;
 import com.example.budgetapp.ui.activity.ChangeFragmentTitleListener;
-import com.example.budgetapp.ui.activity.MainActivity;
-import com.example.budgetapp.ui.adapter.MainFragmentAdapter;
+import com.example.budgetapp.ui.adapter.TransactionsListAdapter;
 
 import java.util.ArrayList;
 
 import javax.inject.Inject;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import ru.terrakok.cicerone.Router;
 
 public class TransactionsFragment extends MvpAppCompatFragment implements TransactionFragmentView {
@@ -35,21 +38,25 @@ public class TransactionsFragment extends MvpAppCompatFragment implements Transa
     private final int title = R.string.transactions_fragment;
     private ChangeFragmentTitleListener listener;
 
-    private MainFragmentAdapter adapter;
-    private TextView totalAmountTextView;
-    private RecyclerView recyclerView;
-    private FloatingActionButton fab;
+    private TransactionsListAdapter adapter;
 
-    @Inject
-    Router router;
-
-    public static Fragment newInstance(){
-        TransactionsFragment fragment = new TransactionsFragment();
-        return fragment;
-    }
+    @BindView(R.id.totalAmount) TextView totalAmountTextView;
+    @BindView(R.id.transactionsRecycler) RecyclerView recyclerView;
+    @BindView(R.id.fragment_fab) FloatingActionButton fab;
 
     @InjectPresenter
-    TransactionFragmentPresenter transactionFragmentPresenter;
+    TransactionsPresenter presenter;
+
+    @ProvidePresenter
+    TransactionsPresenter providePresenter() {
+        TransactionsPresenter presenter = new TransactionsPresenter(AndroidSchedulers.mainThread());
+        App.getInstance().getAppComponent().inject(presenter);
+        return presenter;
+    }
+
+    public static TransactionsFragment newInstance(){
+        return new TransactionsFragment();
+    }
 
     @Override
     public void onAttach(Context context) {
@@ -61,21 +68,19 @@ public class TransactionsFragment extends MvpAppCompatFragment implements Transa
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        App.getInstance().getAppComponent().inject(this);
-        return inflater.inflate(R.layout.fragment_transaction, container, false);
+        View view = inflater.inflate(R.layout.fragment_transaction, container, false);
+        ButterKnife.bind(view);
+        return view;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        totalAmountTextView = getView().findViewById(R.id.totalAmount);
-        recyclerView = getView().findViewById(R.id.transactionsRecycler);
-        fab = getView().findViewById(R.id.fragment_fab);
-        setFABOnClickListener();
-
-        transactionFragmentPresenter.getTotalAmount();
-        transactionFragmentPresenter.getTransaction();
+        recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
+        adapter = new TransactionsListAdapter(presenter.getTransactionsListPresenter());
+        recyclerView.setAdapter(adapter);
+        fab.setOnClickListener(v -> presenter.fabAction());
+        updateUI();
     }
 
     @Override
@@ -84,25 +89,17 @@ public class TransactionsFragment extends MvpAppCompatFragment implements Transa
         listener.setToolbarTitle(title);
     }
 
-    @Override
-    public void setTotalAmount(Integer totalAmount) {
-        totalAmountTextView.setText(totalAmount + "рублей");
+    public void updateUI() {
+        presenter.loadTransactions();
     }
 
     @Override
-    public void setTransactions(ArrayList<String> transactions) {
-        recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
-        adapter = new MainFragmentAdapter(this.getActivity(), transactions);
-        recyclerView.setAdapter(adapter);
+    public void updateTransactionsList() {
+        adapter.notifyDataSetChanged();
     }
 
     @Override
-    public void showAddTransactionFragment() {
-    }
-
-    public void setFABOnClickListener() {
-        fab.setOnClickListener(v -> {
-            router.navigateTo(new Screens.AddTransactionFragmentScreen()); //TODO projectID передана заглушка
-        });
+    public void updateTotalAmount(int amount) {
+        totalAmountTextView.setText(String.valueOf(amount));
     }
 }

@@ -19,7 +19,6 @@ import com.arellomobile.mvp.MvpAppCompatFragment;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.example.budgetapp.R;
-import com.example.budgetapp.mvp.model.database.DataBaseManager;
 import com.example.budgetapp.mvp.model.entity.Category;
 import com.example.budgetapp.mvp.model.entity.Project;
 import com.example.budgetapp.mvp.model.entity.ProjectElement;
@@ -27,7 +26,6 @@ import com.example.budgetapp.mvp.model.entity.Unit;
 import com.example.budgetapp.mvp.presenter.ProjectElementPresenter;
 import com.example.budgetapp.mvp.view.ProjectElementView;
 import com.example.budgetapp.ui.activity.ChangeFragmentTitleListener;
-import com.example.budgetapp.ui.activity.MainActivity;
 import com.example.budgetapp.ui.adapter.CategoriesSpinnerAdapter;
 import com.example.budgetapp.ui.adapter.UnitsSpinnerAdapter;
 import com.example.budgetapp.utils.Constants;
@@ -71,7 +69,7 @@ public class ProjectElementFragment extends MvpAppCompatFragment implements Proj
 
     @ProvidePresenter
     ProjectElementPresenter providePresenter() {
-        ProjectElementPresenter presenter = new ProjectElementPresenter(AndroidSchedulers.mainThread(), DataBaseManager.getInstance(getActivity().getApplicationContext()));
+        ProjectElementPresenter presenter = new ProjectElementPresenter(AndroidSchedulers.mainThread());
         return presenter;
     }
 
@@ -114,8 +112,6 @@ public class ProjectElementFragment extends MvpAppCompatFragment implements Proj
         categorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                System.out.println("onItemSelected");
-                System.out.println("CategoriesSpinnerInitialized " + categoriesSpinnerInitialized);
                 if (categoriesSpinnerInitialized) {
                     presenter.checkCategorySpinnerChoice(position);
                 } else {
@@ -181,7 +177,7 @@ public class ProjectElementFragment extends MvpAppCompatFragment implements Proj
             presenter.addDataError(getContext().getResources().getString(R.string.project_element_name));
             return;
         }
-        Project project = new Project(projectId);
+        int id = new Project(projectId);
         Category category = categoriesSpinnerAdapter.getItem(categorySpinner.getSelectedItemPosition());
         if (category.getId() == 0) {
             presenter.addDataError(getContext().getResources().getString(R.string.project_element_category));
@@ -204,7 +200,7 @@ public class ProjectElementFragment extends MvpAppCompatFragment implements Proj
         }
         int monitored = monitoringCheckbox.isChecked() ? Constants.MONITORED : Constants.UNMONITORED;
         float minimalQuantity = monitored == Constants.MONITORED ? Float.parseFloat(minimumQuantityInput.getText().toString()) : 0f;
-        presenter.addElement(new ProjectElement(name, project, category, unit, quantity, amount, monitored, minimalQuantity));
+        presenter.addElement(new ProjectElement(name, id, category, unit, quantity, amount, monitored, minimalQuantity));
     }
 
 

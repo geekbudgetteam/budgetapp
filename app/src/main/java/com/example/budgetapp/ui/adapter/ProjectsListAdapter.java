@@ -16,10 +16,12 @@ import com.example.budgetapp.utils.Constants;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class ProjectsListAdapter extends RecyclerView.Adapter<ProjectsListAdapter.ProjectHolder> {
 
     private IProjectsListPresenter presenter;
-    private SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yy", Locale.getDefault());
 
     public ProjectsListAdapter(IProjectsListPresenter presenter) {
         this.presenter = presenter;
@@ -43,47 +45,46 @@ public class ProjectsListAdapter extends RecyclerView.Adapter<ProjectsListAdapte
 
     public class ProjectHolder extends RecyclerView.ViewHolder implements ProjectRowView {
 
-        TextView projectNameView;
-        TextView projectPeriodView;
-        TextView projectAmountView;
         private Project project;
+
+        @BindView(R.id.project_name) TextView projectNameView;
+        @BindView(R.id.transaction_date)TextView projectPeriodView;
+        @BindView(R.id.transaction_amount)TextView projectAmountView;
 
         ProjectHolder(View itemView) {
             super(itemView);
+            ButterKnife.bind(itemView);
             itemView.setOnClickListener((v) -> presenter.navigateToProject(project));
-            projectNameView = itemView.findViewById(R.id.project_name);
-            projectPeriodView = itemView.findViewById(R.id.project_period);
-            projectAmountView = itemView.findViewById(R.id.project_amount);
         }
 
         @Override
         public void setProject(Project project) {
             this.project = project;
-            String name = "Наименование: " + project.getName();
+            String name = Constants.NAME_FIELD + project.getName();
             projectNameView.setText(name);
-            String period = null;
+            StringBuilder periodBuilder = new StringBuilder();
+            periodBuilder.append(Constants.PERIOD_FIELD);
             switch (project.getProjectPeriod()) {
                 case Constants.WEEK:
-                    period = "Период: " + Constants.WEEK_STRING;
+                    periodBuilder.append(Constants.WEEK_STRING);
                     break;
                 case Constants.MONTH:
-                    period = "Период: " + Constants.MONTH_STRING;
+                    periodBuilder.append(Constants.MONTH_STRING);
                     break;
                 case Constants.YEAR:
-                    period = "Период: " + Constants.YEAR_STRING;
+                    periodBuilder.append(Constants.YEAR_STRING);
                     break;
                 case Constants.DATED:
                     if (project.getStartPeriod() == project.getFinishPeriod()) {
-                        period = "Период: "
-                                + sdf.format(project.getStartPeriod());
+                        periodBuilder.append(Constants.DATE_FORMAT.format(project.getStartPeriod()));
                     } else {
-                        period = "Период: "
-                                + sdf.format(project.getStartPeriod()
-                                + " - " + sdf.format(project.getFinishPeriod()));
+                        periodBuilder.append(Constants.DATE_FORMAT.format(project.getStartPeriod()))
+                                .append(" - ")
+                                .append(Constants.DATE_FORMAT.format(project.getFinishPeriod()));
                     }
                     break;
             }
-            projectPeriodView.setText(period);
+            projectPeriodView.setText(periodBuilder.toString());
             projectAmountView.setText(String.valueOf(project.getAmount()));
         }
     }
