@@ -2,9 +2,6 @@ package com.example.budgetapp.mvp.presenter;
 
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
-import com.example.budgetapp.mvp.model.entity.Project;
-import com.example.budgetapp.mvp.model.entity.Transaction;
-import com.example.budgetapp.mvp.model.entity.storage.ProjectStorage;
 import com.example.budgetapp.mvp.model.entity.storage.TransactionStorage;
 import com.example.budgetapp.mvp.model.entity.view.TransactionDetail;
 import com.example.budgetapp.mvp.view.TransactionFragmentView;
@@ -75,6 +72,10 @@ public class TransactionsPresenter extends MvpPresenter<TransactionFragmentView>
 
     public void fabAction(){
         router.navigateTo(new Screens.AddTransactionFragmentScreen());
+    }
+
+    public void onBack() {
+        router.exit();
     }
 
     class TransactionsListPresenter implements ITransactionsListPresenter {

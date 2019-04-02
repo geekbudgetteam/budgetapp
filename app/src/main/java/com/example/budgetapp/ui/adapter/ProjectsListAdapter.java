@@ -13,9 +13,6 @@ import com.example.budgetapp.mvp.presenter.IProjectsListPresenter;
 import com.example.budgetapp.mvp.view.ProjectRowView;
 import com.example.budgetapp.utils.Constants;
 
-import java.text.SimpleDateFormat;
-import java.util.Locale;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -53,7 +50,7 @@ public class ProjectsListAdapter extends RecyclerView.Adapter<ProjectsListAdapte
 
         ProjectHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(itemView);
+            ButterKnife.bind(this, itemView);
             itemView.setOnClickListener((v) -> presenter.navigateToProject(project));
         }
 

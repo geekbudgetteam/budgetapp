@@ -5,14 +5,12 @@ import com.example.budgetapp.mvp.model.entity.view.TransactionDetail;
 
 import java.util.List;
 
-import io.reactivex.Completable;
 import io.reactivex.Flowable;
 import io.reactivex.Maybe;
-import io.reactivex.Observable;
 
 public interface TransactionStorage {
 
-    Completable addTransaction(Transaction transaction);
+    void addTransaction(Transaction transaction);
 
     Maybe<Transaction> getTransaction(int id);
 
@@ -20,7 +18,7 @@ public interface TransactionStorage {
 
     Flowable<List<TransactionDetail>> getTransactionDetailsList();
 
-    Completable updateTransaction(Transaction transaction);
+    void updateTransaction(Transaction transaction);
 
-    Completable deleteTransaction(Transaction transaction);
+    void deleteTransaction(Transaction transaction);
 }

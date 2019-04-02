@@ -1,15 +1,15 @@
 package com.example.budgetapp.mvp.model.database.dao;
 
+import android.arch.persistence.room.Dao;
+import android.arch.persistence.room.Delete;
+import android.arch.persistence.room.Insert;
+import android.arch.persistence.room.OnConflictStrategy;
+import android.arch.persistence.room.Query;
+
 import com.example.budgetapp.mvp.model.entity.Unit;
 
 import java.util.List;
 
-import androidx.room.Dao;
-import androidx.room.Delete;
-import androidx.room.Insert;
-import androidx.room.OnConflictStrategy;
-import androidx.room.Query;
-import io.reactivex.Completable;
 import io.reactivex.Flowable;
 import io.reactivex.Maybe;
 
@@ -17,7 +17,7 @@ import io.reactivex.Maybe;
 public interface UnitDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    Completable insertUnit(Unit unit);
+    void insertUnit(Unit unit);
 
     @Query("SELECT * FROM units WHERE id = :id")
     Maybe<Unit> getUnit(int id);
@@ -26,6 +26,6 @@ public interface UnitDao {
     Flowable<List<Unit>> getUnitsList();
 
     @Delete
-    Completable deleteUnit(Unit unit);
+    void deleteUnit(Unit unit);
 
 }

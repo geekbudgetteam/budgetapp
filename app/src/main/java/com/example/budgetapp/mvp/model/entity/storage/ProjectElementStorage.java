@@ -4,19 +4,18 @@ import com.example.budgetapp.mvp.model.entity.ProjectElement;
 
 import java.util.List;
 
-import io.reactivex.Completable;
 import io.reactivex.Flowable;
 import io.reactivex.Maybe;
 
 public interface ProjectElementStorage {
 
-    Completable addProjectElement(ProjectElement projectElement);
+    void addProjectElement(ProjectElement projectElement);
 
     Maybe<ProjectElement> getProjectElement(int id);
 
     Flowable<List<ProjectElement>> getProjectElementsList();
 
-    Completable updateProjectElement(ProjectElement projectElement);
+    void updateProjectElement(ProjectElement projectElement);
 
-    Completable deleteProjectElement(ProjectElement projectElement);
+    void deleteProjectElement(ProjectElement projectElement);
 }

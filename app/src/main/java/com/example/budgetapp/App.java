@@ -5,7 +5,6 @@ import android.app.Application;
 import com.example.budgetapp.di.AppComponent;
 import com.example.budgetapp.di.DaggerAppComponent;
 import com.example.budgetapp.di.modules.AppModule;
-import com.example.budgetapp.di.modules.CiceroneModule;
 
 public class App extends Application {
     public static App instance;

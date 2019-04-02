@@ -7,19 +7,27 @@ import com.arellomobile.mvp.MvpPresenter;
 import com.example.budgetapp.mvp.model.entity.Category;
 import com.example.budgetapp.mvp.model.entity.ProjectElement;
 import com.example.budgetapp.mvp.model.entity.Unit;
+import com.example.budgetapp.mvp.model.entity.storage.CategoryStorage;
+import com.example.budgetapp.mvp.model.entity.storage.ProjectElementStorage;
+import com.example.budgetapp.mvp.model.entity.storage.UnitStorage;
 import com.example.budgetapp.mvp.view.ProjectElementView;
 import com.example.budgetapp.utils.Constants;
+
+import org.reactivestreams.Publisher;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import io.reactivex.Observable;
-import io.reactivex.ObservableSource;
+import javax.inject.Inject;
+
+import io.reactivex.Flowable;
 import io.reactivex.Scheduler;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
+import ru.terrakok.cicerone.Router;
 
 @InjectViewState
 public class ProjectElementPresenter extends MvpPresenter<ProjectElementView> {
@@ -28,12 +36,19 @@ public class ProjectElementPresenter extends MvpPresenter<ProjectElementView> {
     private static final String ADD_UNIT_ITEM = "Добавить ед. измерения";
 
     private Scheduler scheduler;
-
+    @Inject
+    Router router;
     private ICategoriesSpinnerPresenter categoriesSpinnerPresenter = new CategoriesSpinnerPresenter();
     private IUnitsSpinnerPresenter unitsSpinnerPresenter = new UnitsSpinnerPresenter();
-
     private List<Category> categories = new ArrayList<>();
     private List<Unit> units = new ArrayList<>();
+    @Inject
+    CategoryStorage categoryStorage;
+    @Inject
+    UnitStorage unitStorage;
+    @Inject
+    ProjectElementStorage projectElementStorage;
+    private Disposable disposable;
 
     public ProjectElementPresenter(Scheduler scheduler) {
         this.scheduler = scheduler;
@@ -47,11 +62,11 @@ public class ProjectElementPresenter extends MvpPresenter<ProjectElementView> {
 
     @SuppressLint("CheckResult")
     public void loadData() {
-        dbManager.getCategoriesList()
+        disposable = categoryStorage.getCategoriesList()
                 .subscribeOn(Schedulers.io())
-                .retryWhen(new Function<Observable<Throwable>, ObservableSource<?>>() {
+                .retryWhen(new Function<Flowable<Throwable>, Publisher<?>>() {
                     @Override
-                    public ObservableSource<?> apply(Observable<Throwable> throwableObservable) throws Exception {
+                    public Publisher<?> apply(Flowable<Throwable> throwableObservable) throws Exception {
                         return throwableObservable.take(3).delay(1, TimeUnit.SECONDS);
                     }
                 })
@@ -62,8 +77,7 @@ public class ProjectElementPresenter extends MvpPresenter<ProjectElementView> {
                         ProjectElementPresenter.this.categories = categories;
                         ProjectElementPresenter.this.categories.add(0, new Category(Constants.SPINNER_CHOICE));
                         ProjectElementPresenter.this.categories.add(new Category(Constants.SPINNER_ADD));
-
-                        dbManager.getUnitsList()
+                        unitStorage.getUnitsList()
                                 .subscribeOn(Schedulers.io())
                                 .retryWhen(throwableObservable -> throwableObservable.take(3).delay(1, TimeUnit.SECONDS))
                                 .observeOn(scheduler)
@@ -104,9 +118,12 @@ public class ProjectElementPresenter extends MvpPresenter<ProjectElementView> {
     }
 
     public void addElement(ProjectElement element) {
-        dbManager.addProjectElement(element);
-        getViewState().actionComplete();
+        projectElementStorage.addProjectElement(element);
+        onBack();
+    }
 
+    public void onBack() {
+        router.exit();
     }
 
     public ICategoriesSpinnerPresenter getCategoriesSpinnerPresenter() {

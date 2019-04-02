@@ -8,7 +8,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import io.reactivex.Completable;
 import io.reactivex.Flowable;
 import io.reactivex.Maybe;
 
@@ -22,8 +21,8 @@ public class UnitRepository implements UnitStorage {
     }
 
     @Override
-    public Completable addUnit(Unit unit) {
-        return unitDao.insertUnit(unit);
+    public void addUnit(Unit unit) {
+        unitDao.insertUnit(unit);
     }
 
     @Override
@@ -37,12 +36,12 @@ public class UnitRepository implements UnitStorage {
     }
 
     @Override
-    public Completable updateUnit(Unit unit) {
-        return unitDao.insertUnit(unit);
+    public void updateUnit(Unit unit) {
+        unitDao.insertUnit(unit);
     }
 
     @Override
-    public Completable deleteUnit(Unit unit) {
-        return unitDao.deleteUnit(unit);
+    public void deleteUnit(Unit unit) {
+        unitDao.deleteUnit(unit);
     }
 }

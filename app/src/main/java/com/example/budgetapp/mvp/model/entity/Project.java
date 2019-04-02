@@ -1,9 +1,9 @@
 package com.example.budgetapp.mvp.model.entity;
 
-import java.io.Serializable;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
 
-import androidx.room.Entity;
-import androidx.room.PrimaryKey;
+import java.io.Serializable;
 
 @Entity(tableName = "projects")
 public class Project implements Serializable {
@@ -17,10 +17,6 @@ public class Project implements Serializable {
     private long startPeriod;
     private long finishPeriod;
     private float amount;
-
-    public Project(int id) {
-        this.id = id;
-    }
 
     public Project(int projectType, String name, int variable, int projectPeriod, long startPeriod, long finishPeriod) {
         this.projectType = projectType;

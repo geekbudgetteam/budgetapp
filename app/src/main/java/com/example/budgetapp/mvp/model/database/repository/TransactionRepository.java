@@ -9,7 +9,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import io.reactivex.Completable;
 import io.reactivex.Flowable;
 import io.reactivex.Maybe;
 
@@ -23,8 +22,8 @@ public class TransactionRepository implements TransactionStorage {
     }
 
     @Override
-    public Completable addTransaction(Transaction transaction) {
-        return transactionDao.insertTransaction(transaction);
+    public void addTransaction(Transaction transaction) {
+        transactionDao.insertTransaction(transaction);
     }
 
     @Override
@@ -43,12 +42,12 @@ public class TransactionRepository implements TransactionStorage {
     }
 
     @Override
-    public Completable updateTransaction(Transaction transaction) {
-        return transactionDao.insertTransaction(transaction);
+    public void updateTransaction(Transaction transaction) {
+        transactionDao.insertTransaction(transaction);
     }
 
     @Override
-    public Completable deleteTransaction(Transaction transaction) {
-        return transactionDao.deleteTransaction(transaction);
+    public void deleteTransaction(Transaction transaction) {
+        transactionDao.deleteTransaction(transaction);
     }
 }

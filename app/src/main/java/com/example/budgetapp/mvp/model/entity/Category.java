@@ -1,9 +1,9 @@
 package com.example.budgetapp.mvp.model.entity;
 
-import java.io.Serializable;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
 
-import androidx.room.Entity;
-import androidx.room.PrimaryKey;
+import java.io.Serializable;
 
 @Entity(tableName = "categories")
 public class Category implements Serializable {

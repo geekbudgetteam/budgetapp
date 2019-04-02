@@ -1,9 +1,9 @@
 package com.example.budgetapp.mvp.model.database.converter;
 
-import java.util.Date;
+import android.arch.persistence.room.TypeConverter;
+import android.support.annotation.NonNull;
 
-import androidx.annotation.NonNull;
-import androidx.room.TypeConverter;
+import java.util.Date;
 
 public class DateConverter {
     @TypeConverter

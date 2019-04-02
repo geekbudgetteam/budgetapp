@@ -1,12 +1,13 @@
 package com.example.budgetapp.mvp.model.entity;
 
+import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.ForeignKey;
+import android.arch.persistence.room.PrimaryKey;
+
 import java.io.Serializable;
 
-import androidx.room.ColumnInfo;
-import androidx.room.Entity;
-import androidx.room.ForeignKey;
-import androidx.room.PrimaryKey;
-import static androidx.room.ForeignKey.SET_NULL;
+import static android.arch.persistence.room.ForeignKey.SET_NULL;
 
 @Entity(tableName = "elements",
         foreignKeys = {
@@ -18,9 +19,9 @@ public class ProjectElement implements Serializable {
     @PrimaryKey(autoGenerate = true)
     private int id;
     private String name;
-    @ColumnInfo(name = "project_id")
+    @ColumnInfo(name = "project_id", index = true)
     private int projectId;
-    @ColumnInfo(name = "category_id")
+    @ColumnInfo(name = "category_id", index = true)
     private int categoryId;
     @ColumnInfo(name = "unit_id")
     private int unitId;
@@ -30,19 +31,15 @@ public class ProjectElement implements Serializable {
     @ColumnInfo(name = "minimal_quantity")
     private float minimalQuantity;
 
-    public ProjectElement(String name, float quantity, float amount, int monitored, float minimalQuantity) {
+    public ProjectElement(String name, int projectId, int categoryId, int unitId, float quantity, float amount, int monitored, float minimalQuantity) {
         this.name = name;
+        this.projectId = projectId;
+        this.categoryId = categoryId;
+        this.unitId = unitId;
         this.quantity = quantity;
         this.amount = amount;
         this.monitored = monitored;
         this.minimalQuantity = minimalQuantity;
-    }
-
-    public ProjectElement(String name, int projectId, int categoryId, int unitId, float quantity, float amount, int monitored, float minimalQuantity) {
-        this(name, quantity, amount, monitored, minimalQuantity);
-        this.projectId = projectId;
-        this.categoryId = categoryId;
-        this.unitId = unitId;
     }
 
     public int getId() {
@@ -101,7 +98,7 @@ public class ProjectElement implements Serializable {
         this.amount = amount;
     }
 
-    public int isMonitored() {
+    public int getMonitored() {
         return monitored;
     }
 

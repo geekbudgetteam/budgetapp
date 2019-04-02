@@ -22,7 +22,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:entries="@string/transaction_type"/>
+            android:entries="@array/transaction_type_values" />
 
     </LinearLayout>
 
@@ -35,14 +35,23 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="6"
             android:text="@string/transaction_project" />
 
         <Spinner
             android:id="@+id/project_spinner"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            android:layout_weight="5" />
+
+        <ImageButton
+            android:id="@+id/add_project_btn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/add_button"
+            android:padding="@dimen/padding"
+            android:src="@drawable/ic_add_black" />
 
     </LinearLayout>
 
@@ -55,14 +64,22 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="6"
             android:text="@string/transaction_category" />
 
         <Spinner
             android:id="@+id/category_spinner"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            android:layout_weight="5" />
+
+        <ImageButton
+            android:id="@+id/add_category_btn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/add_button"
+            android:src="@drawable/ic_add_black" />
 
     </LinearLayout>
 
@@ -95,6 +112,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center"
         android:layout_margin="@dimen/fab_margin"
+        android:background="@drawable/add_button"
         android:text="@string/transaction_add_button" />
 
 

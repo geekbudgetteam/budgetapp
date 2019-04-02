@@ -7,8 +7,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.budgetapp.R;
-import com.example.budgetapp.mvp.model.entity.Category;
-import com.example.budgetapp.mvp.model.entity.Transaction;
 import com.example.budgetapp.mvp.model.entity.view.TransactionDetail;
 import com.example.budgetapp.mvp.presenter.ITransactionsListPresenter;
 import com.example.budgetapp.mvp.view.TransactionRowView;
@@ -55,7 +53,7 @@ public class TransactionsListAdapter extends RecyclerView.Adapter<TransactionsLi
 
         TransactionHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(itemView);
+            ButterKnife.bind(this, itemView);
             itemView.setOnClickListener((v) -> presenter.navigateToTransaction(transaction));
         }
 

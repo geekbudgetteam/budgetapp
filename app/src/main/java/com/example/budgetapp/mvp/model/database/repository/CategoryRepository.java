@@ -8,7 +8,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import io.reactivex.Completable;
 import io.reactivex.Flowable;
 import io.reactivex.Maybe;
 
@@ -22,8 +21,8 @@ public class CategoryRepository implements CategoryStorage {
     }
 
     @Override
-    public Completable addCategory(Category category) {
-        return categoryDao.insertCategory(category);
+    public void addCategory(Category category) {
+        categoryDao.insertCategory(category);
     }
 
     @Override
@@ -37,12 +36,12 @@ public class CategoryRepository implements CategoryStorage {
     }
 
     @Override
-    public Completable updateCategory(Category category) {
-        return categoryDao.insertCategory(category);
+    public void updateCategory(Category category) {
+        categoryDao.insertCategory(category);
     }
 
     @Override
-    public Completable deleteCategory(Category category) {
-        return categoryDao.deleteCategory(category);
+    public void deleteCategory(Category category) {
+        categoryDao.deleteCategory(category);
     }
 }

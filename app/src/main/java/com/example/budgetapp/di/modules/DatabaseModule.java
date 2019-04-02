@@ -1,12 +1,14 @@
 package com.example.budgetapp.di.modules;
 
+import android.arch.persistence.room.Room;
+
 import com.example.budgetapp.App;
+import com.example.budgetapp.mvp.model.database.BudgetDatabase;
 import com.example.budgetapp.mvp.model.database.dao.CategoryDao;
 import com.example.budgetapp.mvp.model.database.dao.ProjectDao;
 import com.example.budgetapp.mvp.model.database.dao.ProjectElementDao;
 import com.example.budgetapp.mvp.model.database.dao.TransactionDao;
 import com.example.budgetapp.mvp.model.database.dao.UnitDao;
-import com.example.budgetapp.mvp.model.database.BudgetDatabase;
 import com.example.budgetapp.mvp.model.database.repository.CategoryRepository;
 import com.example.budgetapp.mvp.model.database.repository.ProjectElementRepository;
 import com.example.budgetapp.mvp.model.database.repository.ProjectRepository;
@@ -20,7 +22,6 @@ import com.example.budgetapp.mvp.model.entity.storage.UnitStorage;
 
 import javax.inject.Singleton;
 
-import androidx.room.Room;
 import dagger.Module;
 import dagger.Provides;
 

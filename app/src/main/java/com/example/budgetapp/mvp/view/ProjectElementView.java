@@ -14,8 +14,4 @@ public interface ProjectElementView extends MvpView {
     void setMinimumQuantityVisible(boolean monitored);
 
     void showMessage(String message);
-
-    void actionComplete();
-
-
 }

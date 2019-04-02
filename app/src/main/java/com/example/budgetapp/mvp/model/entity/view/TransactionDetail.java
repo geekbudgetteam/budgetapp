@@ -1,18 +1,17 @@
 package com.example.budgetapp.mvp.model.entity.view;
 
+import android.arch.persistence.room.TypeConverters;
+
 import com.example.budgetapp.mvp.model.database.converter.DateConverter;
 
 import java.util.Date;
 
-import androidx.room.DatabaseView;
-import androidx.room.TypeConverters;
-
-@DatabaseView("SELECT transactions.id, " +
-        "projects.name AS projectName, transactions " +
-        "categories.name AS categoryName, transactions.name, transactions.amount " +
-        "FROM transactions " +
-        "INNER JOIN projects ON transactions.project_id = projects.id" +
-        "INNER JOIN categories ON transactions.category_id = categories.id" )
+//("SELECT transactions.id, " +
+//        "projects.name AS projectName, transactions " +
+//        "categories.name AS categoryName, transactions.name, transactions.amount " +
+//        "FROM transactions " +
+//        "INNER JOIN projects ON transactions.project_id = projects.id" +
+//        "INNER JOIN categories ON transactions.category_id = categories.id" )
 public class TransactionDetail {
     private int id;
     private int projectName;

@@ -13,6 +13,8 @@ import com.example.budgetapp.R;
 import com.example.budgetapp.mvp.model.entity.Category;
 import com.example.budgetapp.mvp.presenter.ICategoriesSpinnerPresenter;
 
+import org.jetbrains.annotations.NotNull;
+
 public class CategoriesSpinnerAdapter extends ArrayAdapter<Category> implements SpinnerAdapter {
 
     private ICategoriesSpinnerPresenter presenter;
@@ -39,6 +41,7 @@ public class CategoriesSpinnerAdapter extends ArrayAdapter<Category> implements 
         return position;
     }
 
+    @NotNull
     @Override
     public View getView(int position, View convertView, @NonNull ViewGroup parent) {
         TextView label = (TextView) super.getView(position, convertView, parent);

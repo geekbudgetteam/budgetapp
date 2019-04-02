@@ -13,6 +13,7 @@ import android.view.View;
 import com.example.budgetapp.App;
 import com.example.budgetapp.R;
 import com.example.budgetapp.navigation.Screens;
+import com.example.budgetapp.ui.common.BackButtonListener;
 
 import javax.inject.Inject;
 
@@ -25,7 +26,7 @@ import ru.terrakok.cicerone.commands.Replace;
 
 public class MainActivity extends AppCompatActivity implements ChangeFragmentTitleListener {
 
-    private Navigator navigator = new SupportAppNavigator(this, R.id.fl_master);
+    private Navigator navigator = new SupportAppNavigator(this, R.id.container);
 
     @Inject
     NavigatorHolder navigatorHolder;
@@ -45,7 +46,7 @@ public class MainActivity extends AppCompatActivity implements ChangeFragmentTit
         navigationView = findViewById(R.id.nav_view);
         setNavigationItemSelectedListener();
 
-        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fl_master);
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.container);
         if (savedInstanceState == null && fragment == null) {
             navigator.applyCommands(new Command[]{new Replace(new Screens.TransactionsFragmentScreen())});
         }
@@ -128,7 +129,12 @@ public class MainActivity extends AppCompatActivity implements ChangeFragmentTit
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.container);
+            if (fragment instanceof BackButtonListener) {
+                ((BackButtonListener) fragment).onBackPressed();
+            } else {
+                super.onBackPressed();
+            }
         }
     }
 }

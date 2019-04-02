@@ -4,101 +4,132 @@ import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
 import com.example.budgetapp.mvp.model.entity.Category;
 import com.example.budgetapp.mvp.model.entity.Project;
+import com.example.budgetapp.mvp.model.entity.Transaction;
+import com.example.budgetapp.mvp.model.entity.storage.CategoryStorage;
+import com.example.budgetapp.mvp.model.entity.storage.ProjectStorage;
+import com.example.budgetapp.mvp.model.entity.storage.TransactionStorage;
 import com.example.budgetapp.mvp.view.AddTransactionView;
+import com.example.budgetapp.navigation.Screens;
+import com.example.budgetapp.utils.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import io.reactivex.Observer;
+import javax.inject.Inject;
+
 import io.reactivex.Scheduler;
-import io.reactivex.disposables.Disposable;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.schedulers.Schedulers;
+import ru.terrakok.cicerone.Router;
 
 @InjectViewState
 public class AddTransactionPresenter extends MvpPresenter<AddTransactionView> {
 
     private Scheduler scheduler;
-    private List<Project> projectsList;
-    private List<Category> categoriesList;
-    private ArrayList<String> projectsName;
-    private ArrayList<String> categoryName;
+    @Inject
+    Router router;
+    @Inject
+    ProjectStorage projectStorage;
+    @Inject
+    CategoryStorage categoryStorage;
+    @Inject
+    TransactionStorage transactionStorage;
+    private CompositeDisposable disposables = new CompositeDisposable();
+    private IProjectsSpinnerPresenter projectsSpinnerPresenter = new ProjectsSpinnerPresenter();
+    private ICategoriesSpinnerPresenter categoriesSpinnerPresenter = new CategoriesSpinnerPresenter();
+    private List<Project> projects = new ArrayList<>();
+    private List<Category> categories = new ArrayList<>();
 
     public AddTransactionPresenter(Scheduler scheduler) {
         this.scheduler = scheduler;
-        projectsName = new ArrayList<>();
-        categoryName = new ArrayList<>();
     }
 
-    public void goBackToTransactionFragment() {
-        getViewState().showTransactionFragment();
+    @Override
+    protected void onFirstViewAttach() {
+        super.onFirstViewAttach();
+        loadData();
+    }
+
+    public void loadData() {
+        disposables.add(projectStorage.getProjectsList()
+                .subscribeOn(Schedulers.io())
+                .observeOn(scheduler)
+                .subscribe((projects) -> {
+                    this.projects = projects;
+                    disposables.add(categoryStorage.getCategoriesList()
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(scheduler)
+                            .subscribe((categories) -> this.categories = categories));
+                    getViewState().updateData();
+                }));
+    }
+
+    public IProjectsSpinnerPresenter getProjectsSpinnerPresenter() {
+        return projectsSpinnerPresenter;
+    }
+
+    public ICategoriesSpinnerPresenter getCategoriesSpinnerPresenter() {
+        return categoriesSpinnerPresenter;
+    }
+
+    public void showAddProjectFragment() {
+        router.navigateTo(new Screens.AddProjectFragmentScreen());
+    }
+
+    public void showAddCategoryFragment() {
+        router.navigateTo(new Screens.AddCategoryFragmentScreen());
+    }
+
+    public void addDataError(String field) {
+        getViewState().showMessage(Constants.ERROR_MESSAGE + field);
     }
 
     public void addTransaction() {
-        getViewState().showTransactionFragment();
+        getViewState().getData();
     }
 
-    public void setProjectsType() {
-        Observer<List<Project>> observer = new Observer<List<Project>>() {
-            @Override
-            public void onSubscribe(Disposable d) {
-            }
-
-            @Override
-            public void onNext(List<Project> s) {
-                projectsList = s;
-            }
-
-            @Override
-            public void onError(Throwable e) {
-            }
-
-            @Override
-            public void onComplete() {
-                if (projectsList == null) {
-                    ArrayList<String> projectsListName = new ArrayList<>();
-                    projectsListName.add("Пусто");
-                    getViewState().setProjectsList(projectsListName);
-                } else {
-                    for (int i = 0; i < projectsList.size(); i++) {
-                        projectsName.add(projectsList.get(i).getName());
-                    }
-                    getViewState().setProjectsList(projectsName);
-                }
-
-            }
-        };
-        dataBaseManager.getProjectsList().subscribe(observer);
+    public void addTransaction(Transaction transaction) {
+        transactionStorage.addTransaction(transaction);
+        onBack();
     }
 
-    public void setCategoryType(){
-        Observer<List<Category>> observer = new Observer<List<Category>>() {
-            @Override
-            public void onSubscribe(Disposable d) {
-            }
+    public void onBack() {
+        router.exit();
+    }
 
-            @Override
-            public void onNext(List<Category> s) {
-                categoriesList = s;
-            }
+    class ProjectsSpinnerPresenter implements IProjectsSpinnerPresenter {
 
-            @Override
-            public void onError(Throwable e) {
-            }
+        @Override
+        public int getProjectsCount() {
+            return projects.size();
+        }
 
-            @Override
-            public void onComplete() {
-                if (categoriesList == null) {
-                    ArrayList<String> categoriesListName = new ArrayList<>();
-                    categoriesListName.add("Пусто");
-                    getViewState().setCategoryList(categoriesListName);
-                } else {
-                    for (int i = 0; i < categoriesList.size(); i++) {
-                        categoryName.add(categoriesList.get(i).getName());
-                    }
-                    getViewState().setCategoryList(categoryName);
-                }
+        @Override
+        public Project getProject(int position) {
+            return projects.get(position);
+        }
 
-            }
-        };
-        dataBaseManager.getCategoriesList().subscribe(observer);
+        @Override
+        public List<Project> getProjectsList() {
+            return projects;
+        }
+    }
+
+    class CategoriesSpinnerPresenter implements ICategoriesSpinnerPresenter {
+
+        @Override
+        public int getCategoriesCount() {
+            return categories.size();
+        }
+
+        @Override
+        public Category getCategory(int position) {
+            return categories.get(position);
+        }
+
+        @Override
+        public List<Category> getCategoriesList() {
+            return categories;
+        }
     }
 }

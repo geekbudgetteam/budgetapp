@@ -8,7 +8,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import io.reactivex.Completable;
 import io.reactivex.Flowable;
 import io.reactivex.Maybe;
 
@@ -22,8 +21,8 @@ public class ProjectElementRepository implements ProjectElementStorage {
     }
 
     @Override
-    public Completable addProjectElement(ProjectElement projectElement) {
-        return projectElementDao.insertProjectElement(projectElement);
+    public void addProjectElement(ProjectElement projectElement) {
+        projectElementDao.insertProjectElement(projectElement);
     }
 
     @Override
@@ -37,12 +36,12 @@ public class ProjectElementRepository implements ProjectElementStorage {
     }
 
     @Override
-    public Completable updateProjectElement(ProjectElement projectElement) {
-        return projectElementDao.insertProjectElement(projectElement);
+    public void updateProjectElement(ProjectElement projectElement) {
+        projectElementDao.insertProjectElement(projectElement);
     }
 
     @Override
-    public Completable deleteProjectElement(ProjectElement projectElement) {
-        return projectElementDao.deleteProjectElement(projectElement);
+    public void deleteProjectElement(ProjectElement projectElement) {
+        projectElementDao.deleteProjectElement(projectElement);
     }
 }

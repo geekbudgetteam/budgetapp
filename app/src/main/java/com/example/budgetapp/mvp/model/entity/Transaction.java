@@ -1,12 +1,13 @@
 package com.example.budgetapp.mvp.model.entity;
 
+import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.ForeignKey;
+import android.arch.persistence.room.PrimaryKey;
+
 import java.io.Serializable;
 
-import androidx.room.ColumnInfo;
-import androidx.room.Entity;
-import androidx.room.ForeignKey;
-import androidx.room.PrimaryKey;
-import static androidx.room.ForeignKey.SET_NULL;
+import static android.arch.persistence.room.ForeignKey.SET_NULL;
 
 @Entity(tableName = "transactions",
         foreignKeys = {
@@ -17,22 +18,18 @@ public class Transaction implements Serializable {
 
     @PrimaryKey(autoGenerate = true)
     private int id;
-    @ColumnInfo(name = "project_id")
+    @ColumnInfo(name = "project_id", index = true)
     private int projectId;
-    @ColumnInfo(name = "category_id")
+    @ColumnInfo(name = "category_id", index = true)
     private int categoryId;
     private long date;
     private float amount;
 
-    public Transaction(long date, float amount) {
-        this.date = date;
-        this.amount = amount;
-    }
-
     public Transaction(int projectId, int categoryId, long date, float amount) {
-        this(date, amount);
         this.projectId = projectId;
         this.categoryId = categoryId;
+        this.date = date;
+        this.amount = amount;
     }
 
     public int getId() {
