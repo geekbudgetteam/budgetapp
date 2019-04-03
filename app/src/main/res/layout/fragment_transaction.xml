@@ -1,41 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.fragment.TransactionsFragment">
+    android:orientation="vertical">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
         android:id="@+id/totalAmount"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="1 000 000.00 рублей"
-        android:textSize="25dp"
+        android:background="@color/colorPrimary"
+        android:padding="@dimen/padding_header"
+        android:textColor="@color/colorPrimaryText"
         android:gravity="center"
-        app:layout_constraintTop_toTopOf="parent"/>
+        android:textSize="30sp" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/transactionsRecycler"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        app:layout_anchor="@+id/totalAmount"
-        app:layout_constraintTop_toBottomOf="@+id/totalAmount" />
+        android:layout_height="match_parent">
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fragment_fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:background="#CDDC39"
-        android:elevation="20dp"
-        android:src="@drawable/baseline_add_black_18dp"
-        app:layout_anchor="@+id/transactionsRecycler"
-        app:layout_anchorGravity="top|end"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/transactionsRecycler" />
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
-</android.support.constraint.ConstraintLayout>
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fragment_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_marginEnd="@dimen/fab_margin"
+            android:layout_marginBottom="@dimen/fab_margin"
+            android:background="@color/colorAccent"
+            android:elevation="20dp"
+            android:src="@drawable/ic_add_black" />
+
+    </FrameLayout>
+
+</LinearLayout>

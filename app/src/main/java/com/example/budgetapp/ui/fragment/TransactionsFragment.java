@@ -17,6 +17,8 @@ import com.example.budgetapp.mvp.presenter.TransactionsPresenter;
 import com.example.budgetapp.mvp.view.TransactionFragmentView;
 import com.example.budgetapp.ui.adapter.TransactionsListAdapter;
 
+import java.util.Locale;
+
 import butterknife.BindView;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 
@@ -25,7 +27,8 @@ public class TransactionsFragment extends BaseFragment implements TransactionFra
     private TransactionsListAdapter adapter;
 
     @BindView(R.id.totalAmount) TextView totalAmountTextView;
-    @BindView(R.id.transactionsRecycler) RecyclerView recyclerView;
+    @BindView(R.id.recycler_view)
+    RecyclerView recyclerView;
     @BindView(R.id.fragment_fab) FloatingActionButton fab;
 
     @InjectPresenter
@@ -72,13 +75,13 @@ public class TransactionsFragment extends BaseFragment implements TransactionFra
     }
 
     @Override
-    public void updateTotalAmount(int amount) {
-        totalAmountTextView.setText(String.valueOf(amount));
+    public void updateTotalAmount(float amount) {
+        String value = String.format(Locale.getDefault(), "%.2f %s", amount, getContext().getResources().getString(R.string.currency));
+        totalAmountTextView.setText(value);
     }
 
     @Override
     public void onBackPressed() {
         presenter.onBack();
-
     }
 }

@@ -23,6 +23,8 @@ public class Constants {
     public static final String MONTH_STRING = "Месяц";
     public static final String YEAR_STRING = "Год";
 
+    public static final String CURRENCY = "руб.";
+
     //    ProjectElement monitored types
     public static final int UNMONITORED = 0;
     public static final int MONITORED = 1;

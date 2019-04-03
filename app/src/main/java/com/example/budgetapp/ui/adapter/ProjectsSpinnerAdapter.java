@@ -10,9 +10,7 @@ import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 
 import com.example.budgetapp.R;
-import com.example.budgetapp.mvp.model.entity.Category;
 import com.example.budgetapp.mvp.model.entity.Project;
-import com.example.budgetapp.mvp.presenter.ICategoriesSpinnerPresenter;
 import com.example.budgetapp.mvp.presenter.IProjectsSpinnerPresenter;
 
 public class ProjectsSpinnerAdapter extends ArrayAdapter<Project> implements SpinnerAdapter {
@@ -37,7 +35,12 @@ public class ProjectsSpinnerAdapter extends ArrayAdapter<Project> implements Spi
 
     @Override
     public long getItemId(int position) {
-        return position;
+        Project project = getItem(position);
+        if (project != null) {
+            return project.getId();
+        } else {
+            return 0;
+        }
     }
 
     @Override

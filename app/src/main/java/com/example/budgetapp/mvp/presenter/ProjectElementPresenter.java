@@ -161,7 +161,11 @@ public class ProjectElementPresenter extends MvpPresenter<ProjectElementView> {
 
         @Override
         public Unit getUnit(int position) {
-            return units.get(position);
+            Unit unit = null;
+            if (position != -1) {
+                unit = units.get(position);
+            }
+            return unit;
         }
 
         @Override

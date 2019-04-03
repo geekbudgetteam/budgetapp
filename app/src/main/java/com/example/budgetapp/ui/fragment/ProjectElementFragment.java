@@ -162,12 +162,12 @@ public class ProjectElementFragment extends BaseFragment implements ProjectEleme
             presenter.addDataError(getContext().getResources().getString(R.string.project_element_name));
             return;
         }
-        int categoryId = categoriesSpinnerAdapter.getItem(categorySpinner.getSelectedItemPosition()).getId();
+        int categoryId = (int) categoriesSpinnerAdapter.getItemId(categorySpinner.getSelectedItemPosition());
         if (categoryId == 0) {
             presenter.addDataError(getContext().getResources().getString(R.string.project_element_category));
             return;
         }
-        int unitId = unitsSpinnerAdapter.getItem(unitSpinner.getSelectedItemPosition()).getId();
+        int unitId = (int) unitsSpinnerAdapter.getItemId(unitSpinner.getSelectedItemPosition());
         if (unitId == 0) {
             presenter.addDataError(getContext().getResources().getString(R.string.project_element_unit));
             return;
@@ -189,7 +189,7 @@ public class ProjectElementFragment extends BaseFragment implements ProjectEleme
 
     @Override
     public void showMessage(String message) {
-        Toast.makeText(getView().getContext(), message, Toast.LENGTH_SHORT).show();
+        Toast.makeText(getView().getContext(), message, Toast.LENGTH_LONG).show();
     }
 
     @Override

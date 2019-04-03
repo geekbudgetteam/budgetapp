@@ -31,7 +31,7 @@ public class ProjectsPresenter extends MvpPresenter<ProjectsListView> {
 
     private Scheduler scheduler;
     private Disposable disposable;
-    private IProjectsListPresenter projectsListPresenter = new ProjectsPresenter.ProjectsListPresenter();
+    private IProjectsListPresenter projectsListPresenter = new ProjectsListPresenter();
     private List<Project> projects = new ArrayList<>();
 
     @Inject
@@ -91,10 +91,6 @@ public class ProjectsPresenter extends MvpPresenter<ProjectsListView> {
                         ProjectsPresenter.this.getViewState().updateProjectsList();
                     }
                 });
-    }
-
-    public void onBackPressed(){
-        router.replaceScreen(new Screens.TransactionsFragmentScreen());
     }
 
     class ProjectsListPresenter implements IProjectsListPresenter {

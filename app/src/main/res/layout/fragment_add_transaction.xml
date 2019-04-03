@@ -14,15 +14,24 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/transaction_type" />
+            android:layout_gravity="center_vertical"
+            android:layout_weight="2"
+            android:text="@string/transaction_type"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <Spinner
             android:id="@+id/type_spinner"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="3"
             android:entries="@array/transaction_type_values" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="@dimen/button_radius_medium"
+            android:layout_weight="1" />
+
 
     </LinearLayout>
 
@@ -35,23 +44,33 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="6"
-            android:text="@string/transaction_project" />
+            android:layout_gravity="center_vertical"
+            android:layout_weight="2"
+            android:text="@string/transaction_project"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <Spinner
             android:id="@+id/project_spinner"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="5" />
+            android:layout_gravity="center_vertical"
+            android:layout_weight="3" />
 
-        <ImageButton
-            android:id="@+id/add_project_btn"
+        <FrameLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/add_button"
-            android:padding="@dimen/padding"
-            android:src="@drawable/ic_add_black" />
+            android:layout_weight="1">
+
+            <ImageButton
+                android:id="@+id/add_project_btn"
+                android:layout_width="@dimen/button_radius_medium"
+                android:layout_height="@dimen/button_radius_medium"
+                android:layout_gravity="center"
+                android:background="@drawable/add_button"
+                android:src="@drawable/ic_add_black" />
+
+        </FrameLayout>
+
 
     </LinearLayout>
 
@@ -64,22 +83,32 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="6"
-            android:text="@string/transaction_category" />
+            android:layout_gravity="center_vertical"
+            android:layout_weight="2"
+            android:text="@string/transaction_category"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <Spinner
             android:id="@+id/category_spinner"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="5" />
+            android:layout_gravity="center_vertical"
+            android:layout_weight="3" />
 
-        <ImageButton
-            android:id="@+id/add_category_btn"
+        <FrameLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="1">
+
+            <ImageButton
+                android:id="@+id/add_category_btn"
+                android:layout_width="@dimen/button_radius_medium"
+                android:layout_height="@dimen/button_radius_medium"
+                android:layout_gravity="center"
             android:background="@drawable/add_button"
             android:src="@drawable/ic_add_black" />
+
+        </FrameLayout>
 
     </LinearLayout>
 
@@ -89,20 +118,27 @@
         android:orientation="horizontal"
         android:padding="@dimen/padding">
 
-
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/transaction_amount" />
+            android:layout_gravity="center_vertical"
+            android:layout_weight="2"
+            android:text="@string/transaction_amount"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <EditText
             android:id="@+id/amount_input"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="3"
             android:hint="@string/transaction_number_hint"
             android:inputType="number" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="@dimen/button_radius_medium"
+            android:layout_weight="1" />
 
     </LinearLayout>
 
@@ -112,6 +148,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center"
         android:layout_margin="@dimen/fab_margin"
+        android:padding="@dimen/padding"
         android:background="@drawable/add_button"
         android:text="@string/transaction_add_button" />
 

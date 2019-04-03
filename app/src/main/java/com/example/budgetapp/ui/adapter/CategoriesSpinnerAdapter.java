@@ -38,7 +38,12 @@ public class CategoriesSpinnerAdapter extends ArrayAdapter<Category> implements 
 
     @Override
     public long getItemId(int position) {
-        return position;
+        Category category = getItem(position);
+        if (category != null) {
+            return category.getId();
+        } else {
+            return 0;
+        }
     }
 
     @NotNull

@@ -6,5 +6,7 @@
     <dimen name="nav_header_height">176dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="padding">10dp</dimen>
+    <dimen name="padding_header">30dp</dimen>
     <dimen name="button_radius_large">50dp</dimen>
+    <dimen name="button_radius_medium">40dp</dimen>
 </resources>

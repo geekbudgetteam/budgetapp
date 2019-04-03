@@ -59,7 +59,7 @@ public class ProjectsListFragment extends MvpAppCompatFragment implements Projec
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_list, container, false);
-        ButterKnife.bind(view);
+        ButterKnife.bind(this, view);
         return view;
     }
 
@@ -79,14 +79,5 @@ public class ProjectsListFragment extends MvpAppCompatFragment implements Projec
     @Override
     public void updateProjectsList() {
         adapter.notifyDataSetChanged();
-    }
-
-    public int getFragmentType() {
-        return fragmentType;
-    }
-
-    public boolean onBackPressed() {
-        presenter.onBackPressed();
-        return true;
     }
 }

@@ -106,7 +106,11 @@ public class AddTransactionPresenter extends MvpPresenter<AddTransactionView> {
 
         @Override
         public Project getProject(int position) {
-            return projects.get(position);
+            Project project = null;
+            if (position != -1) {
+                project = projects.get(position);
+            }
+            return project;
         }
 
         @Override
@@ -124,7 +128,11 @@ public class AddTransactionPresenter extends MvpPresenter<AddTransactionView> {
 
         @Override
         public Category getCategory(int position) {
-            return categories.get(position);
+            Category category = null;
+            if (position != -1) {
+                category = categories.get(position);
+            }
+            return category;
         }
 
         @Override

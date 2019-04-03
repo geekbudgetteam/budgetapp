@@ -85,12 +85,12 @@ public class AddTransactionFragment extends BaseFragment implements AddTransacti
 
     @Override
     public void getData() {
-        int projectId = projectsSpinnerAdapter.getItem(projectSpinner.getSelectedItemPosition()).getId();
+        int projectId = (int) projectsSpinnerAdapter.getItemId(projectSpinner.getSelectedItemPosition());
         if (projectId == 0) {
             presenter.addDataError(getContext().getResources().getString(R.string.transaction_project));
             return;
         }
-        int categoryId = categoriesSpinnerAdapter.getItem(categorySpinner.getSelectedItemPosition()).getId();
+        int categoryId = (int) categoriesSpinnerAdapter.getItemId(categorySpinner.getSelectedItemPosition());
         if (categoryId == 0) {
             presenter.addDataError(getContext().getResources().getString(R.string.transaction_category));
             return;
@@ -113,7 +113,7 @@ public class AddTransactionFragment extends BaseFragment implements AddTransacti
 
     @Override
     public void showMessage(String message) {
-        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
     }
 
     @Override

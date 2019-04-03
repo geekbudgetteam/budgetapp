@@ -8,6 +8,9 @@
     <string name="navigation_drawer_open">Панель управления открыта</string>
     <string name="navigation_drawer_close">Панель управления закрыта</string>
 
+    <string name="currency">руб.</string>
+
+
     <!--Fragments titles-->
     <string name="transactions_fragment">Транзакции</string>
     <string name="add_transaction_fragment">Добавить транзакцию</string>

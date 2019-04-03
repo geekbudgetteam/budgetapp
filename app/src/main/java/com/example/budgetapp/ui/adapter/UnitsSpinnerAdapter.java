@@ -35,7 +35,12 @@ public class UnitsSpinnerAdapter extends ArrayAdapter<Unit> implements SpinnerAd
 
     @Override
     public long getItemId(int position) {
-        return position;
+        Unit unit = getItem(position);
+        if (unit != null) {
+            return unit.getId();
+        } else {
+            return 0;
+        }
     }
 
     @Override
