@@ -8,8 +8,10 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import io.reactivex.Completable;
 import io.reactivex.Flowable;
 import io.reactivex.Maybe;
+import io.reactivex.schedulers.Schedulers;
 
 public class UnitRepository implements UnitStorage {
 
@@ -21,8 +23,9 @@ public class UnitRepository implements UnitStorage {
     }
 
     @Override
-    public void addUnit(Unit unit) {
-        unitDao.insertUnit(unit);
+    public Completable addUnit(Unit unit) {
+        return Completable.fromAction(() -> unitDao.insertUnit(unit))
+                .subscribeOn(Schedulers.io());
     }
 
     @Override
@@ -36,12 +39,14 @@ public class UnitRepository implements UnitStorage {
     }
 
     @Override
-    public void updateUnit(Unit unit) {
-        unitDao.insertUnit(unit);
+    public Completable updateUnit(Unit unit) {
+        return Completable.fromAction(() -> unitDao.insertUnit(unit))
+                .subscribeOn(Schedulers.io());
     }
 
     @Override
-    public void deleteUnit(Unit unit) {
-        unitDao.deleteUnit(unit);
+    public Completable deleteUnit(Unit unit) {
+        return Completable.fromAction(() -> unitDao.deleteUnit(unit))
+                .subscribeOn(Schedulers.io());
     }
 }

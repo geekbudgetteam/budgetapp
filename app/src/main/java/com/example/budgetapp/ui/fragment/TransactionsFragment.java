@@ -18,6 +18,7 @@ import com.example.budgetapp.mvp.view.TransactionFragmentView;
 import com.example.budgetapp.ui.adapter.TransactionsListAdapter;
 
 import java.util.Locale;
+import java.util.Objects;
 
 import butterknife.BindView;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -57,7 +58,7 @@ public class TransactionsFragment extends BaseFragment implements TransactionFra
 
     @Override
     int getLayoutRes() {
-        return R.layout.fragment_transaction;
+        return R.layout.fragment_transactions;
     }
 
     @Override
@@ -76,7 +77,7 @@ public class TransactionsFragment extends BaseFragment implements TransactionFra
 
     @Override
     public void updateTotalAmount(float amount) {
-        String value = String.format(Locale.getDefault(), "%.2f %s", amount, getContext().getResources().getString(R.string.currency));
+        String value = String.format(Locale.getDefault(), "%.2f %s", amount, Objects.requireNonNull(getContext()).getResources().getString(R.string.currency));
         totalAmountTextView.setText(value);
     }
 

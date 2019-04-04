@@ -6,7 +6,7 @@ import com.arellomobile.mvp.viewstate.strategy.SkipStrategy;
 import com.arellomobile.mvp.viewstate.strategy.StateStrategyType;
 
 @StateStrategyType(value = AddToEndSingleStrategy.class)
-public interface AddTransactionView extends MvpView {
+public interface AddTransactionFragmentView extends MvpView {
 
     void updateData();
 

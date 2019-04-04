@@ -3,7 +3,8 @@ package com.example.budgetapp.di;
 import com.example.budgetapp.di.modules.AppModule;
 import com.example.budgetapp.di.modules.CiceroneModule;
 import com.example.budgetapp.di.modules.DatabaseModule;
-import com.example.budgetapp.mvp.presenter.AddTransactionPresenter;
+import com.example.budgetapp.mvp.presenter.AddProjectFragmentPresenter;
+import com.example.budgetapp.mvp.presenter.AddTransactionFragmentPresenter;
 import com.example.budgetapp.mvp.presenter.ProjectElementPresenter;
 import com.example.budgetapp.mvp.presenter.ProjectsHolderPresenter;
 import com.example.budgetapp.mvp.presenter.ProjectsPresenter;
@@ -36,5 +37,8 @@ public interface AppComponent {
 
     void inject(ProjectsHolderPresenter presenter);
     void inject(AddTransactionFragment fragment);
-    void inject(AddTransactionPresenter presenter);
+
+    void inject(AddTransactionFragmentPresenter presenter);
+
+    void inject(AddProjectFragmentPresenter presenter);
 }

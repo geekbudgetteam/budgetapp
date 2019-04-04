@@ -32,7 +32,6 @@
             android:layout_height="@dimen/button_radius_medium"
             android:layout_weight="1" />
 
-
     </LinearLayout>
 
     <LinearLayout
@@ -70,7 +69,6 @@
                 android:src="@drawable/ic_add_black" />
 
         </FrameLayout>
-
 
     </LinearLayout>
 
@@ -151,6 +149,5 @@
         android:padding="@dimen/padding"
         android:background="@drawable/add_button"
         android:text="@string/transaction_add_button" />
-
 
 </LinearLayout>

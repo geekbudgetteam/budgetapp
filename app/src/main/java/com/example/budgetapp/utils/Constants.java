@@ -14,11 +14,15 @@ public class Constants {
     public static final int VARIABLE = 1;
 
     //    Project periods
-    public static final int DATED = 0;
-    public static final int WEEK = 1;
-    public static final int MONTH = 2;
-    public static final int YEAR = 3;
+    public static final int YEAR = 0;
+    public static final int MONTH = 1;
+    public static final int WEEK = 2;
+    public static final int DAY = 3;
+    public static final int DATE = 4;
+    public static final int PERIOD = 5;
 
+
+    public static final String DAY_STRING = "День";
     public static final String WEEK_STRING = "Неделя";
     public static final String MONTH_STRING = "Месяц";
     public static final String YEAR_STRING = "Год";
@@ -51,7 +55,7 @@ public class Constants {
     public static final String PERIOD_FIELD = "Период: ";
 
     //    Date format
-    public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd.MM.yy", Locale.getDefault());
+    public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
 
 
 }

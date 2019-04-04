@@ -15,8 +15,8 @@ import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.example.budgetapp.App;
 import com.example.budgetapp.R;
 import com.example.budgetapp.mvp.model.entity.Transaction;
-import com.example.budgetapp.mvp.presenter.AddTransactionPresenter;
-import com.example.budgetapp.mvp.view.AddTransactionView;
+import com.example.budgetapp.mvp.presenter.AddTransactionFragmentPresenter;
+import com.example.budgetapp.mvp.view.AddTransactionFragmentView;
 import com.example.budgetapp.ui.adapter.CategoriesSpinnerAdapter;
 import com.example.budgetapp.ui.adapter.ProjectsSpinnerAdapter;
 
@@ -25,28 +25,26 @@ import java.util.Date;
 import butterknife.BindView;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 
-public class AddTransactionFragment extends BaseFragment implements AddTransactionView {
+public class AddTransactionFragment extends BaseFragment implements AddTransactionFragmentView {
 
     @BindView(R.id.add_project_btn)
     ImageButton addProjectBtn;
     @BindView(R.id.add_category_btn)
     ImageButton addCategoryBtn;
-
-    @BindView(R.id.type_spinner) Spinner typeSpinner;
-    @BindView(R.id.project_spinner) Spinner projectSpinner;
     @BindView(R.id.add_transaction_btn)
     Button addTransactionBtn;
+    @InjectPresenter
+    AddTransactionFragmentPresenter presenter;
+    @BindView(R.id.type_spinner) Spinner typeSpinner;
+    @BindView(R.id.project_spinner) Spinner projectSpinner;
     @BindView(R.id.category_spinner) Spinner categorySpinner;
-    private ProjectsSpinnerAdapter projectsSpinnerAdapter;
     @BindView(R.id.amount_input) EditText amountInput;
+    private ProjectsSpinnerAdapter projectsSpinnerAdapter;
     private CategoriesSpinnerAdapter categoriesSpinnerAdapter;
 
-    @InjectPresenter
-    AddTransactionPresenter presenter;
-
     @ProvidePresenter
-    public AddTransactionPresenter provideAddTransactionFragmentPresenter(){
-        AddTransactionPresenter presenter = new AddTransactionPresenter(AndroidSchedulers.mainThread());
+    public AddTransactionFragmentPresenter provideAddTransactionFragmentPresenter() {
+        AddTransactionFragmentPresenter presenter = new AddTransactionFragmentPresenter(AndroidSchedulers.mainThread());
         App.getInstance().getAppComponent().inject(presenter);
         return presenter;
     }
@@ -104,10 +102,7 @@ public class AddTransactionFragment extends BaseFragment implements AddTransacti
         if (typeSpinner.getSelectedItemPosition() == 0 && amount > 0) {
             amount *= -1;
         }
-
-
         Transaction transaction = new Transaction(projectId, categoryId, date, amount);
-
         presenter.addTransaction(transaction);
     }
 

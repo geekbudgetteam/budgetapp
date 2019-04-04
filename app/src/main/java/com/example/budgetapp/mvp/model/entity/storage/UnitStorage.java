@@ -4,18 +4,19 @@ import com.example.budgetapp.mvp.model.entity.Unit;
 
 import java.util.List;
 
+import io.reactivex.Completable;
 import io.reactivex.Flowable;
 import io.reactivex.Maybe;
 
 public interface UnitStorage {
 
-    void addUnit(Unit unit);
+    Completable addUnit(Unit unit);
 
     Maybe<Unit> getUnit(int id);
 
     Flowable<List<Unit>> getUnitsList();
 
-    void updateUnit(Unit unit);
+    Completable updateUnit(Unit unit);
 
-    void deleteUnit(Unit unit);
+    Completable deleteUnit(Unit unit);
 }

@@ -44,9 +44,12 @@ public class ProjectsListAdapter extends RecyclerView.Adapter<ProjectsListAdapte
 
         private Project project;
 
-        @BindView(R.id.project_name) TextView projectNameView;
-        @BindView(R.id.transaction_date)TextView projectPeriodView;
-        @BindView(R.id.transaction_amount)TextView projectAmountView;
+        @BindView(R.id.project_name)
+        TextView projectNameView;
+        @BindView(R.id.transaction_date)
+        TextView projectPeriodView;
+        @BindView(R.id.transaction_amount)
+        TextView projectAmountView;
 
         ProjectHolder(View itemView) {
             super(itemView);
@@ -62,6 +65,9 @@ public class ProjectsListAdapter extends RecyclerView.Adapter<ProjectsListAdapte
             StringBuilder periodBuilder = new StringBuilder();
             periodBuilder.append(Constants.PERIOD_FIELD);
             switch (project.getProjectPeriod()) {
+                case Constants.DAY:
+                    periodBuilder.append(Constants.DAY_STRING);
+                    break;
                 case Constants.WEEK:
                     periodBuilder.append(Constants.WEEK_STRING);
                     break;
@@ -71,14 +77,13 @@ public class ProjectsListAdapter extends RecyclerView.Adapter<ProjectsListAdapte
                 case Constants.YEAR:
                     periodBuilder.append(Constants.YEAR_STRING);
                     break;
-                case Constants.DATED:
-                    if (project.getStartPeriod() == project.getFinishPeriod()) {
-                        periodBuilder.append(Constants.DATE_FORMAT.format(project.getStartPeriod()));
-                    } else {
-                        periodBuilder.append(Constants.DATE_FORMAT.format(project.getStartPeriod()))
-                                .append(" - ")
-                                .append(Constants.DATE_FORMAT.format(project.getFinishPeriod()));
-                    }
+                case Constants.DATE:
+                    periodBuilder.append(Constants.DATE_FORMAT.format(project.getStartPeriod()));
+                    break;
+                case Constants.PERIOD:
+                    periodBuilder.append(Constants.DATE_FORMAT.format(project.getStartPeriod()))
+                            .append(" - ")
+                            .append(Constants.DATE_FORMAT.format(project.getFinishPeriod()));
                     break;
             }
             projectPeriodView.setText(periodBuilder.toString());

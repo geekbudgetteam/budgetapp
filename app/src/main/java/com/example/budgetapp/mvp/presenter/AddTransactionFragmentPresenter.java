@@ -8,7 +8,7 @@ import com.example.budgetapp.mvp.model.entity.Transaction;
 import com.example.budgetapp.mvp.model.entity.storage.CategoryStorage;
 import com.example.budgetapp.mvp.model.entity.storage.ProjectStorage;
 import com.example.budgetapp.mvp.model.entity.storage.TransactionStorage;
-import com.example.budgetapp.mvp.view.AddTransactionView;
+import com.example.budgetapp.mvp.view.AddTransactionFragmentView;
 import com.example.budgetapp.navigation.Screens;
 import com.example.budgetapp.utils.Constants;
 
@@ -23,9 +23,10 @@ import io.reactivex.schedulers.Schedulers;
 import ru.terrakok.cicerone.Router;
 
 @InjectViewState
-public class AddTransactionPresenter extends MvpPresenter<AddTransactionView> {
+public class AddTransactionFragmentPresenter extends MvpPresenter<AddTransactionFragmentView> {
 
     private Scheduler scheduler;
+
     @Inject
     Router router;
     @Inject
@@ -40,7 +41,7 @@ public class AddTransactionPresenter extends MvpPresenter<AddTransactionView> {
     private List<Project> projects = new ArrayList<>();
     private List<Category> categories = new ArrayList<>();
 
-    public AddTransactionPresenter(Scheduler scheduler) {
+    public AddTransactionFragmentPresenter(Scheduler scheduler) {
         this.scheduler = scheduler;
     }
 

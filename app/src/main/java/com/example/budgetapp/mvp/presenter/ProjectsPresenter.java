@@ -9,8 +9,6 @@ import com.example.budgetapp.mvp.view.ProjectsListView;
 import com.example.budgetapp.navigation.Screens;
 import com.example.budgetapp.utils.Constants;
 
-import org.reactivestreams.Publisher;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -20,9 +18,6 @@ import javax.inject.Inject;
 import io.reactivex.Flowable;
 import io.reactivex.Scheduler;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
-import io.reactivex.functions.Function;
-import io.reactivex.functions.Predicate;
 import io.reactivex.schedulers.Schedulers;
 import ru.terrakok.cicerone.Router;
 
@@ -55,41 +50,28 @@ public class ProjectsPresenter extends MvpPresenter<ProjectsListView> {
     public void loadProjects(int fragmentType) {
         disposable = projectStorage.getProjectsList()
                 .subscribeOn(Schedulers.io())
-                .retryWhen(new Function<Flowable<Throwable>, Publisher<?>>() {
-                    @Override
-                    public Publisher<?> apply(Flowable<Throwable> throwableFlowable) throws Exception {
-                        return throwableFlowable.take(3).delay(1, TimeUnit.SECONDS);
-                    }
-                })
-                .flatMapIterable(new Function<List<Project>, List<Project>>() {
-                    @Override
-                    public List<Project> apply(List<Project> projects) throws Exception {
-                        return projects;
-                    }
-                })
-                .filter(new Predicate<Project>() {
-                    @Override
-                    public boolean test(Project project) throws Exception {
-                        boolean returnValue = false;
-                        switch (fragmentType) {
-                            case Constants.EXPENSE_PROJECTS:
-                                returnValue = project.getProjectType() == Constants.EXPENSE;
-                                break;
-                            case Constants.INCOME_PROJECTS:
-                                returnValue = project.getProjectType() == Constants.INCOME;
-                                break;
-                        }
-                        return returnValue;
-                    }
-                })
-                .toList()
+                .retryWhen(throwableFlowable -> throwableFlowable.take(3).delay(1, TimeUnit.SECONDS))
+                .flatMap(projects -> Flowable.fromIterable(projects)
+                        .filter(project -> {
+                            boolean returnValue = false;
+                            switch (fragmentType) {
+                                case Constants.EXPENSE_PROJECTS:
+                                    returnValue = project.getProjectType() == Constants.EXPENSE;
+                                    break;
+                                case Constants.INCOME_PROJECTS:
+                                    returnValue = project.getProjectType() == Constants.INCOME;
+                                    break;
+                            }
+                            System.out.println("returnValue " + returnValue);
+                            return returnValue;
+                        })
+                        .toList()
+                        .toFlowable())
                 .observeOn(scheduler)
-                .subscribe(new Consumer<List<Project>>() {
-                    @Override
-                    public void accept(List<Project> projects) throws Exception {
-                        ProjectsPresenter.this.projects = projects;
-                        ProjectsPresenter.this.getViewState().updateProjectsList();
-                    }
+                .subscribe(projects -> {
+                    ProjectsPresenter.this.projects = projects;
+                    System.out.println("Size " + projects.size());
+                    ProjectsPresenter.this.getViewState().updateProjectsList();
                 });
     }
 

@@ -23,6 +23,8 @@ import com.example.budgetapp.ui.adapter.CategoriesSpinnerAdapter;
 import com.example.budgetapp.ui.adapter.UnitsSpinnerAdapter;
 import com.example.budgetapp.utils.Constants;
 
+import java.util.Objects;
+
 import butterknife.BindView;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 
@@ -159,7 +161,7 @@ public class ProjectElementFragment extends BaseFragment implements ProjectEleme
     public void getData() {
         String name = nameInput.getText().toString();
         if (name.equals("")) {
-            presenter.addDataError(getContext().getResources().getString(R.string.project_element_name));
+            presenter.addDataError(Objects.requireNonNull(getContext()).getResources().getString(R.string.project_element_name));
             return;
         }
         int categoryId = (int) categoriesSpinnerAdapter.getItemId(categorySpinner.getSelectedItemPosition());

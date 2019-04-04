@@ -9,8 +9,10 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import io.reactivex.Completable;
 import io.reactivex.Flowable;
 import io.reactivex.Maybe;
+import io.reactivex.schedulers.Schedulers;
 
 public class TransactionRepository implements TransactionStorage {
 
@@ -22,8 +24,9 @@ public class TransactionRepository implements TransactionStorage {
     }
 
     @Override
-    public void addTransaction(Transaction transaction) {
-        transactionDao.insertTransaction(transaction);
+    public Completable addTransaction(Transaction transaction) {
+        return Completable.fromAction(() -> transactionDao.insertTransaction(transaction))
+                .subscribeOn(Schedulers.io());
     }
 
     @Override
@@ -42,12 +45,14 @@ public class TransactionRepository implements TransactionStorage {
     }
 
     @Override
-    public void updateTransaction(Transaction transaction) {
-        transactionDao.insertTransaction(transaction);
+    public Completable updateTransaction(Transaction transaction) {
+        return Completable.fromAction(() -> transactionDao.insertTransaction(transaction))
+                .subscribeOn(Schedulers.io());
     }
 
     @Override
-    public void deleteTransaction(Transaction transaction) {
-        transactionDao.deleteTransaction(transaction);
+    public Completable deleteTransaction(Transaction transaction) {
+        return Completable.fromAction(() -> transactionDao.deleteTransaction(transaction))
+                .subscribeOn(Schedulers.io());
     }
 }

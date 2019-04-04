@@ -20,6 +20,7 @@
     <string name="project_fragment">Проект</string>
     <string name="project_element_fragment">Добавить элемент</string>
 
+
     <!--Transaction values-->
     <string name="transaction_type">Вид: </string>
     <string-array name="transaction_type_values">
@@ -33,8 +34,37 @@
     <string name="transaction_add_button">Добавить</string>
 
 
+    <!--Project values-->
+    <string name="project_type">Вид: </string>
+    <string-array name="project_type_values">
+        <item>Расходы</item>
+        <item>Доходы</item>
+    </string-array>
+    <string name="project_name">Имя:</string>
+    <string name="project_duration_type">Тип:</string>
+    <string-array name="project_duration_values">
+        <item>Постоянный</item>
+        <item>Переменный</item>
+    </string-array>
+    <string name="project_period">Период: </string>
+    <string-array name="project_period_values">
+        <item>Год</item>
+        <item>Месяц</item>
+        <item>Неделя</item>
+        <item>День</item>
+        <item>Дата</item>
+        <item>Период</item>
+    </string-array>
+    <string name="project_start_date">Дата начала: </string>
+    <string name="project_finish_date">Дата завершения: </string>
+
+    <string name="project_name_hint">Наименование</string>
+    <string name="project_date_hint">01.01.2019</string>
+    <string name="project_add_button">Добавить</string>
+
+
     <!--ProjectElement values-->
-    <string name="project_element_name">Наименование:</string>
+    <string name="project_element_name">Имя:</string>
     <string name="project_element_category">Категория:</string>
     <string name="project_element_unit">Единица измерения:</string>
     <string name="project_element_quantity">Количество:</string>

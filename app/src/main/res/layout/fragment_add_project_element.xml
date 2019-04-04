@@ -14,16 +14,24 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/project_element_name" />
+            android:layout_gravity="center_vertical"
+            android:layout_weight="2"
+            android:text="@string/project_element_name"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <EditText
             android:id="@+id/name_input"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="3"
             android:hint="@string/project_element_name_hint"
             android:inputType="text" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="@dimen/button_radius_medium"
+            android:layout_weight="1" />
 
     </LinearLayout>
 
@@ -36,14 +44,31 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="2"
             android:text="@string/project_element_category" />
 
         <Spinner
             android:id="@+id/category_spinner"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"></Spinner>
+            android:layout_gravity="center_vertical"
+            android:layout_weight="3" />
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <ImageButton
+                android:id="@+id/add_category_btn"
+                android:layout_width="@dimen/button_radius_medium"
+                android:layout_height="@dimen/button_radius_medium"
+                android:layout_gravity="center"
+                android:background="@drawable/add_button"
+                android:src="@drawable/ic_add_black" />
+
+        </FrameLayout>
 
     </LinearLayout>
 
@@ -56,15 +81,31 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="2"
             android:text="@string/project_element_unit" />
 
         <Spinner
             android:id="@+id/unit_spinner"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"></Spinner>
+            android:layout_gravity="center_vertical"
+            android:layout_weight="3" />
 
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <ImageButton
+                android:id="@+id/add_unit_btn"
+                android:layout_width="@dimen/button_radius_medium"
+                android:layout_height="@dimen/button_radius_medium"
+                android:layout_gravity="center"
+                android:background="@drawable/add_button"
+                android:src="@drawable/ic_add_black" />
+
+        </FrameLayout>
 
     </LinearLayout>
 
@@ -77,16 +118,23 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="2"
             android:text="@string/project_element_quantity" />
 
         <EditText
             android:id="@+id/quantity_input"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="3"
             android:hint="@string/project_element_number_hint"
             android:inputType="number" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="@dimen/button_radius_medium"
+            android:layout_weight="1" />
 
     </LinearLayout>
 
@@ -96,11 +144,11 @@
         android:orientation="horizontal"
         android:padding="@dimen/padding">
 
-
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="2"
             android:text="@string/project_element_amount" />
 
 
@@ -108,10 +156,15 @@
             android:id="@+id/amount_input"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="3"
             android:hint="@string/project_element_number_hint"
             android:inputType="number" />
 
+        <View
+            android:layout_width="0dp"
+            android:layout_height="@dimen/button_radius_medium"
+            android:layout_weight="1" />
 
     </LinearLayout>
 
@@ -125,6 +178,7 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
             android:layout_weight="1"
             android:text="@string/project_element_monitoring" />
 
@@ -132,8 +186,8 @@
             android:id="@+id/monitoring_checkbox"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
             android:layout_weight="1" />
-
 
     </LinearLayout>
 
@@ -147,19 +201,25 @@
             android:id="@+id/minimum_quantity_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="2"
             android:text="@string/project_element_minimum" />
 
         <EditText
             android:id="@+id/minimum_quantity_input"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="3"
             android:hint="@string/project_element_number_hint"
             android:inputType="number" />
 
-    </LinearLayout>
+        <View
+            android:layout_width="0dp"
+            android:layout_height="@dimen/button_radius_medium"
+            android:layout_weight="1" />
 
+    </LinearLayout>
 
     <Button
         android:id="@+id/add_element_btn"
@@ -168,6 +228,5 @@
         android:layout_gravity="bottom|center"
         android:layout_margin="@dimen/fab_margin"
         android:text="@string/project_element_add_button" />
-
 
 </LinearLayout>

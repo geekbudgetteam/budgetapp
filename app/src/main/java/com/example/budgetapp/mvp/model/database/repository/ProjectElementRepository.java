@@ -8,8 +8,10 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import io.reactivex.Completable;
 import io.reactivex.Flowable;
 import io.reactivex.Maybe;
+import io.reactivex.schedulers.Schedulers;
 
 public class ProjectElementRepository implements ProjectElementStorage {
 
@@ -21,8 +23,9 @@ public class ProjectElementRepository implements ProjectElementStorage {
     }
 
     @Override
-    public void addProjectElement(ProjectElement projectElement) {
-        projectElementDao.insertProjectElement(projectElement);
+    public Completable addProjectElement(ProjectElement projectElement) {
+        return Completable.fromAction(() -> projectElementDao.insertProjectElement(projectElement))
+                .subscribeOn(Schedulers.io());
     }
 
     @Override
@@ -36,12 +39,14 @@ public class ProjectElementRepository implements ProjectElementStorage {
     }
 
     @Override
-    public void updateProjectElement(ProjectElement projectElement) {
-        projectElementDao.insertProjectElement(projectElement);
+    public Completable updateProjectElement(ProjectElement projectElement) {
+        return Completable.fromAction(() -> projectElementDao.insertProjectElement(projectElement))
+                .subscribeOn(Schedulers.io());
     }
 
     @Override
-    public void deleteProjectElement(ProjectElement projectElement) {
-        projectElementDao.deleteProjectElement(projectElement);
+    public Completable deleteProjectElement(ProjectElement projectElement) {
+        return Completable.fromAction(() -> projectElementDao.deleteProjectElement(projectElement))
+                .subscribeOn(Schedulers.io());
     }
 }
