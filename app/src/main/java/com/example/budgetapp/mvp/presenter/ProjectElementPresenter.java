@@ -38,22 +38,22 @@ public class ProjectElementPresenter extends MvpPresenter<ProjectElementView> {
     private Scheduler scheduler;
     @Inject
     Router router;
+
     private ICategoriesSpinnerPresenter categoriesSpinnerPresenter = new CategoriesSpinnerPresenter();
     private IUnitsSpinnerPresenter unitsSpinnerPresenter = new UnitsSpinnerPresenter();
     private List<Category> categories = new ArrayList<>();
     private List<Unit> units = new ArrayList<>();
+    private Disposable disposable;
     @Inject
     CategoryStorage categoryStorage;
     @Inject
     UnitStorage unitStorage;
     @Inject
     ProjectElementStorage projectElementStorage;
-    private Disposable disposable;
 
     public ProjectElementPresenter(Scheduler scheduler) {
         this.scheduler = scheduler;
     }
-
 
     @Override
     protected void onFirstViewAttach() {
@@ -118,8 +118,9 @@ public class ProjectElementPresenter extends MvpPresenter<ProjectElementView> {
     }
 
     public void addElement(ProjectElement element) {
-        projectElementStorage.addProjectElement(element);
-        onBack();
+        disposable = projectElementStorage.addProjectElement(element)
+                .observeOn(scheduler)
+                .subscribe(this::onBack);
     }
 
     public void onBack() {

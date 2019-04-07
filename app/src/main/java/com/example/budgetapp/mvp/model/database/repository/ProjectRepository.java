@@ -30,12 +30,14 @@ public class ProjectRepository implements ProjectStorage {
 
     @Override
     public Maybe<Project> getProject(int id) {
-        return projectDao.getProject(id);
+        return projectDao.getProject(id)
+                .subscribeOn(Schedulers.io());
     }
 
     @Override
     public Flowable<List<Project>> getProjectsList() {
-        return projectDao.getProjectsList();
+        return projectDao.getProjectsList()
+                .subscribeOn(Schedulers.io());
     }
 
     @Override

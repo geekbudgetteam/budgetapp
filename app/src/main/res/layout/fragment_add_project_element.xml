@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -179,15 +178,26 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:text="@string/project_element_monitoring" />
 
-        <CheckBox
-            android:id="@+id/monitoring_checkbox"
+        <View
+            android:layout_width="0dp"
+            android:layout_height="@dimen/button_radius_medium"
+            android:layout_weight="3" />
+
+        <FrameLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_weight="1" />
+            android:layout_weight="1">
+
+            <CheckBox
+                android:id="@+id/monitoring_checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
+
+        </FrameLayout>
 
     </LinearLayout>
 
@@ -221,12 +231,20 @@
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/add_element_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|center"
-        android:layout_margin="@dimen/fab_margin"
-        android:text="@string/project_element_add_button" />
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/add_element_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center_horizontal"
+            android:background="@drawable/add_button"
+            android:layout_margin="@dimen/fab_margin"
+            android:padding="@dimen/padding"
+            android:text="@string/project_element_add_button" />
+
+    </FrameLayout>
 
 </LinearLayout>

@@ -6,9 +6,9 @@ import com.example.budgetapp.ui.fragment.AddCategoryFragment;
 import com.example.budgetapp.ui.fragment.AddProjectFragment;
 import com.example.budgetapp.ui.fragment.AddTransactionFragment;
 import com.example.budgetapp.ui.fragment.DeveloperFragment;
-import com.example.budgetapp.ui.fragment.FamilyBudgetFragment;
 import com.example.budgetapp.ui.fragment.FeedbackFragment;
 import com.example.budgetapp.ui.fragment.ProjectElementFragment;
+import com.example.budgetapp.ui.fragment.ProjectFragment;
 import com.example.budgetapp.ui.fragment.ProjectsHolderFragment;
 import com.example.budgetapp.ui.fragment.TransactionsFragment;
 
@@ -65,10 +65,16 @@ public class Screens {
         }
     }
 
-    public static class FamilyBudgetPresenterScreen extends SupportAppScreen{
+    public static class ProjectFragmentScreen extends SupportAppScreen {
+        private int projectId;
+
+        public ProjectFragmentScreen(int projectId) {
+            this.projectId = projectId;
+        }
+
         @Override
         public Fragment getFragment() {
-            return FamilyBudgetFragment.newInstance();
+            return ProjectFragment.newInstance(projectId);
         }
     }
 

@@ -61,6 +61,7 @@
     <string name="project_name_hint">Наименование</string>
     <string name="project_date_hint">01.01.2019</string>
     <string name="project_add_button">Добавить</string>
+    <string name="project_update_button">Изменить</string>
 
 
     <!--ProjectElement values-->
@@ -76,6 +77,12 @@
     <string name="project_element_number_hint">0</string>
     <string name="project_element_add_button">Добавить</string>
 
+
+    <!--Category values-->
+    <string name="category_name">Имя:</string>
+
+    <string name="category_name_hint">Наименование</string>
+    <string name="category_add_button">Добавить</string>
 
     <string name="familybudget">Бюджет</string>
 

@@ -17,7 +17,6 @@ import io.reactivex.Scheduler;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
-import io.reactivex.schedulers.Schedulers;
 import ru.terrakok.cicerone.Router;
 
 @InjectViewState
@@ -45,10 +44,11 @@ public class TransactionsPresenter extends MvpPresenter<TransactionFragmentView>
     public void loadTransactions(){
         final int[] totalAmount = new int[1];
         disposable = transactionStorage.getTransactionDetailsList()
-                .subscribeOn(Schedulers.io())
+//                .subscribeOn(Schedulers.io())
                 .map(new Function<List<TransactionDetail>, List<TransactionDetail>>() {
                     @Override
                     public List<TransactionDetail> apply(List<TransactionDetail> transactions) throws Exception {
+                        System.out.println("Transactions size: " + transactions.size());
                         for (TransactionDetail transaction: transactions) {
                             totalAmount[0] += transaction.getAmount();
                         }
@@ -94,7 +94,7 @@ public class TransactionsPresenter extends MvpPresenter<TransactionFragmentView>
 
         @Override
         public void navigateToTransaction(TransactionDetail transaction) {
-            router.navigateTo(new Screens.FamilyBudgetPresenterScreen());
+//            router.navigateTo(new Screens.ProjectFragmentScreen());
         }
     }
 }

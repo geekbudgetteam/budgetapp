@@ -14,8 +14,8 @@ import java.util.Date;
 //        "INNER JOIN categories ON transactions.category_id = categories.id" )
 public class TransactionDetail {
     private int id;
-    private int projectName;
-    private int categoryName;
+    private String projectName;
+    private String categoryName;
     @TypeConverters({DateConverter.class})
     private Date date;
     private float amount;
@@ -28,19 +28,19 @@ public class TransactionDetail {
         this.id = id;
     }
 
-    public int getProjectName() {
+    public String getProjectName() {
         return projectName;
     }
 
-    public void setProjectName(int projectName) {
+    public void setProjectName(String projectName) {
         this.projectName = projectName;
     }
 
-    public int getCategoryName() {
+    public String getCategoryName() {
         return categoryName;
     }
 
-    public void setCategoryName(int categoryName) {
+    public void setCategoryName(String categoryName) {
         this.categoryName = categoryName;
     }
 

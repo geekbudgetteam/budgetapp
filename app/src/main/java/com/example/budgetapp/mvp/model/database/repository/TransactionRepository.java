@@ -31,17 +31,20 @@ public class TransactionRepository implements TransactionStorage {
 
     @Override
     public Maybe<Transaction> getTransaction(int id) {
-        return transactionDao.getTransaction(id);
+        return transactionDao.getTransaction(id)
+                .subscribeOn(Schedulers.io());
     }
 
     @Override
     public Flowable<List<Transaction>> getTransactionsList() {
-        return transactionDao.getTransactionsList();
+        return transactionDao.getTransactionsList()
+                .subscribeOn(Schedulers.io());
     }
 
     @Override
     public Flowable<List<TransactionDetail>> getTransactionDetailsList() {
-        return transactionDao.getTransactionDetailsList();
+        return transactionDao.getTransactionDetailsList()
+                .subscribeOn(Schedulers.io());
     }
 
     @Override

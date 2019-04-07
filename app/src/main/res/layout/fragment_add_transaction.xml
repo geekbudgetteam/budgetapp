@@ -25,7 +25,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_weight="3"
-            android:entries="@array/transaction_type_values" />
+            android:entries="@array/transaction_type_values"
+            android:textSize="20sp" />
 
         <View
             android:layout_width="0dp"

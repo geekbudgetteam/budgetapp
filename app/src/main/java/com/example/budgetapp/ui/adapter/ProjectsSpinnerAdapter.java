@@ -20,7 +20,6 @@ public class ProjectsSpinnerAdapter extends ArrayAdapter<Project> implements Spi
     public ProjectsSpinnerAdapter(Context context, IProjectsSpinnerPresenter presenter) {
         super(context, R.layout.spinner_item);
         this.presenter = presenter;
-
     }
 
     @Override
@@ -43,12 +42,15 @@ public class ProjectsSpinnerAdapter extends ArrayAdapter<Project> implements Spi
         }
     }
 
+    @NonNull
     @Override
     public View getView(int position, View convertView, @NonNull ViewGroup parent) {
-        TextView label = (TextView) super.getView(position, convertView, parent);
         Project project = getItem(position);
+        TextView label = (TextView) super.getView(position, convertView, parent);
         label.setTextColor(Color.BLACK);
-        label.setText(project.getName());
+        if (project != null) {
+            label.setText(project.getName());
+        }
         return label;
     }
 
@@ -56,7 +58,9 @@ public class ProjectsSpinnerAdapter extends ArrayAdapter<Project> implements Spi
     public View getDropDownView(int position, View convertView, @NonNull ViewGroup parent) {
         Project project = getItem(position);
         TextView label = (TextView) super.getView(position, convertView, parent);
-        label.setText(project.getName());
+        if (project != null) {
+            label.setText(project.getName());
+        }
         return label;
     }
 }

@@ -91,7 +91,7 @@ public class ProjectsPresenter extends MvpPresenter<ProjectsListView> {
 
         @Override
         public void navigateToProject(Project project) {
-            router.navigateTo(new Screens.FamilyBudgetPresenterScreen());
+            router.navigateTo(new Screens.ProjectFragmentScreen(project.getId()));
         }
     }
 }

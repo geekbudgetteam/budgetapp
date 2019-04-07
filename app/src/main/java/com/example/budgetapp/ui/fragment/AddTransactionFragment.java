@@ -27,19 +27,20 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 
 public class AddTransactionFragment extends BaseFragment implements AddTransactionFragmentView {
 
+    @InjectPresenter
+    AddTransactionFragmentPresenter presenter;
+    private ProjectsSpinnerAdapter projectsSpinnerAdapter;
+
     @BindView(R.id.add_project_btn)
     ImageButton addProjectBtn;
     @BindView(R.id.add_category_btn)
     ImageButton addCategoryBtn;
     @BindView(R.id.add_transaction_btn)
     Button addTransactionBtn;
-    @InjectPresenter
-    AddTransactionFragmentPresenter presenter;
     @BindView(R.id.type_spinner) Spinner typeSpinner;
     @BindView(R.id.project_spinner) Spinner projectSpinner;
     @BindView(R.id.category_spinner) Spinner categorySpinner;
     @BindView(R.id.amount_input) EditText amountInput;
-    private ProjectsSpinnerAdapter projectsSpinnerAdapter;
     private CategoriesSpinnerAdapter categoriesSpinnerAdapter;
 
     @ProvidePresenter
@@ -56,6 +57,8 @@ public class AddTransactionFragment extends BaseFragment implements AddTransacti
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        typeSpinner.getAdapter();
+
         projectsSpinnerAdapter = new ProjectsSpinnerAdapter(this.getContext(), presenter.getProjectsSpinnerPresenter());
         projectSpinner.setAdapter(projectsSpinnerAdapter);
         addProjectBtn.setOnClickListener((v) -> presenter.showAddProjectFragment());
@@ -94,6 +97,10 @@ public class AddTransactionFragment extends BaseFragment implements AddTransacti
             return;
         }
         long date = new Date().getTime();
+        if (amountInput.getText().length() == 0) {
+            presenter.addDataError(getContext().getResources().getString(R.string.transaction_amount));
+            return;
+        }
         float amount = Float.parseFloat(amountInput.getText().toString());
         if (amount == 0) {
             presenter.addDataError(getContext().getResources().getString(R.string.transaction_amount));

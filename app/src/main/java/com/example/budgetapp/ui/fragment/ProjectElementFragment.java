@@ -79,7 +79,9 @@ public class ProjectElementFragment extends BaseFragment implements ProjectEleme
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        projectId = getArguments().getInt(ARG_PROJECT_ID);
+        if (getArguments() != null) {
+            projectId = getArguments().getInt(ARG_PROJECT_ID);
+        }
     }
 
     @Override
@@ -196,6 +198,6 @@ public class ProjectElementFragment extends BaseFragment implements ProjectEleme
 
     @Override
     public void onBackPressed() {
-
+        presenter.onBack();
     }
 }

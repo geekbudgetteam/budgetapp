@@ -52,7 +52,7 @@ public class ProjectsListFragment extends MvpAppCompatFragment implements Projec
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        System.out.println("onCreate after");
+        fragmentType = getArguments().getInt(ARG_FRAGMENT_TYPE);
     }
 
     @Nullable

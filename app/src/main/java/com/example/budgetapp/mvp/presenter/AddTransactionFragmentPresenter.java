@@ -26,6 +26,11 @@ import ru.terrakok.cicerone.Router;
 public class AddTransactionFragmentPresenter extends MvpPresenter<AddTransactionFragmentView> {
 
     private Scheduler scheduler;
+    private CompositeDisposable disposables = new CompositeDisposable();
+    private IProjectsSpinnerPresenter projectsSpinnerPresenter = new ProjectsSpinnerPresenter();
+    private ICategoriesSpinnerPresenter categoriesSpinnerPresenter = new CategoriesSpinnerPresenter();
+    private List<Project> projects = new ArrayList<>();
+    private List<Category> categories = new ArrayList<>();
 
     @Inject
     Router router;
@@ -35,11 +40,6 @@ public class AddTransactionFragmentPresenter extends MvpPresenter<AddTransaction
     CategoryStorage categoryStorage;
     @Inject
     TransactionStorage transactionStorage;
-    private CompositeDisposable disposables = new CompositeDisposable();
-    private IProjectsSpinnerPresenter projectsSpinnerPresenter = new ProjectsSpinnerPresenter();
-    private ICategoriesSpinnerPresenter categoriesSpinnerPresenter = new CategoriesSpinnerPresenter();
-    private List<Project> projects = new ArrayList<>();
-    private List<Category> categories = new ArrayList<>();
 
     public AddTransactionFragmentPresenter(Scheduler scheduler) {
         this.scheduler = scheduler;
@@ -60,8 +60,11 @@ public class AddTransactionFragmentPresenter extends MvpPresenter<AddTransaction
                     disposables.add(categoryStorage.getCategoriesList()
                             .subscribeOn(Schedulers.io())
                             .observeOn(scheduler)
-                            .subscribe((categories) -> this.categories = categories));
-                    getViewState().updateData();
+                            .subscribe((categories) -> {
+                                this.categories = categories;
+                                System.out.println("LoadData: P:" + projects + " C: " + categories);
+                                getViewState().updateData();
+                            }));
                 }));
     }
 
@@ -90,8 +93,9 @@ public class AddTransactionFragmentPresenter extends MvpPresenter<AddTransaction
     }
 
     public void addTransaction(Transaction transaction) {
-        transactionStorage.addTransaction(transaction);
-        onBack();
+        disposables.add(transactionStorage.addTransaction(transaction)
+                .observeOn(scheduler)
+                .subscribe(this::onBack));
     }
 
     public void onBack() {

@@ -4,29 +4,39 @@ import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
 import com.example.budgetapp.mvp.model.entity.Project;
 import com.example.budgetapp.mvp.model.entity.storage.ProjectStorage;
-import com.example.budgetapp.mvp.view.AddProjectFragmentView;
+import com.example.budgetapp.mvp.view.ProjectFragmentView;
 import com.example.budgetapp.utils.Constants;
 
 import javax.inject.Inject;
 
 import io.reactivex.Scheduler;
-import io.reactivex.disposables.Disposable;
+import io.reactivex.disposables.CompositeDisposable;
 import ru.terrakok.cicerone.Router;
 
 @InjectViewState
-public class AddProjectFragmentPresenter extends MvpPresenter<AddProjectFragmentView> {
-
-    private Scheduler scheduler;
-    private Disposable disposable;
+public class ProjectFragmentPresenter extends MvpPresenter<ProjectFragmentView> {
 
     @Inject
     Router router;
     @Inject
     ProjectStorage projectStorage;
+    private Scheduler scheduler;
+    private CompositeDisposable disposables = new CompositeDisposable();
+    private Project project;
 
-    public AddProjectFragmentPresenter(Scheduler scheduler) {
+    public ProjectFragmentPresenter(Scheduler scheduler) {
         this.scheduler = scheduler;
     }
+
+    public void loadData(int projectId) {
+        disposables.add(projectStorage.getProject(projectId)
+                .observeOn(scheduler)
+                .subscribe(project -> {
+                    ProjectFragmentPresenter.this.project = project;
+                }));
+
+    }
+
 
     public void checkPeriodSpinnerChoice(int position) {
         switch (position) {
@@ -46,14 +56,14 @@ public class AddProjectFragmentPresenter extends MvpPresenter<AddProjectFragment
         getViewState().showMessage(Constants.ERROR_MESSAGE + field);
     }
 
-    public void addProject() {
+    public void updateProject() {
         getViewState().getData();
     }
 
-    public void addProject(Project project) {
-        disposable = projectStorage.addProject(project)
+    public void updateProject(Project project) {
+        disposables.add(projectStorage.addProject(project)
                 .observeOn(scheduler)
-                .subscribe(this::onBack);
+                .subscribe(this::onBack));
     }
 
     public void onBack() {

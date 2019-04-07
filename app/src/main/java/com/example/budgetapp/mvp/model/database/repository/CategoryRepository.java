@@ -30,12 +30,14 @@ public class CategoryRepository implements CategoryStorage {
 
     @Override
     public Maybe<Category> getCategory(int id) {
-        return categoryDao.getCategory(id);
+        return categoryDao.getCategory(id)
+                .subscribeOn(Schedulers.io());
     }
 
     @Override
     public Flowable<List<Category>> getCategoriesList() {
-        return categoryDao.getCategoriesList();
+        return categoryDao.getCategoriesList()
+                .subscribeOn(Schedulers.io());
     }
 
     @Override

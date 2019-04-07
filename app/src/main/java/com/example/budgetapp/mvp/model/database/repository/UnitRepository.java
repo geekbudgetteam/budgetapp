@@ -30,12 +30,14 @@ public class UnitRepository implements UnitStorage {
 
     @Override
     public Maybe<Unit> getUnit(int id) {
-        return unitDao.getUnit(id);
+        return unitDao.getUnit(id)
+                .subscribeOn(Schedulers.io());
     }
 
     @Override
     public Flowable<List<Unit>> getUnitsList() {
-        return unitDao.getUnitsList();
+        return unitDao.getUnitsList()
+                .subscribeOn(Schedulers.io());
     }
 
     @Override

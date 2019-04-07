@@ -4,10 +4,12 @@ import com.arellomobile.mvp.MvpView;
 import com.arellomobile.mvp.viewstate.strategy.SkipStrategy;
 import com.arellomobile.mvp.viewstate.strategy.StateStrategyType;
 
-@StateStrategyType(SkipStrategy.class)
-public interface AddCategoryFragmentView extends MvpView {
+@StateStrategyType(value = SkipStrategy.class)
+public interface ProjectFragmentView extends MvpView {
 
     void getData();
+
+    void setProjectDateFieldsVisibility(boolean start, boolean finish);
 
     void showMessage(String message);
 }
