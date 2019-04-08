@@ -1,4 +1,4 @@
-package com.example.budgetapp.mvp.view;
+package com.example.budgetapp.mvp.view.row;
 
 import com.example.budgetapp.mvp.model.entity.Project;
 

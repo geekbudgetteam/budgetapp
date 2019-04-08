@@ -4,10 +4,10 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,10 +17,10 @@ import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.example.budgetapp.App;
 import com.example.budgetapp.R;
 import com.example.budgetapp.mvp.model.entity.ProjectElement;
-import com.example.budgetapp.mvp.presenter.ProjectElementPresenter;
-import com.example.budgetapp.mvp.view.ProjectElementView;
-import com.example.budgetapp.ui.adapter.CategoriesSpinnerAdapter;
-import com.example.budgetapp.ui.adapter.UnitsSpinnerAdapter;
+import com.example.budgetapp.mvp.presenter.AddProjectElementPresenter;
+import com.example.budgetapp.mvp.view.fragment.AddProjectElementFragmentView;
+import com.example.budgetapp.ui.adapter.spinner.CategoriesSpinnerAdapter;
+import com.example.budgetapp.ui.adapter.spinner.UnitsSpinnerAdapter;
 import com.example.budgetapp.utils.Constants;
 
 import java.util.Objects;
@@ -28,7 +28,7 @@ import java.util.Objects;
 import butterknife.BindView;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 
-public class ProjectElementFragment extends BaseFragment implements ProjectElementView {
+public class AddProjectElementFragment extends BaseFragment implements AddProjectElementFragmentView {
 
     private static final String ARG_PROJECT_ID = "project_id";
 
@@ -43,8 +43,12 @@ public class ProjectElementFragment extends BaseFragment implements ProjectEleme
     EditText nameInput;
     @BindView(R.id.category_spinner)
     Spinner categorySpinner;
+    @BindView(R.id.add_category_btn)
+    ImageButton addCategoryBtn;
     @BindView(R.id.unit_spinner)
     Spinner unitSpinner;
+    @BindView(R.id.add_unit_btn)
+    ImageButton addUnitBtn;
     @BindView(R.id.quantity_input)
     EditText quantityInput;
     @BindView(R.id.amount_input)
@@ -59,19 +63,19 @@ public class ProjectElementFragment extends BaseFragment implements ProjectEleme
     Button addBtn;
 
     @InjectPresenter
-    ProjectElementPresenter presenter;
+    AddProjectElementPresenter presenter;
 
     @ProvidePresenter
-    ProjectElementPresenter providePresenter() {
-        ProjectElementPresenter presenter = new ProjectElementPresenter(AndroidSchedulers.mainThread());
+    AddProjectElementPresenter providePresenter() {
+        AddProjectElementPresenter presenter = new AddProjectElementPresenter(AndroidSchedulers.mainThread());
         App.getInstance().getAppComponent().inject(presenter);
         return presenter;
     }
 
-    public static ProjectElementFragment newInstance(int projectId) {
+    public static AddProjectElementFragment newInstance(int projectId) {
         Bundle args = new Bundle();
         args.putInt(ARG_PROJECT_ID, projectId);
-        ProjectElementFragment fragment = new ProjectElementFragment();
+        AddProjectElementFragment fragment = new AddProjectElementFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -89,8 +93,10 @@ public class ProjectElementFragment extends BaseFragment implements ProjectEleme
         super.onViewCreated(view, savedInstanceState);
         categoriesSpinnerAdapter = new CategoriesSpinnerAdapter(this.getContext(), presenter.getCategoriesSpinnerPresenter());
         categorySpinner.setAdapter(categoriesSpinnerAdapter);
+        addCategoryBtn.setOnClickListener(v -> presenter.showAddCategoryFragment());
         unitsSpinnerAdapter = new UnitsSpinnerAdapter(this.getContext(), presenter.getUnitsSpinnerPresenter());
         unitSpinner.setAdapter(unitsSpinnerAdapter);
+        addUnitBtn.setOnClickListener(v -> presenter.showAddUnitFragment());
         monitoringCheckbox.setChecked(false);
         monitoringCheckbox.setOnClickListener((v -> presenter.monitoredCheckboxClicked(monitoringCheckbox.isChecked())));
         minimumQuantityTitle.setVisibility(View.INVISIBLE);
@@ -107,39 +113,6 @@ public class ProjectElementFragment extends BaseFragment implements ProjectEleme
     @Override
     int getTitleRes() {
         return R.string.project_element_fragment;
-    }
-
-    private void initViews(View view) {
-
-        categorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (categoriesSpinnerInitialized) {
-                    presenter.checkCategorySpinnerChoice(position);
-                } else {
-                    categoriesSpinnerInitialized = true;
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
-        });
-
-        unitSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (unitsSpinnerInitialized) {
-                    presenter.checkUnitSpinnerChoice(position);
-                } else {
-                    unitsSpinnerInitialized = true;
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
-        });
     }
 
     public void updateUI() {

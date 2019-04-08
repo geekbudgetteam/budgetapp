@@ -1,4 +1,4 @@
-package com.example.budgetapp.mvp.view;
+package com.example.budgetapp.mvp.view.fragment;
 
 import com.arellomobile.mvp.MvpView;
 import com.arellomobile.mvp.viewstate.strategy.SkipStrategy;

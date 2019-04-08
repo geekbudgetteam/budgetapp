@@ -3,6 +3,7 @@ package com.example.budgetapp.mvp.model.database.repository;
 import com.example.budgetapp.mvp.model.database.dao.ProjectElementDao;
 import com.example.budgetapp.mvp.model.entity.ProjectElement;
 import com.example.budgetapp.mvp.model.entity.storage.ProjectElementStorage;
+import com.example.budgetapp.mvp.model.entity.view.ProjectElementDetail;
 
 import java.util.List;
 
@@ -37,6 +38,18 @@ public class ProjectElementRepository implements ProjectElementStorage {
     @Override
     public Flowable<List<ProjectElement>> getProjectElementsList() {
         return projectElementDao.getProjectElementsList()
+                .subscribeOn(Schedulers.io());
+    }
+
+    @Override
+    public Flowable<List<ProjectElementDetail>> getProjectElementDetailsList() {
+        return projectElementDao.getProjectElementDetailsList()
+                .subscribeOn(Schedulers.io());
+    }
+
+    @Override
+    public Flowable<List<ProjectElementDetail>> getProjectElementDetailsListByProject(int projectId) {
+        return projectElementDao.getProjectElementDetailsListByProject(projectId)
                 .subscribeOn(Schedulers.io());
     }
 

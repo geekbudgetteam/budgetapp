@@ -1,7 +1,6 @@
-package com.example.budgetapp.ui.adapter;
+package com.example.budgetapp.ui.adapter.spinner;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,56 +9,58 @@ import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 
 import com.example.budgetapp.R;
-import com.example.budgetapp.mvp.model.entity.Project;
-import com.example.budgetapp.mvp.presenter.IProjectsSpinnerPresenter;
+import com.example.budgetapp.mvp.model.entity.Category;
+import com.example.budgetapp.mvp.presenter.ICategoriesSpinnerPresenter;
 
-public class ProjectsSpinnerAdapter extends ArrayAdapter<Project> implements SpinnerAdapter {
+import org.jetbrains.annotations.NotNull;
 
-    private IProjectsSpinnerPresenter presenter;
+public class CategoriesSpinnerAdapter extends ArrayAdapter<Category> implements SpinnerAdapter {
 
-    public ProjectsSpinnerAdapter(Context context, IProjectsSpinnerPresenter presenter) {
+    private ICategoriesSpinnerPresenter presenter;
+
+    public CategoriesSpinnerAdapter(Context context, ICategoriesSpinnerPresenter presenter) {
         super(context, R.layout.spinner_item);
         this.presenter = presenter;
+
     }
 
     @Override
     public int getCount() {
-        return presenter.getProjectsCount();
+        return presenter.getCategoriesCount();
     }
 
     @Override
-    public Project getItem(int position) {
-        return presenter.getProject(position);
+    public Category getItem(int position) {
+        return presenter.getCategory(position);
     }
 
     @Override
     public long getItemId(int position) {
-        Project project = getItem(position);
-        if (project != null) {
-            return project.getId();
+        Category category = getItem(position);
+        if (category != null) {
+            return category.getId();
         } else {
             return 0;
         }
     }
 
-    @NonNull
+    @NotNull
     @Override
     public View getView(int position, View convertView, @NonNull ViewGroup parent) {
-        Project project = getItem(position);
+        Category category = getItem(position);
         TextView label = (TextView) super.getView(position, convertView, parent);
-        label.setTextColor(Color.BLACK);
-        if (project != null) {
-            label.setText(project.getName());
+        if (category != null) {
+            label.setText(category.getName());
         }
         return label;
     }
 
     @Override
     public View getDropDownView(int position, View convertView, @NonNull ViewGroup parent) {
-        Project project = getItem(position);
+        Category category = getItem(position);
         TextView label = (TextView) super.getView(position, convertView, parent);
-        if (project != null) {
-            label.setText(project.getName());
+        if (category != null) {
+            label.setText(category.getName());
         }
         return label;
     }

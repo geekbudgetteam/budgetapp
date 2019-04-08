@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/edit_project"
+            android:icon="@drawable/ic_edit_white"
+            android:title="@string/edit_project"
+            app:showAsAction="ifRoom"/>
+        <item
+            android:id="@+id/delete_project"
+            android:icon="@drawable/ic_delete_white"
+            android:title="@string/projects_fragment"
+            app:showAsAction="ifRoom"/>
+    </group>
+</menu>

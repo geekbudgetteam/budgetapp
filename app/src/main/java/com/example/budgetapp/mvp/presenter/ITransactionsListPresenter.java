@@ -1,8 +1,7 @@
 package com.example.budgetapp.mvp.presenter;
 
-import com.example.budgetapp.mvp.model.entity.Transaction;
 import com.example.budgetapp.mvp.model.entity.view.TransactionDetail;
-import com.example.budgetapp.mvp.view.TransactionRowView;
+import com.example.budgetapp.mvp.view.row.TransactionRowView;
 
 public interface ITransactionsListPresenter {
 

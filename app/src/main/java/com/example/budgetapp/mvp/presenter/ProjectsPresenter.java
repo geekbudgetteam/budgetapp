@@ -4,8 +4,8 @@ import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
 import com.example.budgetapp.mvp.model.entity.Project;
 import com.example.budgetapp.mvp.model.entity.storage.ProjectStorage;
-import com.example.budgetapp.mvp.view.ProjectRowView;
-import com.example.budgetapp.mvp.view.ProjectsListView;
+import com.example.budgetapp.mvp.view.fragment.ProjectsListFragmentView;
+import com.example.budgetapp.mvp.view.row.ProjectRowView;
 import com.example.budgetapp.navigation.Screens;
 import com.example.budgetapp.utils.Constants;
 
@@ -22,7 +22,7 @@ import io.reactivex.schedulers.Schedulers;
 import ru.terrakok.cicerone.Router;
 
 @InjectViewState
-public class ProjectsPresenter extends MvpPresenter<ProjectsListView> {
+public class ProjectsPresenter extends MvpPresenter<ProjectsListFragmentView> {
 
     private Scheduler scheduler;
     private Disposable disposable;

@@ -8,7 +8,7 @@ import com.example.budgetapp.mvp.model.entity.Transaction;
 import com.example.budgetapp.mvp.model.entity.storage.CategoryStorage;
 import com.example.budgetapp.mvp.model.entity.storage.ProjectStorage;
 import com.example.budgetapp.mvp.model.entity.storage.TransactionStorage;
-import com.example.budgetapp.mvp.view.AddTransactionFragmentView;
+import com.example.budgetapp.mvp.view.fragment.AddTransactionFragmentView;
 import com.example.budgetapp.navigation.Screens;
 import com.example.budgetapp.utils.Constants;
 

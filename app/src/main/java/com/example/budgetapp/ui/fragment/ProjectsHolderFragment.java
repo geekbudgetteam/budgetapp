@@ -13,12 +13,12 @@ import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.example.budgetapp.App;
 import com.example.budgetapp.R;
 import com.example.budgetapp.mvp.presenter.ProjectsHolderPresenter;
-import com.example.budgetapp.mvp.view.ProjectsHolderView;
+import com.example.budgetapp.mvp.view.fragment.ProjectsHolderFragmentView;
 import com.example.budgetapp.ui.adapter.ProjectsFragmentPagerAdapter;
 
 import butterknife.BindView;
 
-public class ProjectsHolderFragment extends BaseFragment implements ProjectsHolderView {
+public class ProjectsHolderFragment extends BaseFragment implements ProjectsHolderFragmentView {
 
     private ProjectsFragmentPagerAdapter adapter;
 

@@ -1,4 +1,4 @@
-package com.example.budgetapp.ui.adapter;
+package com.example.budgetapp.ui.adapter.list;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -10,7 +10,7 @@ import android.widget.TextView;
 import com.example.budgetapp.R;
 import com.example.budgetapp.mvp.model.entity.Project;
 import com.example.budgetapp.mvp.presenter.IProjectsListPresenter;
-import com.example.budgetapp.mvp.view.ProjectRowView;
+import com.example.budgetapp.mvp.view.row.ProjectRowView;
 import com.example.budgetapp.utils.Constants;
 
 import butterknife.BindView;

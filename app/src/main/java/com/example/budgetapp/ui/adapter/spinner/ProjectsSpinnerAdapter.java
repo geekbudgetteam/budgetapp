@@ -1,7 +1,6 @@
-package com.example.budgetapp.ui.adapter;
+package com.example.budgetapp.ui.adapter.spinner;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,53 +9,56 @@ import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 
 import com.example.budgetapp.R;
-import com.example.budgetapp.mvp.model.entity.Unit;
-import com.example.budgetapp.mvp.presenter.IUnitsSpinnerPresenter;
+import com.example.budgetapp.mvp.model.entity.Project;
+import com.example.budgetapp.mvp.presenter.IProjectsSpinnerPresenter;
 
-public class UnitsSpinnerAdapter extends ArrayAdapter<Unit> implements SpinnerAdapter {
+public class ProjectsSpinnerAdapter extends ArrayAdapter<Project> implements SpinnerAdapter {
 
-    private IUnitsSpinnerPresenter presenter;
+    private IProjectsSpinnerPresenter presenter;
 
-    public UnitsSpinnerAdapter(Context context, IUnitsSpinnerPresenter presenter) {
+    public ProjectsSpinnerAdapter(Context context, IProjectsSpinnerPresenter presenter) {
         super(context, R.layout.spinner_item);
         this.presenter = presenter;
-
     }
 
     @Override
     public int getCount() {
-        return presenter.getUnitsCount();
+        return presenter.getProjectsCount();
     }
 
     @Override
-    public Unit getItem(int position) {
-        return presenter.getUnit(position);
+    public Project getItem(int position) {
+        return presenter.getProject(position);
     }
 
     @Override
     public long getItemId(int position) {
-        Unit unit = getItem(position);
-        if (unit != null) {
-            return unit.getId();
+        Project project = getItem(position);
+        if (project != null) {
+            return project.getId();
         } else {
             return 0;
         }
     }
 
+    @NonNull
     @Override
     public View getView(int position, View convertView, @NonNull ViewGroup parent) {
-        Unit unit = getItem(position);
+        Project project = getItem(position);
         TextView label = (TextView) super.getView(position, convertView, parent);
-        label.setTextColor(Color.BLACK);
-        label.setText(unit.getName());
+        if (project != null) {
+            label.setText(project.getName());
+        }
         return label;
     }
 
     @Override
     public View getDropDownView(int position, View convertView, @NonNull ViewGroup parent) {
-        Unit unit = getItem(position);
+        Project project = getItem(position);
         TextView label = (TextView) super.getView(position, convertView, parent);
-        label.setText(unit.getName());
+        if (project != null) {
+            label.setText(project.getName());
+        }
         return label;
     }
 }

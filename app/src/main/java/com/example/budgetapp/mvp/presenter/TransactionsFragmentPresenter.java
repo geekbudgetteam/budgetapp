@@ -4,8 +4,8 @@ import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
 import com.example.budgetapp.mvp.model.entity.storage.TransactionStorage;
 import com.example.budgetapp.mvp.model.entity.view.TransactionDetail;
-import com.example.budgetapp.mvp.view.TransactionFragmentView;
-import com.example.budgetapp.mvp.view.TransactionRowView;
+import com.example.budgetapp.mvp.view.fragment.TransactionFragmentView;
+import com.example.budgetapp.mvp.view.row.TransactionRowView;
 import com.example.budgetapp.navigation.Screens;
 
 import java.util.ArrayList;
@@ -20,11 +20,11 @@ import io.reactivex.functions.Function;
 import ru.terrakok.cicerone.Router;
 
 @InjectViewState
-public class TransactionsPresenter extends MvpPresenter<TransactionFragmentView> {
+public class TransactionsFragmentPresenter extends MvpPresenter<TransactionFragmentView> {
 
     private Scheduler scheduler;
     private Disposable disposable;
-    private ITransactionsListPresenter transactionsListPresenter = new TransactionsPresenter.TransactionsListPresenter();
+    private ITransactionsListPresenter transactionsListPresenter = new TransactionsFragmentPresenter.TransactionsListPresenter();
     private List<TransactionDetail> transactions = new ArrayList<>();
 
     @Inject
@@ -32,7 +32,7 @@ public class TransactionsPresenter extends MvpPresenter<TransactionFragmentView>
     @Inject
     TransactionStorage transactionStorage;
 
-    public TransactionsPresenter(Scheduler scheduler) {
+    public TransactionsFragmentPresenter(Scheduler scheduler) {
         this.scheduler = scheduler;
     }
 
@@ -41,7 +41,7 @@ public class TransactionsPresenter extends MvpPresenter<TransactionFragmentView>
         super.onFirstViewAttach();
     }
 
-    public void loadTransactions(){
+    public void loadData(){
         final int[] totalAmount = new int[1];
         disposable = transactionStorage.getTransactionDetailsList()
 //                .subscribeOn(Schedulers.io())
@@ -59,9 +59,9 @@ public class TransactionsPresenter extends MvpPresenter<TransactionFragmentView>
                 .subscribe(new Consumer<List<TransactionDetail>>() {
                     @Override
                     public void accept(List<TransactionDetail> transactions) throws Exception {
-                        TransactionsPresenter.this.transactions = transactions;
-                        TransactionsPresenter.this.getViewState().updateTransactionsList();
-                        TransactionsPresenter.this.getViewState().updateTotalAmount(totalAmount[0]);
+                        TransactionsFragmentPresenter.this.transactions = transactions;
+                        TransactionsFragmentPresenter.this.getViewState().updateTransactionsList();
+                        TransactionsFragmentPresenter.this.getViewState().updateTotalAmount(totalAmount[0]);
                     }
                 });
     }
@@ -94,7 +94,7 @@ public class TransactionsPresenter extends MvpPresenter<TransactionFragmentView>
 
         @Override
         public void navigateToTransaction(TransactionDetail transaction) {
-//            router.navigateTo(new Screens.ProjectFragmentScreen());
+//            router.navigateTo(new Screens.UpdateProjectFragmentScreen());
         }
     }
 }

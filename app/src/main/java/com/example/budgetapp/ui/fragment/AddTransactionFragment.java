@@ -16,9 +16,9 @@ import com.example.budgetapp.App;
 import com.example.budgetapp.R;
 import com.example.budgetapp.mvp.model.entity.Transaction;
 import com.example.budgetapp.mvp.presenter.AddTransactionFragmentPresenter;
-import com.example.budgetapp.mvp.view.AddTransactionFragmentView;
-import com.example.budgetapp.ui.adapter.CategoriesSpinnerAdapter;
-import com.example.budgetapp.ui.adapter.ProjectsSpinnerAdapter;
+import com.example.budgetapp.mvp.view.fragment.AddTransactionFragmentView;
+import com.example.budgetapp.ui.adapter.spinner.CategoriesSpinnerAdapter;
+import com.example.budgetapp.ui.adapter.spinner.ProjectsSpinnerAdapter;
 
 import java.util.Date;
 
@@ -27,9 +27,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 
 public class AddTransactionFragment extends BaseFragment implements AddTransactionFragmentView {
 
-    @InjectPresenter
-    AddTransactionFragmentPresenter presenter;
     private ProjectsSpinnerAdapter projectsSpinnerAdapter;
+    private CategoriesSpinnerAdapter categoriesSpinnerAdapter;
 
     @BindView(R.id.add_project_btn)
     ImageButton addProjectBtn;
@@ -41,7 +40,9 @@ public class AddTransactionFragment extends BaseFragment implements AddTransacti
     @BindView(R.id.project_spinner) Spinner projectSpinner;
     @BindView(R.id.category_spinner) Spinner categorySpinner;
     @BindView(R.id.amount_input) EditText amountInput;
-    private CategoriesSpinnerAdapter categoriesSpinnerAdapter;
+
+    @InjectPresenter
+    AddTransactionFragmentPresenter presenter;
 
     @ProvidePresenter
     public AddTransactionFragmentPresenter provideAddTransactionFragmentPresenter() {
@@ -58,7 +59,6 @@ public class AddTransactionFragment extends BaseFragment implements AddTransacti
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         typeSpinner.getAdapter();
-
         projectsSpinnerAdapter = new ProjectsSpinnerAdapter(this.getContext(), presenter.getProjectsSpinnerPresenter());
         projectSpinner.setAdapter(projectsSpinnerAdapter);
         addProjectBtn.setOnClickListener((v) -> presenter.showAddProjectFragment());

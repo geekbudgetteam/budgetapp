@@ -10,12 +10,11 @@ import android.view.ViewGroup;
 
 import com.arellomobile.mvp.MvpAppCompatFragment;
 import com.arellomobile.mvp.presenter.InjectPresenter;
-import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.example.budgetapp.R;
 import com.example.budgetapp.mvp.presenter.FeedbackFragmentPresenter;
-import com.example.budgetapp.mvp.view.FeedbackView;
+import com.example.budgetapp.mvp.view.fragment.FeedbackFragmentView;
 
-public class FeedbackFragment extends MvpAppCompatFragment implements FeedbackView {
+public class FeedbackFragment extends MvpAppCompatFragment implements FeedbackFragmentView {
 
     public static Fragment newInstance(){
         FeedbackFragment fragment = new FeedbackFragment();

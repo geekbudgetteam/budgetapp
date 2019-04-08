@@ -17,8 +17,8 @@ import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.example.budgetapp.App;
 import com.example.budgetapp.R;
 import com.example.budgetapp.mvp.model.entity.Project;
-import com.example.budgetapp.mvp.presenter.AddProjectFragmentPresenter;
-import com.example.budgetapp.mvp.view.fragment.AddProjectFragmentView;
+import com.example.budgetapp.mvp.presenter.UpdateProjectFragmentPresenter;
+import com.example.budgetapp.mvp.view.fragment.UpdateProjectFragmentView;
 import com.example.budgetapp.utils.Constants;
 
 import java.text.ParseException;
@@ -28,7 +28,10 @@ import java.util.Objects;
 import butterknife.BindView;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 
-public class AddProjectFragment extends BaseFragment implements AddProjectFragmentView {
+public class UpdateProjectFragment extends BaseFragment implements UpdateProjectFragmentView {
+
+    private static final String ARG_PROJECT_ID = "project_id";
+    private int projectId;
 
     @BindView(R.id.type_spinner)
     Spinner typeSpinner;
@@ -46,32 +49,51 @@ public class AddProjectFragment extends BaseFragment implements AddProjectFragme
     TextView projectFinishDateTitle;
     @BindView(R.id.project_finish_date_input)
     EditText projectFinishDateInput;
-    @BindView(R.id.add_project_btn)
-    Button addProjectBtn;
+    @BindView(R.id.update_project_btn)
+    Button updateProjectBtn;
 
     @InjectPresenter
-    AddProjectFragmentPresenter presenter;
+    UpdateProjectFragmentPresenter presenter;
 
     @ProvidePresenter
-    public AddProjectFragmentPresenter providePresenter() {
-        AddProjectFragmentPresenter presenter = new AddProjectFragmentPresenter(AndroidSchedulers.mainThread());
+    public UpdateProjectFragmentPresenter providePresenter() {
+        UpdateProjectFragmentPresenter presenter = new UpdateProjectFragmentPresenter(AndroidSchedulers.mainThread());
         App.getInstance().getAppComponent().inject(presenter);
         return presenter;
     }
 
-    public static Fragment newInstance() {
-        return new AddProjectFragment();
+    public static Fragment newInstance(int projectId) {
+        Bundle args = new Bundle();
+        args.putInt(ARG_PROJECT_ID, projectId);
+        UpdateProjectFragment fragment = new UpdateProjectFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            projectId = getArguments().getInt(ARG_PROJECT_ID);
+        }
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setProjectPeriodSpinnerListener();
-        projectStartDateTitle.setVisibility(View.INVISIBLE);
-        projectStartDateInput.setVisibility(View.INVISIBLE);
-        projectFinishDateTitle.setVisibility(View.INVISIBLE);
-        projectFinishDateInput.setVisibility(View.INVISIBLE);
-        addProjectBtn.setOnClickListener(v -> presenter.addProject());
+        presenter.loadData(projectId);
+        updateProjectBtn.setOnClickListener(v -> presenter.updateProject());
+    }
+
+    @Override
+    int getLayoutRes() {
+        return R.layout.fragment_update_project;
+    }
+
+    @Override
+    int getTitleRes() {
+        return R.string.project_fragment;
     }
 
     private void setProjectPeriodSpinnerListener() {
@@ -101,13 +123,41 @@ public class AddProjectFragment extends BaseFragment implements AddProjectFragme
     }
 
     @Override
-    int getLayoutRes() {
-        return R.layout.fragment_add_project;
+    public void setProjectTypeSpinnerSelection(int type) {
+        typeSpinner.setSelection(type);
     }
 
     @Override
-    int getTitleRes() {
-        return R.string.add_project_fragment;
+    public void setProjectNameSelection(String projectNameSelection) {
+        projectNameInput.setText(projectNameSelection);
+    }
+
+    @Override
+    public void setProjectDurationSpinnerSelection(int durationSpinnerSelection) {
+        projectDurationSpinner.setSelection(durationSpinnerSelection);
+    }
+
+    @Override
+    public void setProjectPeriodSpinnerSelection(int periodSpinnerSelection) {
+        projectPeriodSpinner.setSelection(periodSpinnerSelection);
+    }
+
+    @Override
+    public void setProjectStartDateSelection(long startDateSelection) {
+        if (startDateSelection != 0) {
+            Date startDate = new Date(startDateSelection);
+            String startDateText = Constants.DATE_FORMAT.format(startDate);
+            projectStartDateInput.setText(startDateText);
+        }
+    }
+
+    @Override
+    public void setProjectFinishDateSelection(long finishDateSelection) {
+        if (finishDateSelection != 0) {
+            Date finishDate = new Date(finishDateSelection);
+            String finishDateText = Constants.DATE_FORMAT.format(finishDate);
+            projectStartDateInput.setText(finishDateText);
+        }
     }
 
     @Override
@@ -132,7 +182,6 @@ public class AddProjectFragment extends BaseFragment implements AddProjectFragme
             startPeriod = startDate.getTime();
             showMessage(startDate.toString() + " " + String.valueOf(startPeriod));
         }
-
         Date finishDate = null;
         long finishPeriod = 0;
         try {
@@ -145,7 +194,7 @@ public class AddProjectFragment extends BaseFragment implements AddProjectFragme
             showMessage(finishDate.toString() + " " + String.valueOf(finishPeriod));
         }
 
-        presenter.addProject(new Project(projectType, projectName, variable, projectPeriod, startPeriod, finishPeriod));
+        presenter.updateProject((new Project(projectType, projectName, variable, projectPeriod, startPeriod, finishPeriod)));
     }
 
     @Override

@@ -15,14 +15,14 @@ import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.example.budgetapp.App;
 import com.example.budgetapp.R;
 import com.example.budgetapp.mvp.presenter.ProjectsPresenter;
-import com.example.budgetapp.mvp.view.ProjectsListView;
-import com.example.budgetapp.ui.adapter.ProjectsListAdapter;
+import com.example.budgetapp.mvp.view.fragment.ProjectsListFragmentView;
+import com.example.budgetapp.ui.adapter.list.ProjectsListAdapter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 
-public class ProjectsListFragment extends MvpAppCompatFragment implements ProjectsListView {
+public class ProjectsListFragment extends MvpAppCompatFragment implements ProjectsListFragmentView {
 
     private static final String ARG_FRAGMENT_TYPE = "fragment_type";
 

@@ -13,9 +13,9 @@ import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.example.budgetapp.App;
 import com.example.budgetapp.R;
-import com.example.budgetapp.mvp.presenter.TransactionsPresenter;
-import com.example.budgetapp.mvp.view.TransactionFragmentView;
-import com.example.budgetapp.ui.adapter.TransactionsListAdapter;
+import com.example.budgetapp.mvp.presenter.TransactionsFragmentPresenter;
+import com.example.budgetapp.mvp.view.fragment.TransactionFragmentView;
+import com.example.budgetapp.ui.adapter.list.TransactionsListAdapter;
 
 import java.util.Locale;
 import java.util.Objects;
@@ -33,11 +33,11 @@ public class TransactionsFragment extends BaseFragment implements TransactionFra
     @BindView(R.id.fragment_fab) FloatingActionButton fab;
 
     @InjectPresenter
-    TransactionsPresenter presenter;
+    TransactionsFragmentPresenter presenter;
 
     @ProvidePresenter
-    TransactionsPresenter providePresenter() {
-        TransactionsPresenter presenter = new TransactionsPresenter(AndroidSchedulers.mainThread());
+    TransactionsFragmentPresenter providePresenter() {
+        TransactionsFragmentPresenter presenter = new TransactionsFragmentPresenter(AndroidSchedulers.mainThread());
         App.getInstance().getAppComponent().inject(presenter);
         return presenter;
     }
@@ -67,7 +67,7 @@ public class TransactionsFragment extends BaseFragment implements TransactionFra
     }
 
     public void updateUI() {
-        presenter.loadTransactions();
+        presenter.loadData();
     }
 
     @Override

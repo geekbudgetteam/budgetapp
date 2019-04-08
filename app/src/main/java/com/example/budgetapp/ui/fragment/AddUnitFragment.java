@@ -13,51 +13,51 @@ import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.example.budgetapp.App;
 import com.example.budgetapp.R;
-import com.example.budgetapp.mvp.model.entity.Category;
-import com.example.budgetapp.mvp.presenter.AddCategoryFragmentPresenter;
-import com.example.budgetapp.mvp.view.fragment.AddCategoryFragmentView;
+import com.example.budgetapp.mvp.model.entity.Unit;
+import com.example.budgetapp.mvp.presenter.AddUnitFragmentPresenter;
+import com.example.budgetapp.mvp.view.fragment.AddUnitFragmentView;
 
 import java.util.Objects;
 
 import butterknife.BindView;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 
-public class AddCategoryFragment extends BaseFragment implements AddCategoryFragmentView {
+public class AddUnitFragment extends BaseFragment implements AddUnitFragmentView {
 
     @BindView(R.id.name_input)
     EditText nameInput;
-    @BindView(R.id.add_category_btn)
+    @BindView(R.id.add_unit_btn)
     Button addBtn;
 
     @InjectPresenter
-    AddCategoryFragmentPresenter presenter;
+    AddUnitFragmentPresenter presenter;
 
     @ProvidePresenter
-    AddCategoryFragmentPresenter providePresenter() {
-        AddCategoryFragmentPresenter presenter = new AddCategoryFragmentPresenter(AndroidSchedulers.mainThread());
+    AddUnitFragmentPresenter providePresenter() {
+        AddUnitFragmentPresenter presenter = new AddUnitFragmentPresenter(AndroidSchedulers.mainThread());
         App.getInstance().getAppComponent().inject(presenter);
         return presenter;
     }
 
     public static Fragment newInstance() {
-        AddCategoryFragment fragment = new AddCategoryFragment();
+        AddUnitFragment fragment = new AddUnitFragment();
         return fragment;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        addBtn.setOnClickListener(v -> presenter.addCategory());
+        addBtn.setOnClickListener(v -> presenter.addUnit());
     }
 
     @Override
     int getLayoutRes() {
-        return R.layout.fragment_add_category;
+        return R.layout.fragment_add_unit;
     }
 
     @Override
     int getTitleRes() {
-        return R.string.add_category_fragment;
+        return R.string.add_unit_fragment;
     }
 
     @Override
@@ -67,7 +67,7 @@ public class AddCategoryFragment extends BaseFragment implements AddCategoryFrag
             presenter.addDataError(Objects.requireNonNull(getContext()).getResources().getString(R.string.project_element_name));
             return;
         }
-        presenter.addCategory(new Category(name));
+        presenter.addUnit(new Unit(name));
 
     }
 

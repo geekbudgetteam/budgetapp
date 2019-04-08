@@ -10,12 +10,11 @@ import android.view.ViewGroup;
 
 import com.arellomobile.mvp.MvpAppCompatFragment;
 import com.arellomobile.mvp.presenter.InjectPresenter;
-import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.example.budgetapp.R;
 import com.example.budgetapp.mvp.presenter.DeveloperFragmentPresenter;
-import com.example.budgetapp.mvp.view.DeveloperView;
+import com.example.budgetapp.mvp.view.fragment.DeveloperFragmentView;
 
-public class DeveloperFragment extends MvpAppCompatFragment implements DeveloperView {
+public class DeveloperFragment extends MvpAppCompatFragment implements DeveloperFragmentView {
 
     public static Fragment newInstance(){
         DeveloperFragment fragment = new DeveloperFragment();

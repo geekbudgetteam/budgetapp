@@ -1,7 +1,6 @@
-package com.example.budgetapp.ui.adapter;
+package com.example.budgetapp.ui.adapter.spinner;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,16 +9,16 @@ import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 
 import com.example.budgetapp.R;
-import com.example.budgetapp.mvp.model.entity.Category;
-import com.example.budgetapp.mvp.presenter.ICategoriesSpinnerPresenter;
+import com.example.budgetapp.mvp.model.entity.Unit;
+import com.example.budgetapp.mvp.presenter.IUnitsSpinnerPresenter;
 
 import org.jetbrains.annotations.NotNull;
 
-public class CategoriesSpinnerAdapter extends ArrayAdapter<Category> implements SpinnerAdapter {
+public class UnitsSpinnerAdapter extends ArrayAdapter<Unit> implements SpinnerAdapter {
 
-    private ICategoriesSpinnerPresenter presenter;
+    private IUnitsSpinnerPresenter presenter;
 
-    public CategoriesSpinnerAdapter(Context context, ICategoriesSpinnerPresenter presenter) {
+    public UnitsSpinnerAdapter(Context context, IUnitsSpinnerPresenter presenter) {
         super(context, R.layout.spinner_item);
         this.presenter = presenter;
 
@@ -27,19 +26,19 @@ public class CategoriesSpinnerAdapter extends ArrayAdapter<Category> implements 
 
     @Override
     public int getCount() {
-        return presenter.getCategoriesCount();
+        return presenter.getUnitsCount();
     }
 
     @Override
-    public Category getItem(int position) {
-        return presenter.getCategory(position);
+    public Unit getItem(int position) {
+        return presenter.getUnit(position);
     }
 
     @Override
     public long getItemId(int position) {
-        Category category = getItem(position);
-        if (category != null) {
-            return category.getId();
+        Unit unit = getItem(position);
+        if (unit != null) {
+            return unit.getId();
         } else {
             return 0;
         }
@@ -48,21 +47,20 @@ public class CategoriesSpinnerAdapter extends ArrayAdapter<Category> implements 
     @NotNull
     @Override
     public View getView(int position, View convertView, @NonNull ViewGroup parent) {
-        Category category = getItem(position);
+        Unit unit = getItem(position);
         TextView label = (TextView) super.getView(position, convertView, parent);
-        label.setTextColor(Color.BLACK);
-        if (category != null) {
-            label.setText(category.getName());
+        if (unit != null) {
+            label.setText(unit.getName());
         }
         return label;
     }
 
     @Override
     public View getDropDownView(int position, View convertView, @NonNull ViewGroup parent) {
-        Category category = getItem(position);
+        Unit unit = getItem(position);
         TextView label = (TextView) super.getView(position, convertView, parent);
-        if (category != null) {
-            label.setText(category.getName());
+        if (unit != null) {
+            label.setText(unit.getName());
         }
         return label;
     }

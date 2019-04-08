@@ -3,14 +3,16 @@ package com.example.budgetapp.navigation;
 import android.support.v4.app.Fragment;
 
 import com.example.budgetapp.ui.fragment.AddCategoryFragment;
+import com.example.budgetapp.ui.fragment.AddProjectElementFragment;
 import com.example.budgetapp.ui.fragment.AddProjectFragment;
 import com.example.budgetapp.ui.fragment.AddTransactionFragment;
+import com.example.budgetapp.ui.fragment.AddUnitFragment;
 import com.example.budgetapp.ui.fragment.DeveloperFragment;
 import com.example.budgetapp.ui.fragment.FeedbackFragment;
-import com.example.budgetapp.ui.fragment.ProjectElementFragment;
 import com.example.budgetapp.ui.fragment.ProjectFragment;
 import com.example.budgetapp.ui.fragment.ProjectsHolderFragment;
 import com.example.budgetapp.ui.fragment.TransactionsFragment;
+import com.example.budgetapp.ui.fragment.UpdateProjectFragment;
 
 import ru.terrakok.cicerone.android.support.SupportAppScreen;
 
@@ -65,6 +67,13 @@ public class Screens {
         }
     }
 
+    public static class AddUnitFragmentScreen extends SupportAppScreen {
+        @Override
+        public Fragment getFragment() {
+            return AddUnitFragment.newInstance();
+        }
+    }
+
     public static class ProjectFragmentScreen extends SupportAppScreen {
         private int projectId;
 
@@ -78,15 +87,28 @@ public class Screens {
         }
     }
 
-    public static class ProjectElementFragmentScreen extends SupportAppScreen{
+    public static class UpdateProjectFragmentScreen extends SupportAppScreen {
         private int projectId;
 
-        public ProjectElementFragmentScreen(int projectId){
+        public UpdateProjectFragmentScreen(int projectId) {
+            this.projectId = projectId;
+        }
+
+        @Override
+        public Fragment getFragment() {
+            return UpdateProjectFragment.newInstance(projectId);
+        }
+    }
+
+    public static class AddProjectElementFragmentScreen extends SupportAppScreen{
+        private int projectId;
+
+        public AddProjectElementFragmentScreen(int projectId){
             this.projectId = projectId;
         }
         @Override
         public Fragment getFragment() {
-            return ProjectElementFragment.newInstance(projectId);
+            return AddProjectElementFragment.newInstance(projectId);
         }
     }
 }

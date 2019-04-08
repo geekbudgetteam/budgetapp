@@ -1,6 +1,7 @@
 package com.example.budgetapp.mvp.model.entity.storage;
 
 import com.example.budgetapp.mvp.model.entity.ProjectElement;
+import com.example.budgetapp.mvp.model.entity.view.ProjectElementDetail;
 
 import java.util.List;
 
@@ -15,6 +16,10 @@ public interface ProjectElementStorage {
     Maybe<ProjectElement> getProjectElement(int id);
 
     Flowable<List<ProjectElement>> getProjectElementsList();
+
+    Flowable<List<ProjectElementDetail>> getProjectElementDetailsList();
+
+    Flowable<List<ProjectElementDetail>> getProjectElementDetailsListByProject(int projectId);
 
     Completable updateProjectElement(ProjectElement projectElement);
 

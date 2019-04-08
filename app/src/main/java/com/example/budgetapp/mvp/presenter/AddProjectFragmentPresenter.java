@@ -4,7 +4,7 @@ import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
 import com.example.budgetapp.mvp.model.entity.Project;
 import com.example.budgetapp.mvp.model.entity.storage.ProjectStorage;
-import com.example.budgetapp.mvp.view.AddProjectFragmentView;
+import com.example.budgetapp.mvp.view.fragment.AddProjectFragmentView;
 import com.example.budgetapp.utils.Constants;
 
 import javax.inject.Inject;

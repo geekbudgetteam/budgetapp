@@ -5,15 +5,23 @@ import java.util.Locale;
 
 public class Constants {
 
-    //    Project types
+    //    Project types int
     public static final int EXPENSE = 0;
     public static final int INCOME = 1;
 
-    //    Project variable type
+    //    Project types String
+    public static final String EXPENSE_STRING = "Расходы";
+    public static final String INCOME_STRING = "Доходы";
+
+    //    Project variable types int
     public static final int CONSTANT = 0;
     public static final int VARIABLE = 1;
 
-    //    Project periods
+    //    Project variable types String
+    public static final String CONSTANT_STRING = "Постоянный";
+    public static final String VARIABLE_STRING = "Переменный";
+
+    //    Project period types int
     public static final int YEAR = 0;
     public static final int MONTH = 1;
     public static final int WEEK = 2;
@@ -21,11 +29,11 @@ public class Constants {
     public static final int DATE = 4;
     public static final int PERIOD = 5;
 
-
-    public static final String DAY_STRING = "День";
-    public static final String WEEK_STRING = "Неделя";
-    public static final String MONTH_STRING = "Месяц";
+    //    Project period types String
     public static final String YEAR_STRING = "Год";
+    public static final String MONTH_STRING = "Месяц";
+    public static final String WEEK_STRING = "Неделя";
+    public static final String DAY_STRING = "День";
 
     public static final String CURRENCY = "руб.";
 
@@ -51,7 +59,7 @@ public class Constants {
     //    View fields
     public static final String NAME_FIELD = "Наименование: ";
     public static final String PROJECT_FIELD = "Проект: ";
-    public static final String Category_FIELD = "Категория: ";
+    public static final String CATEGORY_FIELD = "Категория: ";
     public static final String PERIOD_FIELD = "Период: ";
 
     //    Date format

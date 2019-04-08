@@ -17,6 +17,7 @@
     <string name="projects_fragment">Проекты</string>
     <string name="add_project_fragment">Добавить проект</string>
     <string name="add_category_fragment">Добавить категорию</string>
+    <string name="add_unit_fragment">Добавить ед. измерения</string>
     <string name="project_fragment">Проект</string>
     <string name="project_element_fragment">Добавить элемент</string>
 
@@ -62,6 +63,9 @@
     <string name="project_date_hint">01.01.2019</string>
     <string name="project_add_button">Добавить</string>
     <string name="project_update_button">Изменить</string>
+
+    <string name="edit_project">Изменить</string>
+    <string name="delete_project">Удалить</string>
 
 
     <!--ProjectElement values-->

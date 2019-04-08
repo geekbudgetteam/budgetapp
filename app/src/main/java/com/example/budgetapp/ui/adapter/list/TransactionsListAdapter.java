@@ -1,4 +1,4 @@
-package com.example.budgetapp.ui.adapter;
+package com.example.budgetapp.ui.adapter.list;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,7 +9,7 @@ import android.widget.TextView;
 import com.example.budgetapp.R;
 import com.example.budgetapp.mvp.model.entity.view.TransactionDetail;
 import com.example.budgetapp.mvp.presenter.ITransactionsListPresenter;
-import com.example.budgetapp.mvp.view.TransactionRowView;
+import com.example.budgetapp.mvp.view.row.TransactionRowView;
 import com.example.budgetapp.utils.Constants;
 
 import org.jetbrains.annotations.NotNull;
@@ -62,7 +62,7 @@ public class TransactionsListAdapter extends RecyclerView.Adapter<TransactionsLi
             this.transaction = transaction;
             String projectName = Constants.PROJECT_FIELD + transaction.getProjectName();
             projectNameView.setText(projectName);
-            String categoryName = Constants.Category_FIELD + transaction.getCategoryName();
+            String categoryName = Constants.CATEGORY_FIELD + transaction.getCategoryName();
             categoryNameView.setText(categoryName);
             transactionDateView.setText(Constants.DATE_FORMAT.format(transaction.getDate()));
             transactionAmountView.setText(String.valueOf(transaction.getAmount()));
