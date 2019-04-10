@@ -4,8 +4,10 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -26,8 +28,6 @@ public class AddCategoryFragment extends BaseFragment implements AddCategoryFrag
 
     @BindView(R.id.name_input)
     EditText nameInput;
-    @BindView(R.id.add_category_btn)
-    Button addBtn;
 
     @InjectPresenter
     AddCategoryFragmentPresenter presenter;
@@ -45,9 +45,25 @@ public class AddCategoryFragment extends BaseFragment implements AddCategoryFrag
     }
 
     @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.save_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.save_entity:
+                presenter.addCategory();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        addBtn.setOnClickListener(v -> presenter.addCategory());
     }
 
     @Override
@@ -67,6 +83,7 @@ public class AddCategoryFragment extends BaseFragment implements AddCategoryFrag
             presenter.addDataError(Objects.requireNonNull(getContext()).getResources().getString(R.string.project_element_name));
             return;
         }
+        name = Character.toUpperCase(name.charAt(0)) + name.substring(1);
         presenter.addCategory(new Category(name));
 
     }

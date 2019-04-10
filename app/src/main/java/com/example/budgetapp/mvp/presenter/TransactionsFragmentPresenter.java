@@ -4,7 +4,7 @@ import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
 import com.example.budgetapp.mvp.model.entity.storage.TransactionStorage;
 import com.example.budgetapp.mvp.model.entity.view.TransactionDetail;
-import com.example.budgetapp.mvp.view.fragment.TransactionFragmentView;
+import com.example.budgetapp.mvp.view.fragment.TransactionsFragmentView;
 import com.example.budgetapp.mvp.view.row.TransactionRowView;
 import com.example.budgetapp.navigation.Screens;
 
@@ -15,12 +15,10 @@ import javax.inject.Inject;
 
 import io.reactivex.Scheduler;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
-import io.reactivex.functions.Function;
 import ru.terrakok.cicerone.Router;
 
 @InjectViewState
-public class TransactionsFragmentPresenter extends MvpPresenter<TransactionFragmentView> {
+public class TransactionsFragmentPresenter extends MvpPresenter<TransactionsFragmentView> {
 
     private Scheduler scheduler;
     private Disposable disposable;
@@ -44,25 +42,17 @@ public class TransactionsFragmentPresenter extends MvpPresenter<TransactionFragm
     public void loadData(){
         final int[] totalAmount = new int[1];
         disposable = transactionStorage.getTransactionDetailsList()
-//                .subscribeOn(Schedulers.io())
-                .map(new Function<List<TransactionDetail>, List<TransactionDetail>>() {
-                    @Override
-                    public List<TransactionDetail> apply(List<TransactionDetail> transactions) throws Exception {
-                        System.out.println("Transactions size: " + transactions.size());
-                        for (TransactionDetail transaction: transactions) {
-                            totalAmount[0] += transaction.getAmount();
-                        }
-                        return transactions;
+                .map(transactions -> {
+                    for (TransactionDetail transaction: transactions) {
+                        totalAmount[0] += transaction.getAmount();
                     }
+                    return transactions;
                 })
                 .observeOn(scheduler)
-                .subscribe(new Consumer<List<TransactionDetail>>() {
-                    @Override
-                    public void accept(List<TransactionDetail> transactions) throws Exception {
-                        TransactionsFragmentPresenter.this.transactions = transactions;
-                        TransactionsFragmentPresenter.this.getViewState().updateTransactionsList();
-                        TransactionsFragmentPresenter.this.getViewState().updateTotalAmount(totalAmount[0]);
-                    }
+                .subscribe(transactions -> {
+                    TransactionsFragmentPresenter.this.transactions = transactions;
+                    TransactionsFragmentPresenter.this.getViewState().updateTransactionsList();
+                    TransactionsFragmentPresenter.this.getViewState().updateTotalAmount(totalAmount[0]);
                 });
     }
 
@@ -94,7 +84,7 @@ public class TransactionsFragmentPresenter extends MvpPresenter<TransactionFragm
 
         @Override
         public void navigateToTransaction(TransactionDetail transaction) {
-//            router.navigateTo(new Screens.UpdateProjectFragmentScreen());
+            router.navigateTo(new Screens.TransactionFragmentScreen(transaction.getId()));
         }
     }
 }

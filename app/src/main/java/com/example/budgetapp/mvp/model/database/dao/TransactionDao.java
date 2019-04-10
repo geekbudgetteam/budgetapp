@@ -23,10 +23,18 @@ public interface TransactionDao {
     @Query("SELECT * FROM transactions WHERE id = :id")
     Maybe<Transaction> getTransaction(int id);
 
+    @Query("SELECT transactions.id, " +
+            "projects.name AS projectName, " +
+            "categories.name AS categoryName, transactions.date, transactions.amount " +
+            "FROM transactions, projects, categories " +
+            "WHERE transactions.id = :id " +
+            "AND projects.id = transactions.project_id " +
+            "AND categories.id = transactions.category_id")
+    Maybe<TransactionDetail> getTransactionDetail(int id);
+
     @Query("SELECT * FROM transactions")
     Flowable<List<Transaction>> getTransactionsList();
 
-    //    @Query("SELECT * FROM transactions")
     @Query("SELECT transactions.id, " +
             "projects.name AS projectName, " +
             "categories.name AS categoryName, transactions.date, transactions.amount " +
@@ -37,5 +45,9 @@ public interface TransactionDao {
 
     @Delete
     void deleteTransaction(Transaction transaction);
+
+    @Query("DELETE FROM transactions " +
+            "WHERE id = :id")
+    void deleteTransaction(int id);
 
 }

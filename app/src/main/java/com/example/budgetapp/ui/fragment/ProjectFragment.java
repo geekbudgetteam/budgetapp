@@ -72,26 +72,6 @@ public class ProjectFragment extends BaseFragment implements ProjectFragmentView
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.project_fragment_menu, menu);
-        super.onCreateOptionsMenu(menu, inflater);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.edit_project:
-                presenter.editProject();
-                return true;
-            case R.id.delete_project:
-                presenter.deleteProject();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-
-    @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
@@ -99,6 +79,26 @@ public class ProjectFragment extends BaseFragment implements ProjectFragmentView
         recyclerView.setAdapter(adapter);
         fab.setOnClickListener(v -> presenter.fabAction());
         updateUI();
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.entity_fragment_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.edit_entity:
+                presenter.editProject();
+                return true;
+            case R.id.delete_entity:
+                presenter.deleteProject();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override

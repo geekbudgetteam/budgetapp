@@ -11,8 +11,10 @@ import com.example.budgetapp.ui.fragment.DeveloperFragment;
 import com.example.budgetapp.ui.fragment.FeedbackFragment;
 import com.example.budgetapp.ui.fragment.ProjectFragment;
 import com.example.budgetapp.ui.fragment.ProjectsHolderFragment;
+import com.example.budgetapp.ui.fragment.TransactionFragment;
 import com.example.budgetapp.ui.fragment.TransactionsFragment;
 import com.example.budgetapp.ui.fragment.UpdateProjectFragment;
+import com.example.budgetapp.ui.fragment.UpdateTransactionFragment;
 
 import ru.terrakok.cicerone.android.support.SupportAppScreen;
 
@@ -29,6 +31,32 @@ public class Screens {
         @Override
         public Fragment getFragment() {
             return AddTransactionFragment.newInstance();
+        }
+    }
+
+    public static class TransactionFragmentScreen extends SupportAppScreen {
+        private int transactionId;
+
+        public TransactionFragmentScreen(int transactionId) {
+            this.transactionId = transactionId;
+        }
+
+        @Override
+        public Fragment getFragment() {
+            return TransactionFragment.newInstance(transactionId);
+        }
+    }
+
+    public static class UpdateTransactionFragmentScreen extends SupportAppScreen {
+        private int transactionId;
+
+        public UpdateTransactionFragmentScreen(int transactionId) {
+            this.transactionId = transactionId;
+        }
+
+        @Override
+        public Fragment getFragment() {
+            return UpdateTransactionFragment.newInstance(transactionId);
         }
     }
 

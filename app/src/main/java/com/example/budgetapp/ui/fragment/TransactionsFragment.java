@@ -14,7 +14,7 @@ import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.example.budgetapp.App;
 import com.example.budgetapp.R;
 import com.example.budgetapp.mvp.presenter.TransactionsFragmentPresenter;
-import com.example.budgetapp.mvp.view.fragment.TransactionFragmentView;
+import com.example.budgetapp.mvp.view.fragment.TransactionsFragmentView;
 import com.example.budgetapp.ui.adapter.list.TransactionsListAdapter;
 
 import java.util.Locale;
@@ -23,7 +23,7 @@ import java.util.Objects;
 import butterknife.BindView;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 
-public class TransactionsFragment extends BaseFragment implements TransactionFragmentView {
+public class TransactionsFragment extends BaseFragment implements TransactionsFragmentView {
 
     private TransactionsListAdapter adapter;
 

@@ -10,9 +10,16 @@
 
     <string name="currency">руб.</string>
 
+    <string name="save_entity">Сохранить</string>
+    <string name="edit_entity">Изменить</string>
+    <string name="delete_entity">Удалить</string>
+
+    <string name="date_hint">01.01.2019</string>
+
 
     <!--Fragments titles-->
     <string name="transactions_fragment">Транзакции</string>
+    <string name="transaction_fragment">Транзакция</string>
     <string name="add_transaction_fragment">Добавить транзакцию</string>
     <string name="projects_fragment">Проекты</string>
     <string name="add_project_fragment">Добавить проект</string>
@@ -31,6 +38,8 @@
     <string name="transaction_project">Проект: </string>
     <string name="transaction_category">Категория: </string>
     <string name="transaction_amount">Сумма: </string>
+    <string name="transaction_date">Дата: </string>
+
     <string name="transaction_number_hint">0</string>
     <string name="transaction_add_button">Добавить</string>
 
@@ -64,8 +73,7 @@
     <string name="project_add_button">Добавить</string>
     <string name="project_update_button">Изменить</string>
 
-    <string name="edit_project">Изменить</string>
-    <string name="delete_project">Удалить</string>
+
 
 
     <!--ProjectElement values-->

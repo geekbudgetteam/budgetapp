@@ -14,6 +14,7 @@ import com.example.budgetapp.App;
 import com.example.budgetapp.R;
 import com.example.budgetapp.navigation.Screens;
 import com.example.budgetapp.ui.common.BackButtonListener;
+import com.example.budgetapp.ui.common.ChangeFragmentTitleListener;
 
 import javax.inject.Inject;
 

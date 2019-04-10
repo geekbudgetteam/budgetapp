@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <group android:checkableBehavior="single">
+    <group>
         <item
-            android:id="@+id/edit_project"
+            android:id="@+id/edit_entity"
             android:icon="@drawable/ic_edit_white"
-            android:title="@string/edit_project"
+            android:title="@string/edit_entity"
             app:showAsAction="ifRoom"/>
         <item
-            android:id="@+id/delete_project"
+            android:id="@+id/delete_entity"
             android:icon="@drawable/ic_delete_white"
-            android:title="@string/projects_fragment"
-            app:showAsAction="ifRoom"/>
+            android:title="@string/delete_entity"
+            app:showAsAction="never"/>
     </group>
 </menu>

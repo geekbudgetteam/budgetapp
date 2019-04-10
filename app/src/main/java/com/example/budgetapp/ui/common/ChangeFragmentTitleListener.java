@@ -1,4 +1,4 @@
-package com.example.budgetapp.ui.activity;
+package com.example.budgetapp.ui.common;
 
 public interface ChangeFragmentTitleListener {
 

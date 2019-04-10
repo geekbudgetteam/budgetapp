@@ -18,13 +18,13 @@
             android:text="@string/project_type"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
-        <TextView
-            android:id="@+id/project_type_text"
+        <Spinner
+            android:id="@+id/type_spinner"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_weight="3"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:entries="@array/project_type_values" />
 
         <View
             android:layout_width="0dp"
@@ -47,13 +47,17 @@
             android:text="@string/project_name"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
-        <TextView
-            android:id="@+id/project_name_text"
+        <EditText
+            android:id="@+id/project_name_input"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_weight="3"
-            android:textAppearance="?android:attr/textAppearanceMedium"/>
+            android:hint="@string/project_name_hint"
+            android:inputType="text"
+            android:textColor="@color/colorText"
+            android:singleLine="true"
+            android:imeOptions="actionDone"/>
 
         <View
             android:layout_width="0dp"
@@ -76,13 +80,13 @@
             android:text="@string/project_duration_type"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
-        <TextView
-            android:id="@+id/project_duration_text"
+        <Spinner
+            android:id="@+id/project_duration_spinner"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_weight="3"
-            android:textAppearance="?android:attr/textAppearanceMedium"/>
+            android:entries="@array/project_duration_values" />
 
         <View
             android:layout_width="0dp"
@@ -105,13 +109,13 @@
             android:text="@string/project_period"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
-        <TextView
-            android:id="@+id/project_period_text"
+        <Spinner
+            android:id="@+id/project_period_spinner"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_weight="3"
-            android:textAppearance="?android:attr/textAppearanceMedium"/>
+            android:entries="@array/project_period_values" />
 
         <View
             android:layout_width="0dp"
@@ -120,26 +124,70 @@
 
     </LinearLayout>
 
-    <FrameLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/padding">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycler_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fragment_fab"
-            android:layout_width="wrap_content"
+        <TextView
+            android:id="@+id/project_start_date_title"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            android:layout_marginEnd="@dimen/fab_margin"
-            android:layout_marginBottom="@dimen/fab_margin"
-            android:background="@color/colorAccent"
-            android:elevation="20dp"
-            android:src="@drawable/ic_add_black" />
+            android:layout_gravity="center_vertical"
+            android:layout_weight="2"
+            android:text="@string/project_start_date" />
 
-    </FrameLayout>
+        <EditText
+            android:id="@+id/project_start_date_input"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="3"
+            android:hint="@string/project_date_hint"
+            android:inputType="date"
+            android:textColor="@color/colorText"
+            android:singleLine="true"
+            android:imeOptions="actionDone"/>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="@dimen/button_radius_medium"
+            android:layout_weight="1" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/padding">
+
+        <TextView
+            android:id="@+id/project_finish_date_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="2"
+            android:text="@string/project_start_date" />
+
+        <EditText
+            android:id="@+id/project_finish_date_input"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="3"
+            android:hint="@string/project_date_hint"
+            android:inputType="date"
+            android:textColor="@color/colorText"
+            android:singleLine="true"
+            android:imeOptions="actionDone"/>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="@dimen/button_radius_medium"
+            android:layout_weight="1" />
+
+    </LinearLayout>
 
 </LinearLayout>

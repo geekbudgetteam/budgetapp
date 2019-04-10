@@ -70,7 +70,7 @@ public class ProjectElementsListAdapter extends RecyclerView.Adapter<ProjectElem
         @Override
         public void setProjectElement(ProjectElementDetail projectElement) {
             this.projectElement = projectElement;
-            String name = Constants.NAME_FIELD + projectElement.getName();
+            String name = projectElement.getName();
             projectElementNameText.setText(name);
             String categoryName = Constants.CATEGORY_FIELD + projectElement.getCategoryName();
             categoryNameText.setText(categoryName);

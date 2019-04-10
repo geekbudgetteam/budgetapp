@@ -4,9 +4,11 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -46,8 +48,6 @@ public class AddProjectFragment extends BaseFragment implements AddProjectFragme
     TextView projectFinishDateTitle;
     @BindView(R.id.project_finish_date_input)
     EditText projectFinishDateInput;
-    @BindView(R.id.add_project_btn)
-    Button addProjectBtn;
 
     @InjectPresenter
     AddProjectFragmentPresenter presenter;
@@ -64,6 +64,23 @@ public class AddProjectFragment extends BaseFragment implements AddProjectFragme
     }
 
     @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.save_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.save_entity:
+                presenter.addProject();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setProjectPeriodSpinnerListener();
@@ -71,7 +88,6 @@ public class AddProjectFragment extends BaseFragment implements AddProjectFragme
         projectStartDateInput.setVisibility(View.INVISIBLE);
         projectFinishDateTitle.setVisibility(View.INVISIBLE);
         projectFinishDateInput.setVisibility(View.INVISIBLE);
-        addProjectBtn.setOnClickListener(v -> presenter.addProject());
     }
 
     private void setProjectPeriodSpinnerListener() {

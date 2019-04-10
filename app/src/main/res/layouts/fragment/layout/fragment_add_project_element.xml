@@ -25,7 +25,10 @@
             android:layout_gravity="center_vertical"
             android:layout_weight="3"
             android:hint="@string/project_element_name_hint"
-            android:inputType="text" />
+            android:inputType="text"
+            android:textColor="@color/colorText"
+            android:singleLine="true"
+            android:imeOptions="actionDone"/>
 
         <View
             android:layout_width="0dp"
@@ -66,7 +69,7 @@
                 android:layout_height="@dimen/button_radius_medium"
                 android:layout_gravity="center"
                 android:background="@drawable/add_button"
-                android:src="@drawable/ic_add_black" />
+                android:src="@drawable/ic_add" />
 
         </FrameLayout>
 
@@ -104,7 +107,7 @@
                 android:layout_height="@dimen/button_radius_medium"
                 android:layout_gravity="center"
                 android:background="@drawable/add_button"
-                android:src="@drawable/ic_add_black" />
+                android:src="@drawable/ic_add" />
 
         </FrameLayout>
 
@@ -130,7 +133,10 @@
             android:layout_gravity="center_vertical"
             android:layout_weight="3"
             android:hint="@string/project_element_number_hint"
-            android:inputType="number" />
+            android:inputType="number"
+            android:textColor="@color/colorText"
+            android:singleLine="true"
+            android:imeOptions="actionDone"/>
 
         <View
             android:layout_width="0dp"
@@ -160,7 +166,10 @@
             android:layout_gravity="center_vertical"
             android:layout_weight="3"
             android:hint="@string/project_element_number_hint"
-            android:inputType="number" />
+            android:inputType="number"
+            android:textColor="@color/colorText"
+            android:singleLine="true"
+            android:imeOptions="actionDone"/>
 
         <View
             android:layout_width="0dp"
@@ -224,7 +233,10 @@
             android:layout_gravity="center_vertical"
             android:layout_weight="3"
             android:hint="@string/project_element_number_hint"
-            android:inputType="number" />
+            android:inputType="number"
+            android:textColor="@color/colorText"
+            android:singleLine="true"
+            android:imeOptions="actionDone"/>
 
         <View
             android:layout_width="0dp"
@@ -232,21 +244,5 @@
             android:layout_weight="1" />
 
     </LinearLayout>
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <Button
-            android:id="@+id/add_element_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|center_horizontal"
-            android:background="@drawable/add_button"
-            android:layout_margin="@dimen/fab_margin"
-            android:padding="@dimen/padding"
-            android:text="@string/project_element_add_button" />
-
-    </FrameLayout>
 
 </LinearLayout>

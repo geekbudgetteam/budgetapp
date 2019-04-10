@@ -7,8 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.arellomobile.mvp.MvpAppCompatFragment;
-import com.example.budgetapp.ui.activity.ChangeFragmentTitleListener;
 import com.example.budgetapp.ui.common.BackButtonListener;
+import com.example.budgetapp.ui.common.ChangeFragmentTitleListener;
 
 import butterknife.ButterKnife;
 

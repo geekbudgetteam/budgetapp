@@ -78,7 +78,6 @@ public class ProjectFragmentPresenter extends MvpPresenter<ProjectFragmentView> 
         }
         getViewState().setProjectDuration(projectDuration);
         StringBuilder periodBuilder = new StringBuilder();
-        periodBuilder.append(Constants.PERIOD_FIELD);
         switch (project.getProjectPeriod()) {
             case Constants.DAY:
                 periodBuilder.append(Constants.DAY_STRING);

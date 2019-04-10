@@ -36,6 +36,12 @@ public class TransactionRepository implements TransactionStorage {
     }
 
     @Override
+    public Maybe<TransactionDetail> getTransactionDetail(int id) {
+        return transactionDao.getTransactionDetail(id)
+                .subscribeOn(Schedulers.io());
+    }
+
+    @Override
     public Flowable<List<Transaction>> getTransactionsList() {
         return transactionDao.getTransactionsList()
                 .subscribeOn(Schedulers.io());
@@ -56,6 +62,12 @@ public class TransactionRepository implements TransactionStorage {
     @Override
     public Completable deleteTransaction(Transaction transaction) {
         return Completable.fromAction(() -> transactionDao.deleteTransaction(transaction))
+                .subscribeOn(Schedulers.io());
+    }
+
+    @Override
+    public Completable deleteTransaction(int id) {
+        return Completable.fromAction(() -> transactionDao.deleteTransaction(id))
                 .subscribeOn(Schedulers.io());
     }
 }

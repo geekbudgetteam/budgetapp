@@ -8,12 +8,13 @@ import com.example.budgetapp.mvp.model.entity.Transaction;
 import com.example.budgetapp.mvp.model.entity.storage.CategoryStorage;
 import com.example.budgetapp.mvp.model.entity.storage.ProjectStorage;
 import com.example.budgetapp.mvp.model.entity.storage.TransactionStorage;
-import com.example.budgetapp.mvp.view.fragment.AddTransactionFragmentView;
+import com.example.budgetapp.mvp.view.fragment.UpdateTransactionFragmentView;
 import com.example.budgetapp.navigation.Screens;
 import com.example.budgetapp.utils.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import javax.inject.Inject;
 
@@ -23,10 +24,11 @@ import io.reactivex.schedulers.Schedulers;
 import ru.terrakok.cicerone.Router;
 
 @InjectViewState
-public class AddTransactionFragmentPresenter extends MvpPresenter<AddTransactionFragmentView> {
+public class UpdateTransactionFragmentPresenter extends MvpPresenter<UpdateTransactionFragmentView> {
 
     private Scheduler scheduler;
     private CompositeDisposable disposables = new CompositeDisposable();
+    private Transaction transaction;
     private IProjectsSpinnerPresenter projectsSpinnerPresenter = new ProjectsSpinnerPresenter();
     private ICategoriesSpinnerPresenter categoriesSpinnerPresenter = new CategoriesSpinnerPresenter();
     private List<Project> projects = new ArrayList<>();
@@ -35,36 +37,53 @@ public class AddTransactionFragmentPresenter extends MvpPresenter<AddTransaction
     @Inject
     Router router;
     @Inject
+    TransactionStorage transactionStorage;
+    @Inject
     ProjectStorage projectStorage;
     @Inject
     CategoryStorage categoryStorage;
-    @Inject
-    TransactionStorage transactionStorage;
 
-    public AddTransactionFragmentPresenter(Scheduler scheduler) {
+    public UpdateTransactionFragmentPresenter(Scheduler scheduler) {
         this.scheduler = scheduler;
     }
 
-    @Override
-    protected void onFirstViewAttach() {
-        super.onFirstViewAttach();
-        loadData();
-    }
-
-    public void loadData() {
-        disposables.add(projectStorage.getProjectsList()
-                .subscribeOn(Schedulers.io())
+    public void loadData(int transactionId) {
+        disposables.add(transactionStorage.getTransaction(transactionId)
                 .observeOn(scheduler)
-                .subscribe((projects) -> {
-                    this.projects = projects;
-                    disposables.add(categoryStorage.getCategoriesList()
+                .subscribe(transaction -> {
+                    UpdateTransactionFragmentPresenter.this.transaction = transaction;
+                    disposables.add(projectStorage.getProjectsList()
                             .subscribeOn(Schedulers.io())
                             .observeOn(scheduler)
-                            .subscribe((categories) -> {
-                                this.categories = categories;
-                                getViewState().updateData();
+                            .subscribe((projects) -> {
+                                this.projects = projects;
+                                disposables.add(categoryStorage.getCategoriesList()
+                                        .subscribeOn(Schedulers.io())
+                                        .observeOn(scheduler)
+                                        .subscribe((categories) -> {
+                                            this.categories = categories;
+                                            getViewState().updateData();
+                                            setTransactionFieldsSelection();
+                                        }));
                             }));
                 }));
+    }
+
+    private void setTransactionFieldsSelection(){
+        int transactionType = 0;
+        if (transaction.getAmount() < 0){
+            transactionType = Constants.EXPENSE;
+        } else {
+            transactionType = Constants.INCOME;
+        }
+        getViewState().setTransactionTypeSpinnerSelection(transactionType);
+        getViewState().setProjectSpinnerSelection(transaction.getProjectId() - 1); // -1 is alignment db and list indexes
+        getViewState().setCategorySpinnerSelection(transaction.getCategoryId() - 1); // -1 is alignment db and list indexes
+        String amount = String.format(Locale.getDefault(), "%.2f %s",
+                Math.abs(transaction.getAmount()), Constants.CURRENCY);
+        getViewState().setTransactionAmountSelection(amount);
+        String date = Constants.DATE_FORMAT.format(transaction.getDate());
+        getViewState().setTransactionDateSelection(date);
     }
 
     public void showAddProjectFragment() {
@@ -79,11 +98,12 @@ public class AddTransactionFragmentPresenter extends MvpPresenter<AddTransaction
         getViewState().showMessage(Constants.ERROR_MESSAGE + field);
     }
 
-    public void addTransaction() {
+    public void updateTransaction() {
         getViewState().getData();
     }
 
-    public void addTransaction(Transaction transaction) {
+    public void updateTransaction(Transaction transaction) {
+        transaction.setId(this.transaction.getId());
         disposables.add(transactionStorage.addTransaction(transaction)
                 .observeOn(scheduler)
                 .subscribe(this::onBack));

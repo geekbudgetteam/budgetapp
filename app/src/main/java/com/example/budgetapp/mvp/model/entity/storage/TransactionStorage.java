@@ -15,6 +15,8 @@ public interface TransactionStorage {
 
     Maybe<Transaction> getTransaction(int id);
 
+    Maybe<TransactionDetail> getTransactionDetail(int id);
+
     Flowable<List<Transaction>> getTransactionsList();
 
     Flowable<List<TransactionDetail>> getTransactionDetailsList();
@@ -22,4 +24,6 @@ public interface TransactionStorage {
     Completable updateTransaction(Transaction transaction);
 
     Completable deleteTransaction(Transaction transaction);
+
+    Completable deleteTransaction(int id);
 }
