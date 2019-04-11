@@ -6,53 +6,52 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.example.budgetapp.App;
 import com.example.budgetapp.R;
-import com.example.budgetapp.mvp.presenter.TransactionFragmentPresenter;
-import com.example.budgetapp.mvp.view.fragment.TransactionFragmentView;
+import com.example.budgetapp.mvp.presenter.CategoryFragmentPresenter;
+import com.example.budgetapp.mvp.view.fragment.CategoryFragmentView;
+import com.example.budgetapp.ui.adapter.list.TransactionsListAdapter;
 import com.example.budgetapp.utils.Constants;
 
 import butterknife.BindView;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 
-public class TransactionFragment extends BaseFragment implements TransactionFragmentView {
+public class CategoryFragment extends BaseFragment implements CategoryFragmentView {
 
-    private static final String ARG_TRANSACTION_ID = "transaction_id";
-    private int transactionId;
+    private static final String ARG_CATEGORY_ID = "category_id";
+    private int categoryId;
+    private TransactionsListAdapter adapter;
 
-    @BindView(R.id.transaction_type_text)
-    TextView transactionTypeText;
-    @BindView(R.id.project_name_text)
-    TextView projectNameText;
     @BindView(R.id.category_name_text)
     TextView categoryNameText;
-    @BindView(R.id.amount_text)
-    TextView amountText;
-    @BindView(R.id.transaction_date_text)
-    TextView transactionDateText;
+    @BindView(R.id.recycler_view)
+    RecyclerView recyclerView;
 
     @InjectPresenter
-    TransactionFragmentPresenter presenter;
+    CategoryFragmentPresenter presenter;
 
     @ProvidePresenter
-    public TransactionFragmentPresenter providePresenter() {
-        TransactionFragmentPresenter presenter = new TransactionFragmentPresenter(AndroidSchedulers.mainThread());
+    public CategoryFragmentPresenter providePresenter() {
+        CategoryFragmentPresenter presenter = new CategoryFragmentPresenter(AndroidSchedulers.mainThread());
         App.getInstance().getAppComponent().inject(presenter);
         return presenter;
     }
 
-    public static Fragment newInstance(int transactionId) {
+    public static Fragment newInstance(int categoryId) {
         Bundle args = new Bundle();
-        args.putInt(ARG_TRANSACTION_ID, transactionId);
-        TransactionFragment fragment = new TransactionFragment();
+        args.putInt(ARG_CATEGORY_ID, categoryId);
+        CategoryFragment fragment = new CategoryFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -61,7 +60,7 @@ public class TransactionFragment extends BaseFragment implements TransactionFrag
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            transactionId = getArguments().getInt(ARG_TRANSACTION_ID);
+            categoryId = getArguments().getInt(ARG_CATEGORY_ID);
         }
         setHasOptionsMenu(true);
     }
@@ -76,7 +75,7 @@ public class TransactionFragment extends BaseFragment implements TransactionFrag
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.edit_entity:
-                presenter.editTransaction();
+                presenter.editCategory();
                 return true;
             case R.id.delete_entity:
                 DeleteEntityDialogFragment fragment = new DeleteEntityDialogFragment();
@@ -93,17 +92,20 @@ public class TransactionFragment extends BaseFragment implements TransactionFrag
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        presenter.loadData(transactionId);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
+        adapter = new TransactionsListAdapter(presenter.getTransactionsListPresenter());
+        recyclerView.setAdapter(adapter);
+        updateUI();
     }
 
     @Override
     int getLayoutRes() {
-        return R.layout.fragment_transaction;
+        return R.layout.fragment_category;
     }
 
     @Override
     int getTitleRes() {
-        return R.string.transaction_fragment;
+        return R.string.category_fragment;
     }
 
     @Override
@@ -113,7 +115,7 @@ public class TransactionFragment extends BaseFragment implements TransactionFrag
             switch (requestCode) {
                 case Constants.DELETE_REQUEST:
                     if(data.getIntExtra(DeleteEntityDialogFragment.TAG_RESULT_DELETE, -1) == Constants.RESULT_OK){
-                        presenter.deleteTransaction();
+                        presenter.deleteCategory();
                         break;
                     }
                 default:
@@ -122,14 +124,13 @@ public class TransactionFragment extends BaseFragment implements TransactionFrag
         }
     }
 
-    @Override
-    public void setTransactionType(String type) {
-        transactionTypeText.setText(type);
+    public void updateUI() {
+        presenter.loadData(categoryId);
     }
 
     @Override
-    public void setProjectName(String projectName) {
-        projectNameText.setText(projectName);
+    public void updateTransactionsList() {
+        adapter.notifyDataSetChanged();
     }
 
     @Override
@@ -138,13 +139,8 @@ public class TransactionFragment extends BaseFragment implements TransactionFrag
     }
 
     @Override
-    public void setTransactionAmount(String amount) {
-        amountText.setText(amount);
-    }
-
-    @Override
-    public void setTransactionDate(String date) {
-        transactionDateText.setText(date);
+    public void showMessage(String message) {
+        Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
     }
 
     @Override

@@ -62,7 +62,6 @@ public class ProjectsPresenter extends MvpPresenter<ProjectsListFragmentView> {
                                     returnValue = project.getProjectType() == Constants.INCOME;
                                     break;
                             }
-                            System.out.println("returnValue " + returnValue);
                             return returnValue;
                         })
                         .toList()
@@ -70,7 +69,6 @@ public class ProjectsPresenter extends MvpPresenter<ProjectsListFragmentView> {
                 .observeOn(scheduler)
                 .subscribe(projects -> {
                     ProjectsPresenter.this.projects = projects;
-                    System.out.println("Size " + projects.size());
                     ProjectsPresenter.this.getViewState().updateProjectsList();
                 });
     }

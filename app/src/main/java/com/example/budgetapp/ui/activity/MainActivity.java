@@ -86,16 +86,16 @@ public class MainActivity extends AppCompatActivity implements ChangeFragmentTit
                     menuItem.setChecked(true);
                     int id = menuItem.getItemId();
                     switch (id) {
-                        case R.id.main_fragment:
+                        case R.id.transactions_fragment:
                             navigator.applyCommands(new Command[]{new Replace(new Screens.TransactionsFragmentScreen())});
                             break;
                         case R.id.projects_fragment:
                             navigator.applyCommands(new Command[]{new Replace(new Screens.ProjectsFragmentScreen())});
                             break;
-                        case R.id.nav_about_programmer:
-                            navigator.applyCommands(new Command[]{new Replace(new Screens.DeveloperFragmentScreen())});
+                        case R.id.categories_fragment:
+                            navigator.applyCommands(new Command[]{new Replace(new Screens.CategoriesFragmentScreen())});
                             break;
-                        case R.id.nav_feedback:
+                        case R.id.units_fragment:
                             navigator.applyCommands(new Command[]{new Replace(new Screens.FeedbackFragmentScreen())});
                             break;
                     }

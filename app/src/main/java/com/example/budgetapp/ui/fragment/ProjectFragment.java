@@ -1,5 +1,7 @@
 package com.example.budgetapp.ui.fragment;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -21,6 +23,7 @@ import com.example.budgetapp.R;
 import com.example.budgetapp.mvp.presenter.ProjectFragmentPresenter;
 import com.example.budgetapp.mvp.view.fragment.ProjectFragmentView;
 import com.example.budgetapp.ui.adapter.list.ProjectElementsListAdapter;
+import com.example.budgetapp.utils.Constants;
 
 import butterknife.BindView;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -72,16 +75,6 @@ public class ProjectFragment extends BaseFragment implements ProjectFragmentView
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
-        adapter = new ProjectElementsListAdapter(presenter.getProjectElementsListPresenter());
-        recyclerView.setAdapter(adapter);
-        fab.setOnClickListener(v -> presenter.fabAction());
-        updateUI();
-    }
-
-    @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.entity_fragment_menu, menu);
         super.onCreateOptionsMenu(menu, inflater);
@@ -94,11 +87,25 @@ public class ProjectFragment extends BaseFragment implements ProjectFragmentView
                 presenter.editProject();
                 return true;
             case R.id.delete_entity:
-                presenter.deleteProject();
+                DeleteEntityDialogFragment fragment = new DeleteEntityDialogFragment();
+                fragment.setTargetFragment(this, Constants.DELETE_REQUEST);
+                if (getFragmentManager() != null) {
+                    fragment.show(getFragmentManager(), fragment.getClass().getName());
+                }
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
+        adapter = new ProjectElementsListAdapter(presenter.getProjectElementsListPresenter());
+        recyclerView.setAdapter(adapter);
+        fab.setOnClickListener(v -> presenter.fabAction());
+        updateUI();
     }
 
     @Override
@@ -109,6 +116,22 @@ public class ProjectFragment extends BaseFragment implements ProjectFragmentView
     @Override
     int getTitleRes() {
         return R.string.project_fragment;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK) {
+            switch (requestCode) {
+                case Constants.DELETE_REQUEST:
+                    if(data.getIntExtra(DeleteEntityDialogFragment.TAG_RESULT_DELETE, -1) == Constants.RESULT_OK){
+                        presenter.deleteProject();
+                        break;
+                    }
+                default:
+                    break;
+            }
+        }
     }
 
     public void updateUI() {

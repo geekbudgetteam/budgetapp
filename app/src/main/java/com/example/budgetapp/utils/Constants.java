@@ -5,6 +5,9 @@ import java.util.Locale;
 
 public class Constants {
 
+    //    Request types
+    public static final int DELETE_REQUEST = 1;
+
     //    Project types int
     public static final int EXPENSE = 0;
     public static final int INCOME = 1;
@@ -61,6 +64,10 @@ public class Constants {
     public static final String PROJECT_FIELD = "Проект: ";
     public static final String CATEGORY_FIELD = "Категория: ";
     public static final String PERIOD_FIELD = "Период: ";
+
+    //    Dialog result values
+    public static final int RESULT_CANCEL = 0;
+    public static final int RESULT_OK = 1;
 
     //    Date format
     public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());

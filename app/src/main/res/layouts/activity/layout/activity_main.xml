@@ -22,6 +22,6 @@
         android:fitsSystemWindows="true"
         app:itemTextColor="@color/colorText"
         app:headerLayout="@layout/navigation_header"
-        app:menu="@menu/my_navigation_items" />
+        app:menu="@menu/drawer_navigation_items" />
 
 </android.support.v4.widget.DrawerLayout>

@@ -86,6 +86,7 @@ public class AddProjectElementFragment extends BaseFragment implements AddProjec
         if (getArguments() != null) {
             projectId = getArguments().getInt(ARG_PROJECT_ID);
         }
+        setHasOptionsMenu(true);
     }
 
     @Override

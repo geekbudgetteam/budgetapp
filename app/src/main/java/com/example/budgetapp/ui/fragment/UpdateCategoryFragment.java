@@ -15,38 +15,47 @@ import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.example.budgetapp.App;
 import com.example.budgetapp.R;
-import com.example.budgetapp.mvp.model.entity.Unit;
-import com.example.budgetapp.mvp.presenter.AddUnitFragmentPresenter;
-import com.example.budgetapp.mvp.view.fragment.AddUnitFragmentView;
+import com.example.budgetapp.mvp.model.entity.Category;
+import com.example.budgetapp.mvp.presenter.UpdateCategoryFragmentPresenter;
+import com.example.budgetapp.mvp.view.fragment.UpdateCategoryFragmentView;
 
 import java.util.Objects;
 
 import butterknife.BindView;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 
-public class AddUnitFragment extends BaseFragment implements AddUnitFragmentView {
+public class UpdateCategoryFragment extends BaseFragment implements UpdateCategoryFragmentView {
 
-    @BindView(R.id.name_input)
-    EditText nameInput;
+    private static final String ARG_CATEGORY_ID = "category_id";
+    private int categoryId;
+
+    @BindView(R.id.category_name_input)
+    EditText categoryNameInput;
 
     @InjectPresenter
-    AddUnitFragmentPresenter presenter;
+    UpdateCategoryFragmentPresenter presenter;
 
     @ProvidePresenter
-    AddUnitFragmentPresenter providePresenter() {
-        AddUnitFragmentPresenter presenter = new AddUnitFragmentPresenter(AndroidSchedulers.mainThread());
+    public UpdateCategoryFragmentPresenter providePresenter() {
+        UpdateCategoryFragmentPresenter presenter = new UpdateCategoryFragmentPresenter(AndroidSchedulers.mainThread());
         App.getInstance().getAppComponent().inject(presenter);
         return presenter;
     }
 
-    public static Fragment newInstance() {
-        AddUnitFragment fragment = new AddUnitFragment();
+    public static Fragment newInstance(int categoryId) {
+        Bundle args = new Bundle();
+        args.putInt(ARG_CATEGORY_ID, categoryId);
+        UpdateCategoryFragment fragment = new UpdateCategoryFragment();
+        fragment.setArguments(args);
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            categoryId = getArguments().getInt(ARG_CATEGORY_ID);
+        }
         setHasOptionsMenu(true);
     }
 
@@ -60,44 +69,49 @@ public class AddUnitFragment extends BaseFragment implements AddUnitFragmentView
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.save_entity:
-                presenter.addUnit();
+                presenter.updateCategory();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
-
-
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        presenter.loadData(categoryId);
     }
 
     @Override
     int getLayoutRes() {
-        return R.layout.fragment_add_unit;
+        return R.layout.fragment_update_category;
     }
 
     @Override
     int getTitleRes() {
-        return R.string.add_unit_fragment;
+        return R.string.category_fragment;
+    }
+
+    @Override
+    public void setCategoryName(String categoryName) {
+        categoryNameInput.setText(categoryName);
     }
 
     @Override
     public void getData() {
-        String name = nameInput.getText().toString();
-        if (name.equals("")) {
-            presenter.addDataError(Objects.requireNonNull(getContext()).getResources().getString(R.string.project_element_name));
+        String categoryName = categoryNameInput.getText().toString();
+        if (categoryName.equals("")) {
+            presenter.addDataError(Objects.requireNonNull(getContext()).getResources().getString(R.string.category_name));
             return;
         }
-        name = Character.toUpperCase(name.charAt(0)) + name.substring(1);
-        presenter.addUnit(new Unit(name));
+        categoryName = Character.toUpperCase(categoryName.charAt(0)) + categoryName.substring(1);
+        Category category = new Category(categoryName);
+        presenter.updateCategory(category);
     }
 
     @Override
     public void showMessage(String message) {
-        Toast.makeText(getView().getContext(), message, Toast.LENGTH_LONG).show();
+        Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
     }
 
     @Override

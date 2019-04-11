@@ -21,6 +21,8 @@ public interface TransactionStorage {
 
     Flowable<List<TransactionDetail>> getTransactionDetailsList();
 
+    Flowable<List<TransactionDetail>> getTransactionDetailsListByCategory(int categoryId);
+
     Completable updateTransaction(Transaction transaction);
 
     Completable deleteTransaction(Transaction transaction);

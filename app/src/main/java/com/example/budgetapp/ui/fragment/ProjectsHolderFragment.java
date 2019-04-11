@@ -29,16 +29,17 @@ public class ProjectsHolderFragment extends BaseFragment implements ProjectsHold
     @InjectPresenter
     ProjectsHolderPresenter presenter;
 
-    public static ProjectsHolderFragment newInstance() {
-        return new ProjectsHolderFragment();
-    }
-
     @ProvidePresenter
     ProjectsHolderPresenter providePresenter() {
         ProjectsHolderPresenter presenter = new ProjectsHolderPresenter();
         App.getInstance().getAppComponent().inject(presenter);
         return presenter;
     }
+
+    public static ProjectsHolderFragment newInstance() {
+        return new ProjectsHolderFragment();
+    }
+
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {

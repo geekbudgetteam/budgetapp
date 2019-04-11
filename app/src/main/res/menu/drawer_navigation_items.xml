@@ -2,22 +2,21 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/main_fragment"
-            android:icon="@drawable/baseline_list_alt_black_18dp"
+            android:id="@+id/transactions_fragment"
+            android:icon="@drawable/ic_menu_list"
             android:title="@string/transactions_fragment" />
         <item
             android:id="@+id/projects_fragment"
             android:icon="@drawable/ic_project"
             android:title="@string/projects_fragment" />
         <item
-            android:id="@+id/nav_about_programmer"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="@string/nav_about_programmer" />
+            android:id="@+id/categories_fragment"
+            android:icon="@drawable/ic_menu_categories"
+            android:title="@string/categories_fragment" />
         <item
-            android:id="@+id/nav_feedback"
-            android:icon="@drawable/ic_menu_send"
-            android:title="@string/nav_feedback" />
-
+            android:id="@+id/units_fragment"
+            android:icon="@drawable/ic_menu_unit"
+            android:title="@string/units_fragment" />
 
     </group>
 </menu>

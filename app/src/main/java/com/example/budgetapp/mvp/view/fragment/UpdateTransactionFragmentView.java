@@ -5,7 +5,7 @@ import com.arellomobile.mvp.viewstate.strategy.AddToEndSingleStrategy;
 import com.arellomobile.mvp.viewstate.strategy.SkipStrategy;
 import com.arellomobile.mvp.viewstate.strategy.StateStrategyType;
 
-@StateStrategyType(value = SkipStrategy.class)
+@StateStrategyType(value = AddToEndSingleStrategy.class)
 public interface UpdateTransactionFragmentView extends MvpView {
 
     void setTransactionTypeSpinnerSelection(int type);
@@ -18,10 +18,11 @@ public interface UpdateTransactionFragmentView extends MvpView {
 
     void setTransactionDateSelection(String dateSelection);
 
-    @StateStrategyType(AddToEndSingleStrategy.class)
     void updateData();
 
+    @StateStrategyType(SkipStrategy.class)
     void getData();
 
+    @StateStrategyType(SkipStrategy.class)
     void showMessage(String message);
 }

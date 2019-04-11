@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">budgetapp</string>
+    <string name="budgetapp_title">BUDGETAPP</string>
 
     <string name="nav_about_programmer">О разработчике</string>
     <string name="nav_feedback">Обратная связь</string>
@@ -14,6 +15,11 @@
     <string name="edit_entity">Изменить</string>
     <string name="delete_entity">Удалить</string>
 
+    <!--DeleteEntityFragment values-->
+    <string name="delete_hint">Удалить эту запись?</string>
+    <string name="cancel_btn">Отмена</string>
+    <string name="delete_btn">Удалить</string>
+
     <string name="date_hint">01.01.2019</string>
 
 
@@ -22,10 +28,14 @@
     <string name="transaction_fragment">Транзакция</string>
     <string name="add_transaction_fragment">Добавить транзакцию</string>
     <string name="projects_fragment">Проекты</string>
-    <string name="add_project_fragment">Добавить проект</string>
-    <string name="add_category_fragment">Добавить категорию</string>
-    <string name="add_unit_fragment">Добавить ед. измерения</string>
     <string name="project_fragment">Проект</string>
+    <string name="add_project_fragment">Добавить проект</string>
+    <string name="categories_fragment">Категории</string>
+    <string name="category_fragment">Категория</string>
+    <string name="add_category_fragment">Добавить категорию</string>
+    <string name="units_fragment">Единицы измерения</string>
+    <string name="add_unit_fragment">Добавить ед. измерения</string>
+
     <string name="project_element_fragment">Добавить элемент</string>
 
 

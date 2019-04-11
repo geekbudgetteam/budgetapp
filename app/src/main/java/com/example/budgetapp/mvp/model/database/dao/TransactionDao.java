@@ -43,6 +43,15 @@ public interface TransactionDao {
             "AND categories.id = transactions.category_id")
     Flowable<List<TransactionDetail>> getTransactionDetailsList();
 
+    @Query("SELECT transactions.id, " +
+            "projects.name AS projectName, " +
+            "categories.name AS categoryName, transactions.date, transactions.amount " +
+            "FROM transactions, projects, categories " +
+            "WHERE transactions.category_id = :categoryId " +
+            "AND projects.id = transactions.project_id " +
+            "AND categories.id = transactions.category_id")
+    Flowable<List<TransactionDetail>> getTransactionDetailsListByCategory(int categoryId);
+
     @Delete
     void deleteTransaction(Transaction transaction);
 

@@ -14,5 +14,4 @@
         android:textAppearance="?android:textAppearanceLarge"
         android:textColor="@color/colorPrimaryText"/>
 
-
 </LinearLayout>

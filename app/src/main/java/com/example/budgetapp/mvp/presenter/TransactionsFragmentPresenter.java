@@ -5,7 +5,7 @@ import com.arellomobile.mvp.MvpPresenter;
 import com.example.budgetapp.mvp.model.entity.storage.TransactionStorage;
 import com.example.budgetapp.mvp.model.entity.view.TransactionDetail;
 import com.example.budgetapp.mvp.view.fragment.TransactionsFragmentView;
-import com.example.budgetapp.mvp.view.row.TransactionRowView;
+import com.example.budgetapp.mvp.view.row.EntityRowView;
 import com.example.budgetapp.navigation.Screens;
 
 import java.util.ArrayList;
@@ -22,7 +22,7 @@ public class TransactionsFragmentPresenter extends MvpPresenter<TransactionsFrag
 
     private Scheduler scheduler;
     private Disposable disposable;
-    private ITransactionsListPresenter transactionsListPresenter = new TransactionsFragmentPresenter.TransactionsListPresenter();
+    private EntityListPresenter<TransactionDetail> transactionsListPresenter = new TransactionsListPresenter();
     private List<TransactionDetail> transactions = new ArrayList<>();
 
     @Inject
@@ -56,7 +56,7 @@ public class TransactionsFragmentPresenter extends MvpPresenter<TransactionsFrag
                 });
     }
 
-    public ITransactionsListPresenter getTransactionsListPresenter() {
+    public EntityListPresenter<TransactionDetail> getTransactionsListPresenter() {
         return transactionsListPresenter;
     }
 
@@ -68,23 +68,23 @@ public class TransactionsFragmentPresenter extends MvpPresenter<TransactionsFrag
         router.exit();
     }
 
-    class TransactionsListPresenter implements ITransactionsListPresenter {
+    class TransactionsListPresenter implements EntityListPresenter<TransactionDetail> {
 
         @Override
-        public void bindTransactionsListRow(int pos, TransactionRowView rowView) {
-            if (transactions != null) {
-                rowView.setTransaction(transactions.get(pos));
+        public void bindEntityListRow(int pos, EntityRowView<TransactionDetail> rowView) {
+            if (transactions != null){
+                rowView.setEntity(transactions.get(pos));
             }
         }
 
         @Override
-        public int getTransactionsCount() {
+        public int getEntitiesCount() {
             return transactions.size();
         }
 
         @Override
-        public void navigateToTransaction(TransactionDetail transaction) {
-            router.navigateTo(new Screens.TransactionFragmentScreen(transaction.getId()));
+        public void navigateToEntity(TransactionDetail entity) {
+            router.navigateTo(new Screens.TransactionFragmentScreen(entity.getId()));
         }
     }
 }

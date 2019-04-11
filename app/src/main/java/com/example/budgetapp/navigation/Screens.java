@@ -7,12 +7,14 @@ import com.example.budgetapp.ui.fragment.AddProjectElementFragment;
 import com.example.budgetapp.ui.fragment.AddProjectFragment;
 import com.example.budgetapp.ui.fragment.AddTransactionFragment;
 import com.example.budgetapp.ui.fragment.AddUnitFragment;
-import com.example.budgetapp.ui.fragment.DeveloperFragment;
+import com.example.budgetapp.ui.fragment.CategoriesFragment;
+import com.example.budgetapp.ui.fragment.CategoryFragment;
 import com.example.budgetapp.ui.fragment.FeedbackFragment;
 import com.example.budgetapp.ui.fragment.ProjectFragment;
 import com.example.budgetapp.ui.fragment.ProjectsHolderFragment;
 import com.example.budgetapp.ui.fragment.TransactionFragment;
 import com.example.budgetapp.ui.fragment.TransactionsFragment;
+import com.example.budgetapp.ui.fragment.UpdateCategoryFragment;
 import com.example.budgetapp.ui.fragment.UpdateProjectFragment;
 import com.example.budgetapp.ui.fragment.UpdateTransactionFragment;
 
@@ -67,12 +69,7 @@ public class Screens {
         }
     }
 
-    public static class DeveloperFragmentScreen extends SupportAppScreen{
-        @Override
-        public Fragment getFragment() {
-            return DeveloperFragment.newInstance();
-        }
-    }
+
 
     public static class FeedbackFragmentScreen extends SupportAppScreen{
         @Override
@@ -88,10 +85,43 @@ public class Screens {
         }
     }
 
+    public static class CategoriesFragmentScreen extends SupportAppScreen {
+        @Override
+        public Fragment getFragment() {
+            return CategoriesFragment.newInstance();
+        }
+    }
+
+    public static class CategoryFragmentScreen extends SupportAppScreen {
+        private int categoryId;
+
+        public CategoryFragmentScreen(int categoryId) {
+            this.categoryId = categoryId;
+        }
+
+        @Override
+        public Fragment getFragment() {
+            return CategoryFragment.newInstance(categoryId);
+        }
+    }
+
     public static class AddCategoryFragmentScreen extends SupportAppScreen {
         @Override
         public Fragment getFragment() {
             return AddCategoryFragment.newInstance();
+        }
+    }
+
+    public static class UpdateCategoryFragmentScreen extends SupportAppScreen {
+        private int categoryId;
+
+        public UpdateCategoryFragmentScreen(int categoryId) {
+            this.categoryId = categoryId;
+        }
+
+        @Override
+        public Fragment getFragment() {
+            return UpdateCategoryFragment.newInstance(categoryId);
         }
     }
 

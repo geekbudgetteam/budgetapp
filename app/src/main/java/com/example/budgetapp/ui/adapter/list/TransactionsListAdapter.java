@@ -8,8 +8,8 @@ import android.widget.TextView;
 
 import com.example.budgetapp.R;
 import com.example.budgetapp.mvp.model.entity.view.TransactionDetail;
-import com.example.budgetapp.mvp.presenter.ITransactionsListPresenter;
-import com.example.budgetapp.mvp.view.row.TransactionRowView;
+import com.example.budgetapp.mvp.presenter.EntityListPresenter;
+import com.example.budgetapp.mvp.view.row.EntityRowView;
 import com.example.budgetapp.utils.Constants;
 
 import org.jetbrains.annotations.NotNull;
@@ -19,9 +19,9 @@ import butterknife.ButterKnife;
 
 public class TransactionsListAdapter extends RecyclerView.Adapter<TransactionsListAdapter.TransactionHolder> {
 
-    private ITransactionsListPresenter presenter;
+    private EntityListPresenter<TransactionDetail> presenter;
 
-    public TransactionsListAdapter(ITransactionsListPresenter presenter) {
+    public TransactionsListAdapter(EntityListPresenter<TransactionDetail> presenter) {
         this.presenter = presenter;
     }
 
@@ -33,16 +33,15 @@ public class TransactionsListAdapter extends RecyclerView.Adapter<TransactionsLi
 
     @Override
     public void onBindViewHolder(TransactionHolder holder, int position) {
-        presenter.bindTransactionsListRow(position, holder);
+        presenter.bindEntityListRow(position, holder);
     }
 
     @Override
     public int getItemCount() {
-        return presenter.getTransactionsCount();
+        return presenter.getEntitiesCount();
     }
 
-
-    public class TransactionHolder extends RecyclerView.ViewHolder implements TransactionRowView {
+    public class TransactionHolder extends RecyclerView.ViewHolder implements EntityRowView<TransactionDetail> {
 
         private TransactionDetail transaction;
 
@@ -54,11 +53,11 @@ public class TransactionsListAdapter extends RecyclerView.Adapter<TransactionsLi
         TransactionHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
-            itemView.setOnClickListener((v) -> presenter.navigateToTransaction(transaction));
-        }
+            itemView.setOnClickListener((v) -> presenter.navigateToEntity(transaction));
+    }
 
         @Override
-        public void setTransaction(TransactionDetail transaction) {
+        public void setEntity(TransactionDetail transaction) {
             this.transaction = transaction;
             String projectName = Constants.PROJECT_FIELD + transaction.getProjectName();
             projectNameView.setText(projectName);
