@@ -13,26 +13,29 @@ import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.example.budgetapp.App;
 import com.example.budgetapp.R;
 import com.example.budgetapp.mvp.presenter.CategoriesFragmentPresenter;
+import com.example.budgetapp.mvp.presenter.UnitsFragmentPresenter;
 import com.example.budgetapp.mvp.view.fragment.CategoriesFragmentView;
+import com.example.budgetapp.mvp.view.fragment.UnitsFragmentView;
 import com.example.budgetapp.ui.adapter.list.CategoriesListAdapter;
+import com.example.budgetapp.ui.adapter.list.UnitsListAdapter;
 
 import butterknife.BindView;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 
-public class UnitsFragment extends BaseFragment implements CategoriesFragmentView {
+public class UnitsFragment extends BaseFragment implements UnitsFragmentView {
 
-    private CategoriesListAdapter adapter;
+    private UnitsListAdapter adapter;
 
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
     @BindView(R.id.fragment_fab) FloatingActionButton fab;
 
     @InjectPresenter
-    CategoriesFragmentPresenter presenter;
+    UnitsFragmentPresenter presenter;
 
     @ProvidePresenter
-    CategoriesFragmentPresenter providePresenter() {
-        CategoriesFragmentPresenter presenter = new CategoriesFragmentPresenter(AndroidSchedulers.mainThread());
+    UnitsFragmentPresenter providePresenter() {
+        UnitsFragmentPresenter presenter = new UnitsFragmentPresenter(AndroidSchedulers.mainThread());
         App.getInstance().getAppComponent().inject(presenter);
         return presenter;
     }
@@ -45,7 +48,7 @@ public class UnitsFragment extends BaseFragment implements CategoriesFragmentVie
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
-        adapter = new CategoriesListAdapter(presenter.getCategoriesListPresenter());
+        adapter = new UnitsListAdapter(presenter.getUnitsListPresenter());
         recyclerView.setAdapter(adapter);
         fab.setOnClickListener(v -> presenter.fabAction());
         updateUI();
@@ -53,12 +56,12 @@ public class UnitsFragment extends BaseFragment implements CategoriesFragmentVie
 
     @Override
     int getLayoutRes() {
-        return R.layout.fragment_categories;
+        return R.layout.fragment_units;
     }
 
     @Override
     int getTitleRes() {
-        return R.string.categories_fragment;
+        return R.string.units_fragment;
     }
 
     public void updateUI() {

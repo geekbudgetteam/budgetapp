@@ -76,6 +76,7 @@ public class UpdateProjectFragment extends BaseFragment implements UpdateProject
         if (getArguments() != null) {
             projectId = getArguments().getInt(ARG_PROJECT_ID);
         }
+        setHasOptionsMenu(true);
     }
 
     @Override

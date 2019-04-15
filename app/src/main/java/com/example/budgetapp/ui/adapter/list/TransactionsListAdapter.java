@@ -14,6 +14,8 @@ import com.example.budgetapp.utils.Constants;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Locale;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -64,7 +66,7 @@ public class TransactionsListAdapter extends RecyclerView.Adapter<TransactionsLi
             String categoryName = Constants.CATEGORY_FIELD + transaction.getCategoryName();
             categoryNameView.setText(categoryName);
             transactionDateView.setText(Constants.DATE_FORMAT.format(transaction.getDate()));
-            transactionAmountView.setText(String.valueOf(transaction.getAmount()));
+            transactionAmountView.setText(String.format(Locale.getDefault(), "%.2f", transaction.getAmount()));
         }
     }
 }

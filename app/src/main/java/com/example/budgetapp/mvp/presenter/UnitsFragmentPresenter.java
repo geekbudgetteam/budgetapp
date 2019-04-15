@@ -76,7 +76,7 @@ public class UnitsFragmentPresenter extends MvpPresenter<UnitsFragmentView> {
 
         @Override
         public void navigateToEntity(Unit unit) {
-            router.navigateTo(new Screens.CategoryFragmentScreen(unit.getId()));
+            router.navigateTo(new Screens.UpdateUnitFragmentScreen(unit.getId()));
         }
     }
 }

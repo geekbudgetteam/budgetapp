@@ -41,15 +41,24 @@ public class ProjectFragmentPresenter extends MvpPresenter<ProjectFragmentView> 
     }
 
     public void loadData(int projectId) {
+        final int[] totalAmount = new int[1];
         disposables.add(projectStorage.getProject(projectId)
                 .observeOn(scheduler)
                 .subscribe(project -> {
                     ProjectFragmentPresenter.this.project = project;
-                    setProjectFieldsSelection();
+
                     disposables.add(projectElementStorage.getProjectElementDetailsListByProject(projectId)
+                            .map(elementDetails -> {
+                                for (ProjectElementDetail detail: elementDetails) {
+                                    totalAmount[0] += detail.getAmount();
+                                }
+                                return elementDetails;
+                            })
                             .observeOn(scheduler)
                             .subscribe(projectElements -> {
+                                project.setAmount(totalAmount[0]);
                                 ProjectFragmentPresenter.this.projectElements = projectElements;
+                                setProjectFieldsSelection();
                                 getViewState().updateProjectElementsList();
                             }));
                 }));

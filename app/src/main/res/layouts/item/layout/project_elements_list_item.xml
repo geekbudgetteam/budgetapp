@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="2dp">
@@ -17,8 +18,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_micro"
             android:padding="@dimen/padding_small"
-            android:textColor="@android:color/black"
             android:textAppearance="?android:textAppearanceMedium"
+            android:textColor="@android:color/black"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -26,12 +27,9 @@
             android:id="@+id/category_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/margin_micro"
             android:padding="@dimen/padding_small"
-            android:textColor="@android:color/black"
             android:textAppearance="?android:textAppearanceSmall"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintRight_toLeftOf="@id/project_element_quantity"
+            android:textColor="@android:color/black"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/project_element_name" />
 
@@ -39,25 +37,22 @@
             android:id="@+id/project_element_quantity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_micro"
+            android:layout_marginBottom="@dimen/margin_micro"
             android:padding="@dimen/padding_small"
+            android:textAppearance="?android:textAppearanceSmall"
             android:textColor="@android:color/black"
-            android:textSize="15sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/project_element_amount"
-            app:layout_constraintStart_toEndOf="@+id/project_element_name"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/category_name" />
 
         <TextView
             android:id="@+id/project_element_amount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_micro"
-            android:layout_marginEnd="@dimen/margin_micro"
-            android:layout_marginBottom="@dimen/margin_micro"
+            android:gravity="center"
             android:padding="@dimen/padding_small"
-            android:textColor="@android:color/black"
             android:textAppearance="?android:textAppearanceMedium"
+            android:textColor="@android:color/black"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

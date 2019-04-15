@@ -170,7 +170,7 @@ public class UpdateTransactionFragment extends BaseFragment implements UpdateTra
         }
         String amountValue = amountInput.getText().toString();
         String[] amountValues = amountValue.split(" ");
-        float amount = Float.parseFloat(amountValues[0]);
+        float amount = Float.parseFloat(amountValues[0].replace(",", "."));
         if (amount == 0) {
             presenter.addDataError(getContext().getResources().getString(R.string.transaction_amount));
             return;

@@ -91,7 +91,7 @@ public class AddUnitFragment extends BaseFragment implements AddUnitFragmentView
             presenter.addDataError(Objects.requireNonNull(getContext()).getResources().getString(R.string.project_element_name));
             return;
         }
-        name = Character.toUpperCase(name.charAt(0)) + name.substring(1);
+//        name = Character.toUpperCase(name.charAt(0)) + name.substring(1);
         presenter.addUnit(new Unit(name));
     }
 

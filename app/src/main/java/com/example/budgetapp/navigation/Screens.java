@@ -9,14 +9,15 @@ import com.example.budgetapp.ui.fragment.AddTransactionFragment;
 import com.example.budgetapp.ui.fragment.AddUnitFragment;
 import com.example.budgetapp.ui.fragment.CategoriesFragment;
 import com.example.budgetapp.ui.fragment.CategoryFragment;
-import com.example.budgetapp.ui.fragment.FeedbackFragment;
 import com.example.budgetapp.ui.fragment.ProjectFragment;
 import com.example.budgetapp.ui.fragment.ProjectsHolderFragment;
 import com.example.budgetapp.ui.fragment.TransactionFragment;
 import com.example.budgetapp.ui.fragment.TransactionsFragment;
+import com.example.budgetapp.ui.fragment.UnitsFragment;
 import com.example.budgetapp.ui.fragment.UpdateCategoryFragment;
 import com.example.budgetapp.ui.fragment.UpdateProjectFragment;
 import com.example.budgetapp.ui.fragment.UpdateTransactionFragment;
+import com.example.budgetapp.ui.fragment.UpdateUnitFragment;
 
 import ru.terrakok.cicerone.android.support.SupportAppScreen;
 
@@ -69,15 +70,6 @@ public class Screens {
         }
     }
 
-
-
-    public static class FeedbackFragmentScreen extends SupportAppScreen{
-        @Override
-        public Fragment getFragment() {
-            return FeedbackFragment.newInstance();
-        }
-    }
-
     public static class AddProjectFragmentScreen extends SupportAppScreen{
         @Override
         public Fragment getFragment() {
@@ -125,10 +117,30 @@ public class Screens {
         }
     }
 
+    public static class UnitsFragmentScreen extends SupportAppScreen {
+        @Override
+        public Fragment getFragment() {
+            return UnitsFragment.newInstance();
+        }
+    }
+
     public static class AddUnitFragmentScreen extends SupportAppScreen {
         @Override
         public Fragment getFragment() {
             return AddUnitFragment.newInstance();
+        }
+    }
+
+    public static class UpdateUnitFragmentScreen extends SupportAppScreen {
+        private int unitId;
+
+        public UpdateUnitFragmentScreen(int unitId) {
+            this.unitId = unitId;
+        }
+
+        @Override
+        public Fragment getFragment() {
+            return UpdateUnitFragment.newInstance(unitId);
         }
     }
 

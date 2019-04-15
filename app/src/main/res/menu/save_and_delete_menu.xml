@@ -7,5 +7,10 @@
             android:icon="@drawable/ic_save_white"
             android:title="@string/save_entity"
             app:showAsAction="ifRoom"/>
+        <item
+            android:id="@+id/delete_entity"
+            android:icon="@drawable/ic_delete_white"
+            android:title="@string/delete_entity"
+            app:showAsAction="never"/>
     </group>
 </menu>

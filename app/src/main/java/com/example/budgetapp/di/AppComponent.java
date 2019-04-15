@@ -15,9 +15,11 @@ import com.example.budgetapp.mvp.presenter.ProjectsHolderPresenter;
 import com.example.budgetapp.mvp.presenter.ProjectsPresenter;
 import com.example.budgetapp.mvp.presenter.TransactionFragmentPresenter;
 import com.example.budgetapp.mvp.presenter.TransactionsFragmentPresenter;
+import com.example.budgetapp.mvp.presenter.UnitsFragmentPresenter;
 import com.example.budgetapp.mvp.presenter.UpdateCategoryFragmentPresenter;
 import com.example.budgetapp.mvp.presenter.UpdateProjectFragmentPresenter;
 import com.example.budgetapp.mvp.presenter.UpdateTransactionFragmentPresenter;
+import com.example.budgetapp.mvp.presenter.UpdateUnitFragmentPresenter;
 import com.example.budgetapp.ui.activity.MainActivity;
 import com.example.budgetapp.ui.fragment.AddTransactionFragment;
 import com.example.budgetapp.ui.fragment.ProjectsHolderFragment;
@@ -64,5 +66,7 @@ public interface AppComponent {
     void inject(AddCategoryFragmentPresenter presenter);
     void inject(UpdateCategoryFragmentPresenter presenter);
 
+    void inject(UnitsFragmentPresenter presenter);
     void inject(AddUnitFragmentPresenter presenter);
+    void inject(UpdateUnitFragmentPresenter presenter);
 }

@@ -64,6 +64,7 @@ public class Constants {
     public static final String PROJECT_FIELD = "Проект: ";
     public static final String CATEGORY_FIELD = "Категория: ";
     public static final String PERIOD_FIELD = "Период: ";
+    public static final String QUANTITY_FIELD = "Количество: ";
 
     //    Dialog result values
     public static final int RESULT_CANCEL = 0;

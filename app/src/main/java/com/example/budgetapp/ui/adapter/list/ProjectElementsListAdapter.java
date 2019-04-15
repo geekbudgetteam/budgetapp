@@ -74,8 +74,8 @@ public class ProjectElementsListAdapter extends RecyclerView.Adapter<ProjectElem
             projectElementNameText.setText(name);
             String categoryName = Constants.CATEGORY_FIELD + projectElement.getCategoryName();
             categoryNameText.setText(categoryName);
-            String projectElementQuantity = String.format(Locale.getDefault(), "%.2f %s",
-                    projectElement.getQuantity(), projectElement.getUnitName());
+            String projectElementQuantity = String.format(Locale.getDefault(), "%s %.2f %s",
+                    Constants.QUANTITY_FIELD, projectElement.getQuantity(), projectElement.getUnitName());
             projectElementQuantityText.setText(projectElementQuantity);
             String projectElementAmount = String.format(Locale.getDefault(), "%.2f %s",
                     projectElement.getAmount(), Constants.CURRENCY);

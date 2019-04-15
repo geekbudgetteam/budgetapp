@@ -34,6 +34,7 @@
     <string name="category_fragment">Категория</string>
     <string name="add_category_fragment">Добавить категорию</string>
     <string name="units_fragment">Единицы измерения</string>
+    <string name="unit_fragment">Единица измерения</string>
     <string name="add_unit_fragment">Добавить ед. измерения</string>
 
     <string name="project_element_fragment">Добавить элемент</string>

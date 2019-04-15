@@ -138,7 +138,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_weight="2"
-            android:text="@string/project_start_date" />
+            android:text="@string/project_start_date"
+            android:textAppearance="?android:attr/textAppearanceMedium"/>
 
         <EditText
             android:id="@+id/project_start_date_input"
@@ -171,7 +172,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_weight="2"
-            android:text="@string/project_start_date" />
+            android:text="@string/project_finish_date"
+            android:textAppearance="?android:attr/textAppearanceMedium"/>
 
         <EditText
             android:id="@+id/project_finish_date_input"

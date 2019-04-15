@@ -96,7 +96,7 @@ public class MainActivity extends AppCompatActivity implements ChangeFragmentTit
                             navigator.applyCommands(new Command[]{new Replace(new Screens.CategoriesFragmentScreen())});
                             break;
                         case R.id.units_fragment:
-                            navigator.applyCommands(new Command[]{new Replace(new Screens.FeedbackFragmentScreen())});
+                            navigator.applyCommands(new Command[]{new Replace(new Screens.UnitsFragmentScreen())});
                             break;
                     }
                     drawer.closeDrawers();

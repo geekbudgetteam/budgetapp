@@ -17,8 +17,9 @@ public class AmountInputFocusListener implements View.OnFocusChangeListener {
             String[] values = value.split(" ");
             editText.setText(values[0]);
         } else {
+            float amount = Float.parseFloat((editText.getText().toString().trim()).replace(",", "."));
             String value = String.format(Locale.getDefault(), "%.2f %s",
-                    Math.abs(Float.parseFloat(editText.getText().toString())), Constants.CURRENCY);
+                    Math.abs(amount), Constants.CURRENCY);
             editText.setText(value);
         }
     }
