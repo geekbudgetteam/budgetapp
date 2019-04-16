@@ -55,7 +55,7 @@ public class ProjectElementRepository implements ProjectElementStorage {
 
     @Override
     public Completable updateProjectElement(ProjectElement projectElement) {
-        return Completable.fromAction(() -> projectElementDao.insertProjectElement(projectElement))
+        return Completable.fromAction(() -> projectElementDao.updateProjectElement(projectElement))
                 .subscribeOn(Schedulers.io());
     }
 

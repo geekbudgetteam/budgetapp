@@ -5,6 +5,7 @@ import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
+import android.arch.persistence.room.Update;
 
 import com.example.budgetapp.mvp.model.entity.ProjectElement;
 import com.example.budgetapp.mvp.model.entity.view.ProjectElementDetail;
@@ -50,6 +51,9 @@ public interface ProjectElementDao {
             "AND categories.id = elements.category_id " +
             "AND units.id = elements.unit_id")
     Flowable<List<ProjectElementDetail>> getProjectElementDetailsListByProject(int projectId);
+
+    @Update
+    void updateProjectElement(ProjectElement projectElement);
 
     @Delete
     void deleteProjectElement(ProjectElement projectElement);

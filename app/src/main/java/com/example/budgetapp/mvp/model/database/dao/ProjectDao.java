@@ -5,6 +5,7 @@ import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
+import android.arch.persistence.room.Update;
 
 import com.example.budgetapp.mvp.model.entity.Project;
 
@@ -24,6 +25,9 @@ public interface ProjectDao {
 
     @Query("SELECT * FROM projects")
     Flowable<List<Project>> getProjectsList();
+
+    @Update
+    void updateProject(Project project);
 
     @Delete
     void deleteProject(Project project);

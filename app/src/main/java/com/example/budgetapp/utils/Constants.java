@@ -59,6 +59,9 @@ public class Constants {
     //    ProjectElement Error message
     public static final String ERROR_MESSAGE = "Ошибка ввода данных в поле: ";
 
+    //    Category Error message
+    public static final String DELETE_CATEGORY_ERROR_MESSAGE = "Необходимо выбрать новую Категорию в Транзакциях";
+
     //    View fields
     public static final String NAME_FIELD = "Наименование: ";
     public static final String PROJECT_FIELD = "Проект: ";

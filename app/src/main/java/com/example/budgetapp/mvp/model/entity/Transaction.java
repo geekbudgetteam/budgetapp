@@ -7,12 +7,13 @@ import android.arch.persistence.room.PrimaryKey;
 
 import java.io.Serializable;
 
+import static android.arch.persistence.room.ForeignKey.CASCADE;
 import static android.arch.persistence.room.ForeignKey.SET_NULL;
 
 @Entity(tableName = "transactions",
         foreignKeys = {
-                @ForeignKey(entity = Project.class, parentColumns = "id", childColumns = "project_id", onDelete = SET_NULL),
-                @ForeignKey(entity = Category.class, parentColumns = "id", childColumns = "category_id", onDelete = SET_NULL)
+                @ForeignKey(entity = Project.class, parentColumns = "id", childColumns = "project_id", onDelete = SET_NULL, onUpdate = CASCADE),
+                @ForeignKey(entity = Category.class, parentColumns = "id", childColumns = "category_id", onDelete = SET_NULL, onUpdate = CASCADE)
         })
 public class Transaction implements Serializable {
 

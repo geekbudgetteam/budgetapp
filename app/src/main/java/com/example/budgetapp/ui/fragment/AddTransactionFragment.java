@@ -125,7 +125,7 @@ public class AddTransactionFragment extends BaseFragment implements AddTransacti
             presenter.addDataError(getContext().getResources().getString(R.string.transaction_amount));
             return;
         }
-        String amountValue = amountInput.getText().toString();
+        String amountValue = amountInput.getText().toString().replace(",", ".");
         String[] amountValues = amountValue.split(" ");
         float amount = Float.parseFloat(amountValues[0]);
         if (amount == 0) {

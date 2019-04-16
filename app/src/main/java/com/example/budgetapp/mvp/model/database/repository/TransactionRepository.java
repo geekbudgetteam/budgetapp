@@ -55,13 +55,13 @@ public class TransactionRepository implements TransactionStorage {
 
     @Override
     public Flowable<List<TransactionDetail>> getTransactionDetailsListByCategory(int categoryId) {
-        return transactionDao.getTransactionDetailsList()
+        return transactionDao.getTransactionDetailsListByCategory(categoryId)
                 .subscribeOn(Schedulers.io());
     }
 
     @Override
     public Completable updateTransaction(Transaction transaction) {
-        return Completable.fromAction(() -> transactionDao.insertTransaction(transaction))
+        return Completable.fromAction(() -> transactionDao.updateTransaction(transaction))
                 .subscribeOn(Schedulers.io());
     }
 

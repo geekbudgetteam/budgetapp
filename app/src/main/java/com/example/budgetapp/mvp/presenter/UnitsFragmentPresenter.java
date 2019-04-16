@@ -63,7 +63,7 @@ public class UnitsFragmentPresenter extends MvpPresenter<UnitsFragmentView> {
     class UnitsListPresenter implements EntityListPresenter<Unit> {
 
         @Override
-        public void bindEntityListRow(int pos, EntityRowView rowView) {
+        public void bindEntityListRow(int pos, EntityRowView<Unit> rowView) {
             if (units.size() != 0) {
                 rowView.setEntity(units.get(pos));
             }

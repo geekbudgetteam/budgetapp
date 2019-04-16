@@ -9,6 +9,7 @@ import com.example.budgetapp.mvp.model.entity.view.TransactionDetail;
 import com.example.budgetapp.mvp.view.fragment.CategoryFragmentView;
 import com.example.budgetapp.mvp.view.row.EntityRowView;
 import com.example.budgetapp.navigation.Screens;
+import com.example.budgetapp.utils.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -69,7 +70,9 @@ public class CategoryFragmentPresenter extends MvpPresenter<CategoryFragmentView
     public void deleteCategory(){
         disposables.add(categoryStorage.deleteCategory(category)
                 .observeOn(scheduler)
-                .subscribe(this::onBack));
+                .subscribe(this::onBack, throwable -> {
+                    getViewState().showMessage(Constants.DELETE_CATEGORY_ERROR_MESSAGE);
+                }));
     }
 
     public void onBack() {

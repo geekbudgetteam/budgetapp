@@ -18,7 +18,6 @@ import javax.inject.Inject;
 import io.reactivex.Flowable;
 import io.reactivex.Scheduler;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
 import ru.terrakok.cicerone.Router;
 
 @InjectViewState
@@ -28,6 +27,8 @@ public class ProjectsPresenter extends MvpPresenter<ProjectsListFragmentView> {
     private Disposable disposable;
     private IProjectsListPresenter projectsListPresenter = new ProjectsListPresenter();
     private List<Project> projects = new ArrayList<>();
+    private List<Project> expenseProjects = new ArrayList<>();
+    private List<Project> incomeProjects = new ArrayList<>();
 
     @Inject
     Router router;
@@ -49,7 +50,6 @@ public class ProjectsPresenter extends MvpPresenter<ProjectsListFragmentView> {
 
     public void loadProjects(int fragmentType) {
         disposable = projectStorage.getProjectsList()
-                .subscribeOn(Schedulers.io())
                 .retryWhen(throwableFlowable -> throwableFlowable.take(3).delay(1, TimeUnit.SECONDS))
                 .flatMap(projects -> Flowable.fromIterable(projects)
                         .filter(project -> {

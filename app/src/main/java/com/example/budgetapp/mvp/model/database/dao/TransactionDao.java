@@ -5,6 +5,7 @@ import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
+import android.arch.persistence.room.Update;
 
 import com.example.budgetapp.mvp.model.entity.Transaction;
 import com.example.budgetapp.mvp.model.entity.view.TransactionDetail;
@@ -51,6 +52,9 @@ public interface TransactionDao {
             "AND projects.id = transactions.project_id " +
             "AND categories.id = transactions.category_id")
     Flowable<List<TransactionDetail>> getTransactionDetailsListByCategory(int categoryId);
+
+    @Update
+    void updateTransaction(Transaction transaction);
 
     @Delete
     void deleteTransaction(Transaction transaction);

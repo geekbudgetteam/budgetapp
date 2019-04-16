@@ -5,6 +5,7 @@ import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
+import android.arch.persistence.room.Update;
 
 import com.example.budgetapp.mvp.model.entity.Unit;
 
@@ -24,6 +25,9 @@ public interface UnitDao {
 
     @Query("SELECT * FROM units")
     Flowable<List<Unit>> getUnitsList();
+
+    @Update
+    void updateUnit(Unit unit);
 
     @Delete
     void deleteUnit(Unit unit);

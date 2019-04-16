@@ -42,7 +42,7 @@ public class CategoryRepository implements CategoryStorage {
 
     @Override
     public Completable updateCategory(Category category) {
-        return Completable.fromAction(() -> categoryDao.insertCategory(category))
+        return Completable.fromAction(() -> categoryDao.updateCategory(category))
                 .subscribeOn(Schedulers.io());
     }
 

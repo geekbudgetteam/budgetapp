@@ -42,7 +42,7 @@ public class ProjectRepository implements ProjectStorage {
 
     @Override
     public Completable updateProject(Project project) {
-        return Completable.fromAction(() -> projectDao.insertProject(project))
+        return Completable.fromAction(() -> projectDao.updateProject(project))
                 .subscribeOn(Schedulers.io());
     }
 

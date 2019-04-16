@@ -42,7 +42,7 @@ public class UnitRepository implements UnitStorage {
 
     @Override
     public Completable updateUnit(Unit unit) {
-        return Completable.fromAction(() -> unitDao.insertUnit(unit))
+        return Completable.fromAction(() -> unitDao.updateUnit(unit))
                 .subscribeOn(Schedulers.io());
     }
 

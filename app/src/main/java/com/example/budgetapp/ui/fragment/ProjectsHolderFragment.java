@@ -24,7 +24,7 @@ public class ProjectsHolderFragment extends BaseFragment implements ProjectsHold
 
     @BindView(R.id.view_pager) ViewPager viewPager;
     @BindView(R.id.fragment_fab) FloatingActionButton fab;
-    @BindView(R.id.tabs)TabLayout tabLayout;
+    @BindView(R.id.tabs) TabLayout tabLayout;
 
     @InjectPresenter
     ProjectsHolderPresenter presenter;

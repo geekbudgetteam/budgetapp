@@ -52,7 +52,8 @@ public class UpdateCategoryFragmentPresenter extends MvpPresenter<UpdateCategory
 
     public void updateCategory(Category category) {
         category.setId(this.category.getId());
-        disposables.add(categoryStorage.addCategory(category)
+
+        disposables.add(categoryStorage.updateCategory(category)
                 .observeOn(scheduler)
                 .subscribe(this::onBack));
     }
