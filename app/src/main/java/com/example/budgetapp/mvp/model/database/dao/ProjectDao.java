@@ -26,6 +26,19 @@ public interface ProjectDao {
     @Query("SELECT * FROM projects")
     Flowable<List<Project>> getProjectsList();
 
+    @Query("SELECT * FROM projects WHERE projectType = :projectType")
+    Flowable<List<Project>> getProjectsListByProjectType(int projectType);
+
+    @Query("SELECT projects.id, " +
+            "projects.projectType, projects.name, projects.variable, " +
+            "projects.projectPeriod, projects.startPeriod, projects.finishPeriod, " +
+            "SUM(transactions.amount) AS amount " +
+            "FROM projects " +
+            "LEFT JOIN transactions ON transactions.project_id = projects.id " +
+            "AND projects.id > 0 " +
+            "WHERE projects.projectType = :projectType")
+    Flowable<List<Project>> getProjectsListWithSumByProjectType(int projectType);
+
     @Update
     void updateProject(Project project);
 

@@ -12,13 +12,13 @@ import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.example.budgetapp.App;
 import com.example.budgetapp.R;
-import com.example.budgetapp.mvp.presenter.ProjectsHolderPresenter;
+import com.example.budgetapp.mvp.presenter.ProjectsFragmentPresenter;
 import com.example.budgetapp.mvp.view.fragment.ProjectsHolderFragmentView;
 import com.example.budgetapp.ui.adapter.ProjectsFragmentPagerAdapter;
 
 import butterknife.BindView;
 
-public class ProjectsHolderFragment extends BaseFragment implements ProjectsHolderFragmentView {
+public class ProjectsFragment extends BaseFragment implements ProjectsHolderFragmentView {
 
     private ProjectsFragmentPagerAdapter adapter;
 
@@ -27,19 +27,18 @@ public class ProjectsHolderFragment extends BaseFragment implements ProjectsHold
     @BindView(R.id.tabs) TabLayout tabLayout;
 
     @InjectPresenter
-    ProjectsHolderPresenter presenter;
+    ProjectsFragmentPresenter presenter;
 
     @ProvidePresenter
-    ProjectsHolderPresenter providePresenter() {
-        ProjectsHolderPresenter presenter = new ProjectsHolderPresenter();
+    ProjectsFragmentPresenter providePresenter() {
+        ProjectsFragmentPresenter presenter = new ProjectsFragmentPresenter();
         App.getInstance().getAppComponent().inject(presenter);
         return presenter;
     }
 
-    public static ProjectsHolderFragment newInstance() {
-        return new ProjectsHolderFragment();
+    public static ProjectsFragment newInstance() {
+        return new ProjectsFragment();
     }
-
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {

@@ -9,8 +9,8 @@ import android.widget.TextView;
 
 import com.example.budgetapp.R;
 import com.example.budgetapp.mvp.model.entity.Project;
-import com.example.budgetapp.mvp.presenter.IProjectsListPresenter;
-import com.example.budgetapp.mvp.view.row.ProjectRowView;
+import com.example.budgetapp.mvp.presenter.EntityListPresenter;
+import com.example.budgetapp.mvp.view.row.EntityRowView;
 import com.example.budgetapp.utils.Constants;
 
 import butterknife.BindView;
@@ -18,9 +18,9 @@ import butterknife.ButterKnife;
 
 public class ProjectsListAdapter extends RecyclerView.Adapter<ProjectsListAdapter.ProjectHolder> {
 
-    private IProjectsListPresenter presenter;
+    private EntityListPresenter<Project> presenter;
 
-    public ProjectsListAdapter(IProjectsListPresenter presenter) {
+    public ProjectsListAdapter(EntityListPresenter<Project> presenter) {
         this.presenter = presenter;
     }
 
@@ -32,15 +32,15 @@ public class ProjectsListAdapter extends RecyclerView.Adapter<ProjectsListAdapte
 
     @Override
     public void onBindViewHolder(@NonNull final ProjectHolder holder, int position) {
-        presenter.bindProjectsListRow(position, holder);
+        presenter.bindEntityListRow(position, holder);
     }
 
     @Override
     public int getItemCount() {
-        return presenter.getProjectsCount();
+        return presenter.getEntitiesCount();
     }
 
-    public class ProjectHolder extends RecyclerView.ViewHolder implements ProjectRowView {
+    public class ProjectHolder extends RecyclerView.ViewHolder implements EntityRowView<Project> {
 
         private Project project;
 
@@ -54,11 +54,11 @@ public class ProjectsListAdapter extends RecyclerView.Adapter<ProjectsListAdapte
         ProjectHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
-            itemView.setOnClickListener((v) -> presenter.navigateToProject(project));
+            itemView.setOnClickListener((v) -> presenter.navigateToEntity(project));
         }
 
         @Override
-        public void setProject(Project project) {
+        public void setEntity(Project project) {
             this.project = project;
             String name = Constants.NAME_FIELD + project.getName();
             projectNameView.setText(name);

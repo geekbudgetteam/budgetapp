@@ -14,7 +14,7 @@ import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.example.budgetapp.App;
 import com.example.budgetapp.R;
-import com.example.budgetapp.mvp.presenter.ProjectsPresenter;
+import com.example.budgetapp.mvp.presenter.ProjectsListFragmentPresenter;
 import com.example.budgetapp.mvp.view.fragment.ProjectsListFragmentView;
 import com.example.budgetapp.ui.adapter.list.ProjectsListAdapter;
 
@@ -32,11 +32,11 @@ public class ProjectsListFragment extends MvpAppCompatFragment implements Projec
     @BindView(R.id.recycler_view) RecyclerView recyclerView;
 
     @InjectPresenter
-    ProjectsPresenter presenter;
+    ProjectsListFragmentPresenter presenter;
 
     @ProvidePresenter
-    ProjectsPresenter providePresenter() {
-        ProjectsPresenter presenter = new ProjectsPresenter(AndroidSchedulers.mainThread());
+    ProjectsListFragmentPresenter providePresenter() {
+        ProjectsListFragmentPresenter presenter = new ProjectsListFragmentPresenter(AndroidSchedulers.mainThread());
         App.getInstance().getAppComponent().inject(presenter);
         return presenter;
     }

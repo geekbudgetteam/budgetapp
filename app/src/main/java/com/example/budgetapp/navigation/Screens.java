@@ -10,7 +10,7 @@ import com.example.budgetapp.ui.fragment.AddUnitFragment;
 import com.example.budgetapp.ui.fragment.CategoriesFragment;
 import com.example.budgetapp.ui.fragment.CategoryFragment;
 import com.example.budgetapp.ui.fragment.ProjectFragment;
-import com.example.budgetapp.ui.fragment.ProjectsHolderFragment;
+import com.example.budgetapp.ui.fragment.ProjectsFragment;
 import com.example.budgetapp.ui.fragment.TransactionFragment;
 import com.example.budgetapp.ui.fragment.TransactionsFragment;
 import com.example.budgetapp.ui.fragment.UnitsFragment;
@@ -66,7 +66,7 @@ public class Screens {
     public static class ProjectsFragmentScreen extends SupportAppScreen{
         @Override
         public Fragment getFragment() {
-            return ProjectsHolderFragment.newInstance();
+            return ProjectsFragment.newInstance();
         }
     }
 

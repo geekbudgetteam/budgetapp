@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.budgetapp.R;
-import com.example.budgetapp.mvp.model.entity.Category;
 import com.example.budgetapp.mvp.model.entity.Unit;
 import com.example.budgetapp.mvp.presenter.EntityListPresenter;
 import com.example.budgetapp.mvp.view.row.EntityRowView;
@@ -21,7 +20,7 @@ public class UnitsListAdapter extends RecyclerView.Adapter<UnitsListAdapter.Unit
 
     private EntityListPresenter<Unit> presenter;
 
-    public UnitsListAdapter(EntityListPresenter presenter) {
+    public UnitsListAdapter(EntityListPresenter<Unit> presenter) {
         this.presenter = presenter;
     }
 

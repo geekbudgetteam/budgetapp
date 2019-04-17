@@ -16,6 +16,10 @@ public interface ProjectStorage {
 
     Flowable<List<Project>> getProjectsList();
 
+    Flowable<List<Project>> getProjectsListByProjectType(int projectType);
+
+    Flowable<List<Project>> getProjectsListWithSumByProjectType(int projectType);
+
     Completable updateProject(Project project);
 
     Completable deleteProject(Project project);

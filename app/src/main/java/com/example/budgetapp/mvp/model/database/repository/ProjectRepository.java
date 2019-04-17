@@ -41,6 +41,18 @@ public class ProjectRepository implements ProjectStorage {
     }
 
     @Override
+    public Flowable<List<Project>> getProjectsListByProjectType(int projectType){
+        return projectDao.getProjectsListByProjectType(projectType)
+                .subscribeOn(Schedulers.io());
+    }
+
+    @Override
+    public Flowable<List<Project>> getProjectsListWithSumByProjectType(int projectType){
+        return projectDao.getProjectsListWithSumByProjectType(projectType)
+                .subscribeOn(Schedulers.io());
+    }
+
+    @Override
     public Completable updateProject(Project project) {
         return Completable.fromAction(() -> projectDao.updateProject(project))
                 .subscribeOn(Schedulers.io());

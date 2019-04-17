@@ -10,7 +10,7 @@ import javax.inject.Inject;
 import ru.terrakok.cicerone.Router;
 
 @InjectViewState
-public class ProjectsHolderPresenter extends MvpPresenter<ProjectsHolderFragmentView> {
+public class ProjectsFragmentPresenter extends MvpPresenter<ProjectsHolderFragmentView> {
 
     @Inject
     Router router;

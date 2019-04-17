@@ -11,8 +11,8 @@ import com.example.budgetapp.mvp.presenter.AddUnitFragmentPresenter;
 import com.example.budgetapp.mvp.presenter.CategoriesFragmentPresenter;
 import com.example.budgetapp.mvp.presenter.CategoryFragmentPresenter;
 import com.example.budgetapp.mvp.presenter.ProjectFragmentPresenter;
-import com.example.budgetapp.mvp.presenter.ProjectsHolderPresenter;
-import com.example.budgetapp.mvp.presenter.ProjectsPresenter;
+import com.example.budgetapp.mvp.presenter.ProjectsFragmentPresenter;
+import com.example.budgetapp.mvp.presenter.ProjectsListFragmentPresenter;
 import com.example.budgetapp.mvp.presenter.TransactionFragmentPresenter;
 import com.example.budgetapp.mvp.presenter.TransactionsFragmentPresenter;
 import com.example.budgetapp.mvp.presenter.UnitsFragmentPresenter;
@@ -22,7 +22,7 @@ import com.example.budgetapp.mvp.presenter.UpdateTransactionFragmentPresenter;
 import com.example.budgetapp.mvp.presenter.UpdateUnitFragmentPresenter;
 import com.example.budgetapp.ui.activity.MainActivity;
 import com.example.budgetapp.ui.fragment.AddTransactionFragment;
-import com.example.budgetapp.ui.fragment.ProjectsHolderFragment;
+import com.example.budgetapp.ui.fragment.ProjectsFragment;
 import com.example.budgetapp.ui.fragment.UpdateProjectFragment;
 
 import javax.inject.Singleton;
@@ -39,7 +39,7 @@ import dagger.Component;
 public interface AppComponent {
     void inject(MainActivity mainActivity);
 
-    void inject(ProjectsHolderFragment projectsHolderFragment);
+    void inject(ProjectsFragment projectsFragment);
 
     void inject(UpdateProjectFragment updateProjectFragment);
 
@@ -48,11 +48,11 @@ public interface AppComponent {
     void inject(AddTransactionFragmentPresenter presenter);
     void inject(UpdateTransactionFragmentPresenter presenter);
 
-    void inject(ProjectsPresenter presenter);
+    void inject(ProjectsListFragmentPresenter presenter);
 
     void inject(AddProjectElementPresenter presenter);
 
-    void inject(ProjectsHolderPresenter presenter);
+    void inject(ProjectsFragmentPresenter presenter);
     void inject(AddTransactionFragment fragment);
 
 
