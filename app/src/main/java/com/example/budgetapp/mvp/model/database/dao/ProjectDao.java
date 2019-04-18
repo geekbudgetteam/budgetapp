@@ -29,13 +29,21 @@ public interface ProjectDao {
     @Query("SELECT * FROM projects WHERE projectType = :projectType")
     Flowable<List<Project>> getProjectsListByProjectType(int projectType);
 
+//    Возвращает список с пустым экземпляром Project
+//    @Query("SELECT projects.id, " +
+//            "projects.projectType, projects.name, projects.variable, " +
+//            "projects.projectPeriod, projects.startPeriod, projects.finishPeriod, " +
+//            "SUM(transactions.amount) AS amount " +
+//            "FROM projects " +
+//            "INNER JOIN transactions ON transactions.project_id = projects.id " +
+//            "WHERE projects.projectType = :projectType")
+//    Flowable<List<Project>> getProjectsListWithSumByProjectType(int projectType);
+
     @Query("SELECT projects.id, " +
             "projects.projectType, projects.name, projects.variable, " +
             "projects.projectPeriod, projects.startPeriod, projects.finishPeriod, " +
-            "SUM(transactions.amount) AS amount " +
+            "(SELECT SUM(amount) FROM transactions WHERE project_id = projects.id) AS amount " +
             "FROM projects " +
-            "LEFT JOIN transactions ON transactions.project_id = projects.id " +
-            "AND projects.id > 0 " +
             "WHERE projects.projectType = :projectType")
     Flowable<List<Project>> getProjectsListWithSumByProjectType(int projectType);
 
