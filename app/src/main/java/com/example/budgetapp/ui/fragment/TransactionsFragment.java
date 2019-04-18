@@ -7,6 +7,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.arellomobile.mvp.presenter.InjectPresenter;
@@ -28,6 +29,8 @@ public class TransactionsFragment extends BaseFragment implements TransactionsFr
     private TransactionsListAdapter adapter;
 
     @BindView(R.id.totalAmount) TextView totalAmountTextView;
+    @BindView(R.id.progress_bar)
+    ProgressBar progressBar;
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
     @BindView(R.id.fragment_fab) FloatingActionButton fab;
@@ -64,6 +67,11 @@ public class TransactionsFragment extends BaseFragment implements TransactionsFr
     @Override
     int getTitleRes() {
         return R.string.transactions_fragment;
+    }
+
+
+    public void showProgressBar(boolean visible) {
+        progressBar.setVisibility(visible ? View.VISIBLE : View.INVISIBLE);
     }
 
     public void updateUI() {

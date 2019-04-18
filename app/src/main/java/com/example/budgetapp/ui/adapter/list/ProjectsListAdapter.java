@@ -13,6 +13,8 @@ import com.example.budgetapp.mvp.presenter.EntityListPresenter;
 import com.example.budgetapp.mvp.view.row.EntityRowView;
 import com.example.budgetapp.utils.Constants;
 
+import java.util.Locale;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -87,7 +89,8 @@ public class ProjectsListAdapter extends RecyclerView.Adapter<ProjectsListAdapte
                     break;
             }
             projectPeriodView.setText(periodBuilder.toString());
-            projectAmountView.setText(String.valueOf(project.getAmount()));
+            String amount = String.format(Locale.getDefault(), "%.2f", project.getAmount());
+            projectAmountView.setText(amount);
         }
     }
 }

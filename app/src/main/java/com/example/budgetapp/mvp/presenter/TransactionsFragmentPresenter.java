@@ -40,6 +40,7 @@ public class TransactionsFragmentPresenter extends MvpPresenter<TransactionsFrag
     }
 
     public void loadData(){
+        getViewState().showProgressBar(true);
         final int[] totalAmount = new int[1];
         disposable = transactionStorage.getTransactionDetailsList()
                 .map(transactions -> {
@@ -51,6 +52,7 @@ public class TransactionsFragmentPresenter extends MvpPresenter<TransactionsFrag
                 .observeOn(scheduler)
                 .subscribe(transactions -> {
                     TransactionsFragmentPresenter.this.transactions = transactions;
+                    TransactionsFragmentPresenter.this.getViewState().showProgressBar(false);
                     TransactionsFragmentPresenter.this.getViewState().updateTransactionsList();
                     TransactionsFragmentPresenter.this.getViewState().updateTotalAmount(totalAmount[0]);
                 });

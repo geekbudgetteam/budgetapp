@@ -10,4 +10,6 @@ public interface TransactionsFragmentView extends MvpView {
     void updateTransactionsList();
 
     void updateTotalAmount(float amount);
+
+    void showProgressBar(boolean visible);
 }
